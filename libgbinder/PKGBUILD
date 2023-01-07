@@ -15,14 +15,14 @@ source=("${pkgname}::git+${url}.git#tag=${pkgver}")
 sha512sums=('SKIP')
 
 build() {
-	cd "${srcdir}/${pkgname}/"
-	make release pkgconfig KEEP_SYMBOLS=1
+  cd "${srcdir}/${pkgname}/"
+  make release pkgconfig KEEP_SYMBOLS=1
 }
 
 package() {
-	cd "${srcdir}/${pkgname}/"
-	make install-dev DESTDIR="${pkgdir}"
+  cd "${srcdir}/${pkgname}/"
+  make install-dev DESTDIR="${pkgdir}"
 
-	# license
-	install -Dm 644 "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  # license
+  install -Dm 644 "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
