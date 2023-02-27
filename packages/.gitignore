@@ -1,0 +1,7 @@
+*/*/
+*/LICENSE
+*/*.pkg.tar.zst
+*/*.tar.gz
+*/*.zip
+
+!*/keys/

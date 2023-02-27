@@ -1,7 +1,0 @@
-packages/*/*/
-LICENSE
-*.pkg.tar.zst
-*.tar.gz
-*.zip
-
-!packages/*/keys/
