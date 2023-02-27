@@ -1,0 +1,6 @@
+[submodule "AURPKG/smiley-sans"]
+	path = packages/smiley-sans
+	url = ssh://aur@aur.archlinux.org/smiley-sans.git
+[submodule "AURPKG/smiley-sans-bin"]
+	path = packages/smiley-sans-bin
+	url = ssh://aur@aur.archlinux.org/smiley-sans-bin.git
