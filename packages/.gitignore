@@ -3,5 +3,6 @@
 */*.pkg.tar.zst
 */*.tar.gz
 */*.zip
+*/*.log
 
 !*/keys/
