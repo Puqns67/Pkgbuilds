@@ -7,3 +7,6 @@
 [submodule "AURPKG/wiliwili"]
 	path = packages/wiliwili
 	url = ssh://aur@aur.archlinux.org/wiliwili.git
+[submodule "AURPKG/juicity"]
+	path = packages/juicity
+	url = ssh://aur@aur.archlinux.org/juicity.git
