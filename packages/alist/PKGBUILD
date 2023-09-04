@@ -5,7 +5,7 @@ _solid_router_git_hash='f77b206e8592bb56d2d001e9488de5a54a13699b'
 
 pkgname='alist'
 pkgver=3.27.0
-pkgrel=2
+pkgrel=3
 pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
 url="${_organization_url}/${pkgname}"
 license=('AGPL3')
@@ -28,7 +28,7 @@ sha512sums=('1a504ed6c479188482f0961dc50693169a4afd16dc0471b9d59cbe579e7ee1687b5
             'eb4e5c6cfe905ab6b6680bb9a80a8909bfc74b87de3b0f49b64374bad1f21627f3b496ffca897794cdff882eb86d8da634fb4b50b1c14d6f68a3d8fa02223c2f'
             'e8bfd6079626799ca7af015550c5605991631460d18be2aab41d58412488fd17672b9125c47cfb019d519d883d6b89e4f2f367eddfb30d5857e29fd91f582f78'
             '923dbd6ba9027524537097b2ab84d230a67bcef3f5adf2bb054e502b5806544836f012eb476803ce75d614686af0a4a070794ad1bdd768dc2fa6c26cdc3ac7a7'
-            '9ccee8ea093d81aa75441cd1603f6dcb798f10397206a5d8f770a3242753bf48d3229a881c16238ad98c762dff6824dcb85d26f545b03914d154f280f8ac2c3f')
+            '581158196038b4d56fb18d9859d2ff8ab1113ee0bdb6b0238b5fb89610ebd395a9efbf2dea505f365764fed14a06ca92a5bccf895cded506fe4cc6e1df97a1ec')
 
 prepare() {
   # Link frontend dist to backend sources.
