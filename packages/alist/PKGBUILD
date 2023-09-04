@@ -1,0 +1,64 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+
+_organization_url='https://github.com/alist-org'
+_solid_router_git_hash='f77b206e8592bb56d2d001e9488de5a54a13699b'
+
+pkgname='alist'
+pkgver=3.27.0
+pkgrel=1
+pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
+url="${_organization_url}/${pkgname}"
+license=('AGPL3')
+arch=('i686' 'x86_64' 'armv7h' 'aarch64' 'riscv64')
+depends=('glibc')
+makedepends=('go' 'pnpm')
+
+source=("${pkgname}-backend-${pkgver}.tar.gz"::"${url}/archive/refs/tags/v${pkgver}.tar.gz"
+        "${pkgname}-frontend-${pkgver}.tar.gz"::"${_organization_url}/${pkgname}-web/archive/refs/tags/${pkgver}.tar.gz"
+        "${pkgname}-solid_router-${_solid_router_git_hash}.tar.gz"::"${_organization_url}/solid-router/archive/${_solid_router_git_hash}.tar.gz"
+        "${pkgname}.service"
+        "${pkgname}-sysusers.conf"
+        "${pkgname}-tmpfiles.conf")
+
+sha512sums=('1a504ed6c479188482f0961dc50693169a4afd16dc0471b9d59cbe579e7ee1687b595baa932e4a8653c20893122ec53f9e92e4760df7b4db3bcd763038ff1016'
+            'dd20962d4e5fac1604597b54267604a9231e2d73f9af6a90503a8236d8376b62d6321e244c783b96d4764a94eeab4f86ec5c99b63ab70d54b5de08dd73266e28'
+            '0638e98b8f2866e7cbdd5420c6b31558aeeea05e521dd28c22b917da4c419df933f03d042ceba0a88b7a5a153e152b7abc32af1acc0b90e8be90c3ddbdd4f541'
+            'df2fdcd9d94a0614b9c68da6d1c4155f77d4991fbb2bb604fff7b7c553abb9608cfe687f143ae7f470c8c7757cb0e5b5b6bf4fdb9fe4203ab80a999901a09e66'
+            '923dbd6ba9027524537097b2ab84d230a67bcef3f5adf2bb054e502b5806544836f012eb476803ce75d614686af0a4a070794ad1bdd768dc2fa6c26cdc3ac7a7'
+            '9fe83828c81bbd1a93532847ef4c6fdfd832a43e2bd195637e56c1daec83728648df6b35e79b31a4d1cecef1fbfbc5cd30668c0a94e4d975ddd7c02bab8d813b')
+
+prepare() {
+  # Link frontend dist to backend sources.
+  ln -sf "${srcdir}/${pkgname}-web-${pkgver}/dist" "${srcdir}/${pkgname}-${pkgver}/dist"
+
+  # Move solid-router to web sources.
+  rm -rf "${srcdir}/${pkgname}-web-${pkgver}/solid-router"
+  mv "${srcdir}/solid-router-${_solid_router_git_hash}" "${srcdir}/${pkgname}-web-${pkgver}/solid-router"
+
+  # Update frontend version with $pkgver.
+  sed -i -e "s/0.0.0/${pkgver}/g" "${srcdir}/${pkgname}-web-${pkgver}/package.json"
+}
+
+build() {
+  # Build frontend
+  cd "${srcdir}/${pkgname}-web-${pkgver}"
+  HUSKY=0 pnpm install
+  pnpm build
+
+  # Build backend
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  GOFLAGS="-trimpath -modcacherw" go build -o "${srcdir}/${pkgname}" \
+    -ldflags="-w -s -linkmode=external \
+    -X 'github.com/alist-org/alist/v3/internal/conf.BuiltAt=$(date +"%F %T %z")' \
+    -X 'github.com/alist-org/alist/v3/internal/conf.GoVersion=$(go version | sed "s/go version //")' \
+    -X 'github.com/alist-org/alist/v3/internal/conf.Version=${pkgver}' \
+    -X 'github.com/alist-org/alist/v3/internal/conf.WebVersion=${pkgver}'"
+}
+
+package() {
+  install -Dm755 "${srcdir}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+
+  install -Dm644 "${srcdir}/${pkgname}.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
+  install -Dm644 "${srcdir}/${pkgname}-sysusers.conf" "${pkgdir}/usr/lib/sysusers.d/${pkgname}.conf"
+  install -Dm644 "${srcdir}/${pkgname}-tmpfiles.conf" "${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf"
+}
