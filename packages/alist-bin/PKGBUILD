@@ -1,0 +1,36 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+
+_pkgname='alist'
+pkgname="${_pkgname}-bin"
+pkgver=3.27.0
+pkgrel=4
+pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
+url="https://github.com/alist-org/alist"
+license=('AGPL3')
+arch=('aarch64' 'x86_64' 'riscv64')
+provides=("${_pkgname}")
+conflicts=("${_pkgname}")
+depends=('glibc')
+makedepends=('go' 'pnpm')
+backup=("etc/${_pkgname}/config.json")
+
+source=("${_pkgname}.service"
+        "${_pkgname}-sysusers.conf"
+        "${_pkgname}-tmpfiles.conf")
+source_aarch64=("${_pkgname}-${pkgver}-aarch64.tar.gz"::"${url}/releases/download/v${pkgver}/${_pkgname}-linux-arm64.tar.gz")
+source_x86_64=("${_pkgname}-${pkgver}-x86_64.tar.gz"::"${url}/releases/download/v${pkgver}/${_pkgname}-linux-amd64.tar.gz")
+source_riscv64=("${_pkgname}-${pkgver}-riscv64.tar.gz"::"${url}/releases/download/v${pkgver}/${_pkgname}-linux-riscv64.tar.gz")
+
+sha512sums=('e8bfd6079626799ca7af015550c5605991631460d18be2aab41d58412488fd17672b9125c47cfb019d519d883d6b89e4f2f367eddfb30d5857e29fd91f582f78'
+            '923dbd6ba9027524537097b2ab84d230a67bcef3f5adf2bb054e502b5806544836f012eb476803ce75d614686af0a4a070794ad1bdd768dc2fa6c26cdc3ac7a7'
+            '4ee3df8a34a326c101b831d9ac15469b5ffbe5dbb0ffa0936368d7bcb911c73d0e8bb1dc806992f11e718196ddd69fa6b424b385422c6743fd400b572ea24105')
+sha512sums_aarch64=('168e9f23427edcb3eae993c01992b3706b9e7b95a4d8af5c6e785572d2465ff124175dadf882983c4de0a867466cf1b34e1d19eb04c6404f29ebae4a5a5aea01')
+sha512sums_x86_64=('260ced7ee0a1c527bf93cb21f019b875609d2b30a3dc57c910f7ba799cf118606a5836daf8b76158de3c7064b0dc473ae1b81a5e6cdff5e6f8b6aca367219a3f')
+sha512sums_riscv64=('950cfae23e41bd7153d6147260058c146153ed3964cc69a321f287480f3e39a22a3adb3a2200511890a3e645474b61095a71f783a07b5f38a9ef2a0b0e1342be')
+
+package() {
+  install -Dm755 "${srcdir}/${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
+  install -Dm644 "${srcdir}/${_pkgname}.service" "${pkgdir}/usr/lib/systemd/system/${_pkgname}.service"
+  install -Dm644 "${srcdir}/${_pkgname}-sysusers.conf" "${pkgdir}/usr/lib/sysusers.d/${_pkgname}.conf"
+  install -Dm644 "${srcdir}/${_pkgname}-tmpfiles.conf" "${pkgdir}/usr/lib/tmpfiles.d/${_pkgname}.conf"
+}
