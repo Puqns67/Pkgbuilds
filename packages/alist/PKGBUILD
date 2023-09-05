@@ -5,7 +5,7 @@ _solid_router_git_hash='f77b206e8592bb56d2d001e9488de5a54a13699b'
 
 pkgname='alist'
 pkgver=3.27.0
-pkgrel=3
+pkgrel=4
 pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
 url="${_organization_url}/${pkgname}"
 license=('AGPL3')
@@ -17,7 +17,6 @@ backup=("etc/${pkgname}/config.json")
 source=("${pkgname}-backend-${pkgver}.tar.gz"::"${url}/archive/refs/tags/v${pkgver}.tar.gz"
         "${pkgname}-frontend-${pkgver}.tar.gz"::"${_organization_url}/${pkgname}-web/archive/refs/tags/${pkgver}.tar.gz"
         "${pkgname}-solid_router-${_solid_router_git_hash}.tar.gz"::"${_organization_url}/solid-router/archive/${_solid_router_git_hash}.tar.gz"
-        "${pkgname}-config.json"
         "${pkgname}.service"
         "${pkgname}-sysusers.conf"
         "${pkgname}-tmpfiles.conf")
@@ -25,10 +24,9 @@ source=("${pkgname}-backend-${pkgver}.tar.gz"::"${url}/archive/refs/tags/v${pkgv
 sha512sums=('1a504ed6c479188482f0961dc50693169a4afd16dc0471b9d59cbe579e7ee1687b595baa932e4a8653c20893122ec53f9e92e4760df7b4db3bcd763038ff1016'
             'dd20962d4e5fac1604597b54267604a9231e2d73f9af6a90503a8236d8376b62d6321e244c783b96d4764a94eeab4f86ec5c99b63ab70d54b5de08dd73266e28'
             '0638e98b8f2866e7cbdd5420c6b31558aeeea05e521dd28c22b917da4c419df933f03d042ceba0a88b7a5a153e152b7abc32af1acc0b90e8be90c3ddbdd4f541'
-            'eb4e5c6cfe905ab6b6680bb9a80a8909bfc74b87de3b0f49b64374bad1f21627f3b496ffca897794cdff882eb86d8da634fb4b50b1c14d6f68a3d8fa02223c2f'
             'e8bfd6079626799ca7af015550c5605991631460d18be2aab41d58412488fd17672b9125c47cfb019d519d883d6b89e4f2f367eddfb30d5857e29fd91f582f78'
             '923dbd6ba9027524537097b2ab84d230a67bcef3f5adf2bb054e502b5806544836f012eb476803ce75d614686af0a4a070794ad1bdd768dc2fa6c26cdc3ac7a7'
-            '581158196038b4d56fb18d9859d2ff8ab1113ee0bdb6b0238b5fb89610ebd395a9efbf2dea505f365764fed14a06ca92a5bccf895cded506fe4cc6e1df97a1ec')
+            '4ee3df8a34a326c101b831d9ac15469b5ffbe5dbb0ffa0936368d7bcb911c73d0e8bb1dc806992f11e718196ddd69fa6b424b385422c6743fd400b572ea24105')
 
 prepare() {
   # Link frontend dist to backend sources.
@@ -61,7 +59,6 @@ build() {
 
 package() {
   install -Dm755 "${srcdir}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
-  install -Dm644 "${srcdir}/${pkgname}-config.json" "${pkgdir}/etc/${pkgname}/config.json"
   install -Dm644 "${srcdir}/${pkgname}.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
   install -Dm644 "${srcdir}/${pkgname}-sysusers.conf" "${pkgdir}/usr/lib/sysusers.d/${pkgname}.conf"
   install -Dm644 "${srcdir}/${pkgname}-tmpfiles.conf" "${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf"
