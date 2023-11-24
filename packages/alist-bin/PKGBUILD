@@ -2,7 +2,7 @@
 
 _pkgname='alist'
 pkgname="${_pkgname}-bin"
-pkgver=3.28.0
+pkgver=3.29.0
 pkgrel=1
 pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
 url="https://github.com/alist-org/alist"
@@ -10,6 +10,8 @@ license=('AGPL3')
 arch=('aarch64' 'x86_64' 'riscv64')
 provides=("${_pkgname}")
 conflicts=("${_pkgname}")
+
+options=('!strip')
 
 source=("${_pkgname}.service"
         "${_pkgname}-sysusers.conf"
@@ -21,9 +23,9 @@ source_riscv64=("${_pkgname}-${pkgver}-riscv64.tar.gz"::"${url}/releases/downloa
 sha512sums=('e8bfd6079626799ca7af015550c5605991631460d18be2aab41d58412488fd17672b9125c47cfb019d519d883d6b89e4f2f367eddfb30d5857e29fd91f582f78'
             '923dbd6ba9027524537097b2ab84d230a67bcef3f5adf2bb054e502b5806544836f012eb476803ce75d614686af0a4a070794ad1bdd768dc2fa6c26cdc3ac7a7'
             '4ee3df8a34a326c101b831d9ac15469b5ffbe5dbb0ffa0936368d7bcb911c73d0e8bb1dc806992f11e718196ddd69fa6b424b385422c6743fd400b572ea24105')
-sha512sums_aarch64=('69ea5eb0a8f7c4f4ede35a84b47c212eacf8f12fffe0a544fe2b8047f1d260f1ca78e9f21b1aeb3dfc11f19b5b4c2a13caef447657a982e7d641b4200708a83b')
-sha512sums_x86_64=('9c829c9e1c23cead41675d7a390c89b10b1df4e35980cb6f995611750d8c0e787b01d1b7199cc599715aec8f833551850f05fd7fed1a4eb861f40e71bda4a1d0')
-sha512sums_riscv64=('f802f3de297752f7ebd2f570f24521d8ee92feeb5c1068fb7fe7cee8bc7a0d6a0c6a3185b23fb1e48cabfbb99c556072e30a2d0893f6989327809cdcb6c1dc39')
+sha512sums_aarch64=('0c0fab8ccc05bdb14fe0a6b94bc636b1337a2e740681bbe25db263c3b74120e066456fa7607d8ba60aed8336dbf537a4d47e16ddf7e0d1ac009f34e4e66acac3')
+sha512sums_x86_64=('f84e01a7d95ff38bd7501257ed5afd80e788533a92f01aae9ebec371c399efa5490b25eb8ebcd4d30a7f90a6fa8b1532bfe4b35278ed5cf88cf5f17bbd73f033')
+sha512sums_riscv64=('0516c77bde41233c2006e393b29c0b1323b13dd48cd23c30dfa93d5f27e9dcacb3649f72586401b0dad817a31414cda3013416f65e2fb216adee260042676324')
 
 package() {
   install -Dm755 "${srcdir}/${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
