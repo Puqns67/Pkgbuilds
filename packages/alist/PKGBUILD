@@ -4,7 +4,7 @@ _organization_url='https://github.com/alist-org'
 _solid_router_git_hash='f77b206e8592bb56d2d001e9488de5a54a13699b'
 
 pkgname='alist'
-pkgver=3.28.0
+pkgver=3.29.0
 pkgrel=1
 pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
 url="${_organization_url}/${pkgname}"
@@ -20,8 +20,8 @@ source=("${pkgname}-backend-${pkgver}.tar.gz"::"${url}/archive/refs/tags/v${pkgv
         "${pkgname}-sysusers.conf"
         "${pkgname}-tmpfiles.conf")
 
-sha512sums=('e582174a499d96240bd0a5672aeb12dfd36cfb4484343fdea4cc3cd44318b3334681e28ddea3a66e66a64394d95e01b2b588fc932bfb1094b2cf3b35dbc44f49'
-            '3748542a50a60eb0247c6be82911042c241fa62507c5a5df52fe7e44cc316ebc8a09e236ba8625a879ce62311db55fc6ad01eddbc703d87516264199a8bbe012'
+sha512sums=('75071a4f1132582a05206dc5eb99622fb5d98bcf5cbe380c9ba1cd3774f420d3983babd37010bb58a9a44afa06547b55167e4125126ec50cd987b36cbf5e0648'
+            'b11640c10f6f6be34446ae6aeacc0051b3d88b28bb753a0da2bd1c0b6c7649368acea3ba182ff7cd7635273504bd80dcff1af7f58f01d8874899d0f39b78ba86'
             '0638e98b8f2866e7cbdd5420c6b31558aeeea05e521dd28c22b917da4c419df933f03d042ceba0a88b7a5a153e152b7abc32af1acc0b90e8be90c3ddbdd4f541'
             'e8bfd6079626799ca7af015550c5605991631460d18be2aab41d58412488fd17672b9125c47cfb019d519d883d6b89e4f2f367eddfb30d5857e29fd91f582f78'
             '923dbd6ba9027524537097b2ab84d230a67bcef3f5adf2bb054e502b5806544836f012eb476803ce75d614686af0a4a070794ad1bdd768dc2fa6c26cdc3ac7a7'
