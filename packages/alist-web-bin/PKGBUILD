@@ -1,0 +1,20 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+
+pkgname='alist-web-bin'
+pkgver=3.30.0
+pkgrel=2
+pkgdesc=' 🗂️ The front end of Alist V3 (A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs)'
+url="https://github.com/alist-org/alist-web"
+license=('AGPL-3.0-or-later')
+arch=('any')
+provides=("${pkgname%-bin}")
+conflicts=("${pkgname%-bin}")
+
+source=("${pkgname}-${pkgver}-dist.tar.gz"::"${url}/releases/download/${pkgver}/dist.tar.gz")
+
+sha512sums=('01c6efdab39f70148c2babf33689d13e6d5920139353ebd0d6f1f1bc17a329e25c767d1e07dc9f8074ae00985180a233416314af894a208321f2675ba60a625f')
+
+package() {
+  install -d "${pkgdir}/usr/share"
+  cp -rv "${srcdir}/dist" "${pkgdir}/usr/share/${pkgname%-bin}"
+}
