@@ -1,0 +1,42 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+
+_organization_url='https://github.com/alist-org'
+_solid_router_git_hash='f77b206e8592bb56d2d001e9488de5a54a13699b'
+
+pkgname='alist-web'
+pkgver=3.30.0
+pkgrel=2
+pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
+url="${_organization_url}/${pkgname}"
+license=('AGPL-3.0-or-later')
+arch=('any')
+makedepends=('pnpm')
+
+source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/${pkgver}.tar.gz"
+        "solid_router-${_solid_router_git_hash}.tar.gz"::"${_organization_url}/solid-router/archive/${_solid_router_git_hash}.tar.gz")
+
+sha512sums=('af736a47ed0d5bc19f05885c27f91bcc80f5895226dc4f2072b519ac15de819d73c1642b6e11338546694a99fffc91c140f214b5d47d488bbf8cbb7b0b4cad44'
+            '0638e98b8f2866e7cbdd5420c6b31558aeeea05e521dd28c22b917da4c419df933f03d042ceba0a88b7a5a153e152b7abc32af1acc0b90e8be90c3ddbdd4f541')
+
+prepare() {
+  # Move solid-router to sources.
+  rm -rfv "${srcdir}/${pkgname}-${pkgver}/solid-router"
+  mv -v "${srcdir}/solid-router-${_solid_router_git_hash}" "${srcdir}/${pkgname}-${pkgver}/solid-router"
+
+  # Update version with $pkgver.
+  sed -ie "s/0.0.0/${pkgver}/g" "${srcdir}/${pkgname}-${pkgver}/package.json"
+
+  # Install dependencies
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  HUSKY=0 pnpm install
+}
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  pnpm build
+}
+
+package() {
+  install -d "${pkgdir}/usr/share"
+  cp -rv "${srcdir}/${pkgname}-${pkgver}/dist" "${pkgdir}/usr/share/${pkgname}"
+}
