@@ -1,7 +1,1 @@
-{
-	"dist_dir": "/usr/share/alist-web",
-	"temp_dir": "/var/cache/alist",
-	"log": {
-		"name": "/var/log/alist/alist.log"
-	}
-}
+{}

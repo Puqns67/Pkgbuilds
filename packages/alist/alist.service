@@ -9,6 +9,10 @@ User=alist
 Group=alist
 ExecStart=/usr/bin/alist server --data /var/lib/alist
 Restart=on-failure
+Environment="ALIST_DIST_DIR=/usr/share/alist-web"
+Environment="ALIST_LOG_NAME=/var/log/alist/alist.log"
+Environment="ALIST_UNIX_FILE=/run/alist/alist.socket"
+Environment="ALIST_UNIX_FILE_PERM=0666"
 
 [Install]
 WantedBy=multi-user.target

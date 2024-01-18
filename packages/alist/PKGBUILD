@@ -2,7 +2,7 @@
 
 pkgname='alist'
 pkgver=3.30.0
-pkgrel=2
+pkgrel=3
 pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
 url="https://github.com/alist-org/alist"
 license=('AGPL-3.0-or-later')
@@ -17,14 +17,23 @@ source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/v${pkgver}.tar.
         "${pkgname}-tmpfiles.conf")
 
 sha512sums=('96b5b4aeaa5de9c9807ae13e8b63ee8c95854432b0e399610e2b6cdbdceac166b9102d7698907183a590435794364dced47b1927e34f0010f1eb89a199664f82'
-            'e8bfd6079626799ca7af015550c5605991631460d18be2aab41d58412488fd17672b9125c47cfb019d519d883d6b89e4f2f367eddfb30d5857e29fd91f582f78'
-            'd7032d1e72e43f5e7ab053117031359c4a0df9be277d5e0224f81cbaa27004fe0c96c6351e9ea9a467aaa92847a9ec966f469d56aee8c5984816bb337f08caea'
+            'bec524cdde659f342c5e803ac283f8a990a4f4376bdf210668addfedc5e65228bdee82cb9ad3715ae6ef09d15753cf2e3c484d85ca7fb2a3e1f3aca7b2d13cef'
+            '27c74670adb75075fad058d5ceaf7b20c4e7786c83bae8a32f626f9782af34c9a33c2046ef60fd2a7878d378e29fec851806bbd9a67878f3a9f1cda4830763fd'
             '923dbd6ba9027524537097b2ab84d230a67bcef3f5adf2bb054e502b5806544836f012eb476803ce75d614686af0a4a070794ad1bdd768dc2fa6c26cdc3ac7a7'
-            'b642ea910aef67c99a4fdd1474cbf0d8996e1688309aa08026994c26b58a3b14ded273870bc29c3fb7d98c4203e6093ad2bd645a92a08183f4fe4f5232048a1d')
+            '712509007bae9da0e843d00d72ae84fa01e80f066102fb3288fdf6e86c64aa46237c2624ce026c99a7c32bc2933775f0279842a68a687e5cd689ffb040ba8a1b')
+
+prepare() {
+  # Allow read dist_dir from environment
+  sed -i "s/json:\"dist_dir\"/json:\"dist_dir\" env:\"DIST_DIR\"/g" "${srcdir}/${pkgname}-${pkgver}/internal/conf/config.go"
+
+  # Download dependencies
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  go mod download -x -modcacherw
+}
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  go build -v -x -work -trimpath -modcacherw -o "${srcdir}/${pkgname}" \
+  go build -v -x -work -trimpath -buildmode=pie -o "${srcdir}/${pkgname}" \
     -ldflags="-w -s \
       -X 'github.com/alist-org/alist/v3/internal/conf.BuiltAt=$(date +"%F %T %z")' \
       -X 'github.com/alist-org/alist/v3/internal/conf.GoVersion=$(go version | sed "s/go version //")' \
@@ -36,4 +45,5 @@ package() {
   install -Dm644 "${srcdir}/${pkgname}.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
   install -Dm644 "${srcdir}/${pkgname}-sysusers.conf" "${pkgdir}/usr/lib/sysusers.d/${pkgname}.conf"
   install -Dm644 "${srcdir}/${pkgname}-tmpfiles.conf" "${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf"
+  install -Dm644 "${srcdir}/${pkgname}-config.json" "${pkgdir}/etc/${pkgname}/config.json"
 }
