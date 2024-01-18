@@ -2,13 +2,14 @@
 
 pkgname='alist'
 pkgver=3.30.0
-pkgrel=3
+pkgrel=4
 pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
 url="https://github.com/alist-org/alist"
 license=('AGPL-3.0-or-later')
 arch=('x86_64' 'aarch64' 'riscv64')
 depends=('alist-web' 'glibc')
 makedepends=('go')
+backup=("etc/${pkgname}/config.json")
 
 source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/v${pkgver}.tar.gz"
         "${pkgname}.service"
