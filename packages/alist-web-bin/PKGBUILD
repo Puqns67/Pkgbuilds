@@ -15,6 +15,6 @@ source=("${pkgname}-${pkgver}-dist.tar.gz"::"${url}/releases/download/${pkgver}/
 sha512sums=('01c6efdab39f70148c2babf33689d13e6d5920139353ebd0d6f1f1bc17a329e25c767d1e07dc9f8074ae00985180a233416314af894a208321f2675ba60a625f')
 
 package() {
-  install -d "${pkgdir}/usr/share"
+  install -dm755 "${pkgdir}/usr/share"
   cp -rv "${srcdir}/dist" "${pkgdir}/usr/share/${pkgname%-bin}"
 }
