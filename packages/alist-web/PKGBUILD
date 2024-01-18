@@ -37,6 +37,6 @@ build() {
 }
 
 package() {
-  install -d "${pkgdir}/usr/share"
+  install -dm755 "${pkgdir}/usr/share"
   cp -rv "${srcdir}/${pkgname}-${pkgver}/dist" "${pkgdir}/usr/share/${pkgname}"
 }
