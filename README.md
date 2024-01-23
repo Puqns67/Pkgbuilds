@@ -9,8 +9,8 @@
 1. 导入我的 pgp 密钥至 pacman 可信密钥链，并在本地信任此密钥。
 
     ```sh
-    pacman-key --keyserver "hkps://keys.openpgp.org" --recv-keys "me@puqns67.icu"
-    pacman-key --lsing-key "me@puqns67.icu"
+    pacman-key --recv-keys 0x9669DF042554F536
+    pacman-key --lsing-key 0x9669DF042554F536
     ```
 
 2. 在 pacman.conf 中添加软件源。
