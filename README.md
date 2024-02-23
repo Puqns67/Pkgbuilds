@@ -10,7 +10,7 @@
 
     ```sh
     pacman-key --recv-keys 0x9669DF042554F536
-    pacman-key --lsing-key 0x9669DF042554F536
+    pacman-key --lsign-key 0x9669DF042554F536
     ```
 
 2. 在 pacman.conf 中添加软件源。
