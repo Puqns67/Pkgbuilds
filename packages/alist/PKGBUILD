@@ -1,8 +1,8 @@
 # Maintainer: Puqns67 <me@puqns67.icu>
 
 pkgname='alist'
-pkgver=3.30.0
-pkgrel=5
+pkgver=3.31.0
+pkgrel=1
 pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
 url="https://github.com/alist-org/alist"
 license=('AGPL-3.0-or-later')
@@ -17,11 +17,11 @@ source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/v${pkgver}.tar.
         "${pkgname}-sysusers.conf"
         "${pkgname}-tmpfiles.conf")
 
-sha512sums=('96b5b4aeaa5de9c9807ae13e8b63ee8c95854432b0e399610e2b6cdbdceac166b9102d7698907183a590435794364dced47b1927e34f0010f1eb89a199664f82'
-            'bec524cdde659f342c5e803ac283f8a990a4f4376bdf210668addfedc5e65228bdee82cb9ad3715ae6ef09d15753cf2e3c484d85ca7fb2a3e1f3aca7b2d13cef'
-            '27c74670adb75075fad058d5ceaf7b20c4e7786c83bae8a32f626f9782af34c9a33c2046ef60fd2a7878d378e29fec851806bbd9a67878f3a9f1cda4830763fd'
-            '923dbd6ba9027524537097b2ab84d230a67bcef3f5adf2bb054e502b5806544836f012eb476803ce75d614686af0a4a070794ad1bdd768dc2fa6c26cdc3ac7a7'
-            '712509007bae9da0e843d00d72ae84fa01e80f066102fb3288fdf6e86c64aa46237c2624ce026c99a7c32bc2933775f0279842a68a687e5cd689ffb040ba8a1b')
+b2sums=('348af845a74a979b8bf158151aba139bf0d40e8eae661ea02068eb6bc61d3dd4ac44f30ce4ea42988ffdf56739d44d0c722c4c34896c66cc81da17a83b6fed59'
+        '31f28bbf375abfd5bd92f5868d4fdb8da013ca0c6fb5c9440f2113058f10521fa9f89b6d7f5463f782c5af5d33710b8ae7f153d460a7bcd294c21b7539d62cd4'
+        '9327a492264ecac0806b031b780241d86cabe38348fe49c4c5a610ee584cfbaaefd3fdffd1b1b54c9ee225820433a7f902c688b2e123181a56c73b9cbf9cd13f'
+        '3ae4af13c2731c5343b5c000d14725aada399e314c8d1309bb2c668053c385f759351f62e09246e1cfca9fbe40033faee08722d7456ea8c66c9b77c20bff0c0b'
+        '9169de3f1f689f5fd7252fc7457678aa3706e992fbe6f18b04c695a2dbb11f99347175e0b86c236faf3fba5c5a42bf1a88b3724f87b79c9cf3e6f31d43c8613f')
 
 prepare() {
   # Allow read dist_dir from environment
@@ -33,7 +33,6 @@ prepare() {
 }
 
 build() {
-  export CGO_CPPFLAGS="${CPPFLAGS}"
   export CGO_CFLAGS="${CFLAGS}"
   export CGO_CXXFLAGS="${CXXFLAGS}"
   export CGO_LDFLAGS="${LDFLAGS}"
