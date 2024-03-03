@@ -1,14 +1,14 @@
 pkgbase = alist-web
 	pkgdesc = A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.
-	pkgver = 3.31.0
+	pkgver = 3.32.0
 	pkgrel = 1
 	url = https://github.com/alist-org/alist-web
 	arch = any
 	license = AGPL-3.0-or-later
 	makedepends = pnpm
-	source = alist-web-3.31.0.tar.gz::https://github.com/alist-org/alist-web/archive/refs/tags/3.31.0.tar.gz
+	source = alist-web-3.32.0.tar.gz::https://github.com/alist-org/alist-web/archive/refs/tags/3.32.0.tar.gz
 	source = solid_router-f77b206e8592bb56d2d001e9488de5a54a13699b.tar.gz::https://github.com/alist-org/solid-router/archive/f77b206e8592bb56d2d001e9488de5a54a13699b.tar.gz
-	b2sums = f1deb1182dde1e741ced916a3e45c1f7b5c0f3d0033195ddc7da9c400a3bf83dc399645c211111e2b1f1ddcf155f43e4e725dcb108c7a6c8aec0f709ad935869
+	b2sums = d8898895792a77f8802f7a1a83248392ef63a9c50c142c0957a084e5b7d3676fa3e6f7e09373278bf404de80632b70fd533f5739ef33b313dbf6cf318db29a33
 	b2sums = 0678eafed0908109fda831cbdeccb676e212960bdec0ad062064415566c8f11076bf3a706a1719b21d238dccbaa96e47cb5d265f4d7e5f21f2bd4f5a1e1296f9
 
 pkgname = alist-web
