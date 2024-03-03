@@ -1,7 +1,7 @@
 # Maintainer: Puqns67 <me@puqns67.icu>
 
 pkgname='alist'
-pkgver=3.31.0
+pkgver=3.32.0
 pkgrel=1
 pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
 url="https://github.com/alist-org/alist"
@@ -17,7 +17,7 @@ source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/v${pkgver}.tar.
         "${pkgname}-sysusers.conf"
         "${pkgname}-tmpfiles.conf")
 
-b2sums=('348af845a74a979b8bf158151aba139bf0d40e8eae661ea02068eb6bc61d3dd4ac44f30ce4ea42988ffdf56739d44d0c722c4c34896c66cc81da17a83b6fed59'
+b2sums=('ccb550e97401e1c96e6cfbe4ec08bc9c4190fe0c25d6d987d3a870ed70af7d40257f327771647df488b5e6e32fbbb38a802d7881ea0664c7ad2011f72c46d356'
         '31f28bbf375abfd5bd92f5868d4fdb8da013ca0c6fb5c9440f2113058f10521fa9f89b6d7f5463f782c5af5d33710b8ae7f153d460a7bcd294c21b7539d62cd4'
         '9327a492264ecac0806b031b780241d86cabe38348fe49c4c5a610ee584cfbaaefd3fdffd1b1b54c9ee225820433a7f902c688b2e123181a56c73b9cbf9cd13f'
         '3ae4af13c2731c5343b5c000d14725aada399e314c8d1309bb2c668053c385f759351f62e09246e1cfca9fbe40033faee08722d7456ea8c66c9b77c20bff0c0b'
