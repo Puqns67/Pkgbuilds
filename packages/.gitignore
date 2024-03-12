@@ -4,6 +4,7 @@
 */*.pkg.tar.zst.sig
 */*.tar.gz
 */*.zip
+*/*.AppImage
 */*.log
 
 !*/keys/
