@@ -10,12 +10,12 @@
 _pkgname='osu-lazer'
 pkgname="${_pkgname}-bin"
 pkgver=2024.312.1
-pkgrel=2
+pkgrel=3
 pkgdesc="The future of osu! and the beginning of an open era! Commonly known by the codename osu!lazer. Pew pew."
 arch=('x86_64')
 url='https://osu.ppy.sh/'
 license=('MIT' 'CC-BY-NC-4.0')
-depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'lttng-ust2.12' 'zlib')
+depends=('bash' 'gcc-libs' 'glibc' 'zlib')
 provides=("${_pkgname}")
 conflicts=("${_pkgname}")
 
@@ -31,7 +31,7 @@ b2sums=('b920870e64bfc11f6ec8202c27e4c5a44477c11a399f0781992a174f898914e35b9ac01
         '7730cd8b5d5d7fe362e5ccd3023ed4bedf099e851b41db0c75f6a6908375989c3f69900cdb80df2e42031fe9111bf52c4c9fb011a144e5738494996894474428'
         '5ba7f0bcfa2b96b638a19490af619511cea834aa0dfded0efd3262a244bd168fd3362ff3e92a62c6b1a97165b82d52cbf7a11076104fe374c292cc3879e8cb13')
 
-build() {
+prepare() {
   # Extract AppImage
   cd "${srcdir}"
   "${srcdir}/${_pkgname}-${pkgver}.AppImage" --appimage-extract
