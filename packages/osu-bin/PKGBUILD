@@ -14,12 +14,12 @@ _resver=2024.410.0
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
-pkgrel=1
+pkgrel=2
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
 license=('MIT' 'CC-BY-NC-4.0')
-depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'lttng-ust2.12' 'sdl2' 'zlib')
+depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'lttng-ust2.12' 'zlib')
 provides=("${_appname}" 'osu-lazer')
 conflicts=("${_appname}" 'osu-lazer')
 replaces=('osu-lazer')
@@ -44,7 +44,7 @@ prepare() {
 
   # Use system libraries
   cd "${srcdir}/squashfs-root/usr/bin"
-  rm -v lib{av*,SDL2}.so*
+  rm -v libav*.so.*
 }
 
 package() {
