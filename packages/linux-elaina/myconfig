@@ -1,0 +1,170 @@
+#!/usr/bin/bash
+
+disable() {
+    echo "disable: ${1}"
+    scripts/config --disable $1
+}
+
+enable() {
+    echo "enable: ${1}"
+    scripts/config --enable $1
+}
+
+setStr() {
+    echo "setStr: ${1} -> ${2}"
+    scripts/config --set-str $1 $2
+}
+
+disableAll() {
+    for i in $*; do
+        disable $i
+    done
+}
+
+enableAll() {
+    for i in $*; do
+        enable $i
+    done
+}
+
+# Disable staging driver
+disable CONFIG_STAGING
+
+# Disable support for special cpu
+disableAll \
+    CONFIG_CPU_SUP_HYGON \
+    CONFIG_CPU_SUP_CENTAUR \
+    CONFIG_CPU_SUP_ZHAOXIN
+
+# Disable display and sound
+disableAll \
+    CONFIG_AUXDISPLAY \
+    CONFIG_PANEL \
+    CONFIG_AGP \
+    CONFIG_VGA_SWITCHEROO \
+    CONFIG_DRM \
+    CONFIG_FB \
+    CONFIG_LCD_CLASS_DEVICE \
+    CONFIG_BACKLIGHT_CLASS_DEVICE \
+    CONFIG_USB_APPLEDISPLAY \
+    CONFIG_SAMSUNG_Q10 \
+    CONFIG_ACPI_CMPC \
+    CONFIG_SOUND
+
+# Disable noneeded filesystems
+disableAll \
+    CONFIG_TMPFS_QUOTA \
+    CONFIG_QUOTA \
+    CONFIG_REISERFS_FS \
+    CONFIG_JFS_FS \
+    CONFIG_XFS_FS \
+    CONFIG_GFS2_FS \
+    CONFIG_OCFS2_FS \
+    CONFIG_NILFS2_FS \
+    CONFIG_F2FS_FS \
+    CONFIG_BCACHEFS_FS \
+    CONFIG_ZONEFS_FS \
+    CONFIG_FUSE_FS \
+    CONFIG_OVERLAY_FS \
+    CONFIG_ISO9660_FS \
+    CONFIG_UDF_FS \
+    CONFIG_MSDOS_FS \
+    CONFIG_EXFAT_FS \
+    CONFIG_NTFS_FS \
+    CONFIG_NTFS3_FS \
+    CONFIG_ORANGEFS_FS \
+    CONFIG_ADFS_FS \
+    CONFIG_AFFS_FS \
+    CONFIG_ECRYPT_FS \
+    CONFIG_HFS_FS \
+    CONFIG_HFSPLUS_FS \
+    CONFIG_BEFS_FS \
+    CONFIG_JFFS2_FS \
+    CONFIG_UBIFS_FS \
+    CONFIG_SQUASHFS \
+    CONFIG_MINIX_FS \
+    CONFIG_EROFS_FS \
+    CONFIG_NETWORK_FILESYSTEMS
+
+# Disable noneeded partition types
+disableAll \
+    CONFIG_AIX_PARTITION \
+    CONFIG_OSF_PARTITION \
+    CONFIG_AMIGA_PARTITION \
+    CONFIG_ATARI_PARTITION \
+    CONFIG_MAC_PARTITION \
+    CONFIG_BSD_DISKLABEL \
+    CONFIG_MINIX_SUBPARTITION \
+    CONFIG_SOLARIS_X86_PARTITION \
+    CONFIG_UNIXWARE_DISKLABEL \
+    CONFIG_LDM_PARTITION \
+    CONFIG_SGI_PARTITION \
+    CONFIG_ULTRIX_PARTITION \
+    CONFIG_SUN_PARTITION \
+    CONFIG_KARMA_PARTITION \
+    CONFIG_SYSV68_PARTITION \
+    CONFIG_CMDLINE_PARTITION
+
+# Disable noneeded drivers
+disableAll \
+    CONFIG_PCCARD \
+    CONFIG_GNSS \
+    CONFIG_MD \
+    CONFIG_FIREWIRE \
+    CONFIG_FIREWIRE_NOSY \
+    CONFIG_MACINTOSH_DRIVERS \
+    CONFIG_ISDN \
+    CONFIG_MEMSTICK \
+    CONFIG_ACCESSIBILITY \
+    CONFIG_CHROME_PLATFORMS \
+    CONFIG_MELLANOX_PLATFORM \
+    CONFIG_SURFACE_PLATFORMS \
+    CONFIG_SOUNDWIRE \
+    CONFIG_FPGA \
+    CONFIG_ANDROID_BINDER_IPC \
+    CONFIG_ANDROID_BINDERFS
+
+# Other
+disableAll \
+    CONFIG_BT \
+    CONFIG_IPWIRELESS \
+    CONFIG_PPP \
+    CONFIG_WLAN \
+    CONFIG_WWAN \
+    CONFIG_WIRELESS \
+    CONFIG_NET_9P \
+    CONFIG_NFC \
+    CONFIG_INPUT_JOYSTICK \
+    CONFIG_INPUT_TABLET \
+    CONFIG_INPUT_TOUCHSCREEN \
+    CONFIG_SECURITY_SELINUX
+
+# Zswap
+enableAll \
+    CONFIG_ZSWAP_DEFAULT_ON \
+    CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD \
+    CONFIG_ZSWAP_ZPOOL_DEFAULT_ZSMALLOC \
+    CONFIG_ZSMALLOC
+disableAll \
+    CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4 \
+    CONFIG_ZSWAP_ZPOOL_DEFAULT_Z3FOLD \
+    CONFIG_ZBUD \
+    CONFIG_Z3FOLD
+
+# Codepage
+enableAll \
+    CONFIG_NLS_ISO8859_1 \
+    CONFIG_NLS_UTF8 \
+    CONFIG_FAT_DEFAULT_UTF8
+
+# Fix issue from systemd
+# systemd[1]: Failed to find module 'autofs4'
+enable CONFIG_AUTOFS_FS
+
+# Fix warning from device-mapper
+# kernel: device-mapper: core: CONFIG_IMA_DISABLE_HTABLE is disabled.
+#     Duplicate IMA measurements will not be recorded in the IMA log.
+enable CONFIG_IMA_DISABLE_HTABLE
+
+# Elaina kernel
+setStr CONFIG_DEFAULT_HOSTNAME elaina
