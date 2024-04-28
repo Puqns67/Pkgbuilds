@@ -1,31 +1,18 @@
 #!/usr/bin/bash
 
-disable() {
-    echo "disable: ${1}"
-    scripts/config --disable $1
-}
+source "${SRCDIR}/config.bash"
 
-enable() {
-    echo "enable: ${1}"
-    scripts/config --enable $1
-}
+# Set config as x86-64_v2
+setConfig config_x86-64-v2
 
-setStr() {
-    echo "setStr: ${1} -> ${2}"
-    scripts/config --set-str $1 $2
-}
+# Set GCC optimization level as x86-64_v2
+setOptimization 92
 
-disableAll() {
-    for i in $*; do
-        disable $i
-    done
-}
-
-enableAll() {
-    for i in $*; do
-        enable $i
-    done
-}
+# AUR package linux-xanmod defaulted
+enableAll \
+    CONFIG_STACK_VALIDATION \
+    CONFIG_IKCONFIG \
+    CONFIG_IKCONFIG_PROC
 
 # Disable staging driver
 disable CONFIG_STAGING
@@ -72,18 +59,7 @@ disableAll \
     CONFIG_EXFAT_FS \
     CONFIG_NTFS_FS \
     CONFIG_NTFS3_FS \
-    CONFIG_ORANGEFS_FS \
-    CONFIG_ADFS_FS \
-    CONFIG_AFFS_FS \
-    CONFIG_ECRYPT_FS \
-    CONFIG_HFS_FS \
-    CONFIG_HFSPLUS_FS \
-    CONFIG_BEFS_FS \
-    CONFIG_JFFS2_FS \
-    CONFIG_UBIFS_FS \
-    CONFIG_SQUASHFS \
-    CONFIG_MINIX_FS \
-    CONFIG_EROFS_FS \
+    CONFIG_MISC_FILESYSTEMS \
     CONFIG_NETWORK_FILESYSTEMS
 
 # Disable noneeded partition types
@@ -120,11 +96,9 @@ disableAll \
     CONFIG_MELLANOX_PLATFORM \
     CONFIG_SURFACE_PLATFORMS \
     CONFIG_SOUNDWIRE \
-    CONFIG_FPGA \
-    CONFIG_ANDROID_BINDER_IPC \
-    CONFIG_ANDROID_BINDERFS
+    CONFIG_FPGA
 
-# Other
+# Disable other noneeded moudles
 disableAll \
     CONFIG_BT \
     CONFIG_IPWIRELESS \
@@ -156,6 +130,10 @@ enableAll \
     CONFIG_NLS_ISO8859_1 \
     CONFIG_NLS_UTF8 \
     CONFIG_FAT_DEFAULT_UTF8
+
+# Compress modules with zstandard
+disable CONFIG_MODULE_COMPRESS_NONE
+enable CONFIG_MODULE_COMPRESS_ZSTD
 
 # Fix issue from systemd
 # systemd[1]: Failed to find module 'autofs4'

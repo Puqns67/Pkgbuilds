@@ -1,89 +1,24 @@
 # Maintainer: Puqns67 <me@puqns67.icu>
-# Contributor: Joan Figueras <ffigue at gmail dot com>
-# Contributor: Torge Matthies <openglfreak at googlemail dot com>
-# Contributor: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
-##
-## The following variables can be customized at build time. Use env or export to change at your wish
-##
-##   Example: env _microarchitecture=98 use_numa=n use_tracers=n makepkg -sc
-##
-## Look inside 'choose-gcc-optimization.sh' to choose your microarchitecture
-## Valid numbers between: 0 to 99
-## Default is: 0 => generic
-## Good option if your package is for one machine: 98 (Intel native) or 99 (AMD native)
-if [ -z ${_microarchitecture+x} ]; then
-  _microarchitecture=92
-fi
+_major=6
+_minor=8
+_patch=8
+_xanmod=1
 
-## Disable NUMA since most users do not have multiple processors. Breaks CUDA/NvEnc.
-## Archlinux and Xanmod enable it by default.
-## Set variable "use_numa" to: n to disable (possibly increase performance)
-##                             y to enable  (stock default)
-if [ -z ${use_numa+x} ]; then
-  use_numa=y
-fi
+_to_minor="${_major}.${_minor}"
+_to_patch="${_to_minor}.${_patch}"
+_to_xanmod="${_to_patch}_xanmod${_xanmod}"
 
-## Since upstream disabled CONFIG_STACK_TRACER (limits debugging and analyzing of the kernel)
-## you can enable them setting this option. Caution, because they have an impact in performance.
-## Stock Archlinux has this enabled.
-## Set variable "use_tracers" to: n to disable (possibly increase performance, XanMod default)
-##                                y to enable  (Archlinux default)
-if [ -z ${use_tracers+x} ]; then
-  use_tracers=n
-fi
+_name='Elaina'
+_srcname="linux-${_to_minor}"
 
-# Unique compiler supported upstream is GCC
-## Choose between GCC and CLANG config (default is GCC)
-## Use the environment variable "_compiler=clang"
-if [ "${_compiler}" = "clang" ]; then
-  _compiler_flags="CC=clang HOSTCC=clang LLVM=1 LLVM_IAS=1"
-fi
-
-# Choose between the 4 main configs for stable branch. Default x86-64-v1 which use CONFIG_GENERIC_CPU2:
-# Possible values: config_x86-64-v1 / config_x86-64-v2 (default) / config_x86-64-v3 / config_x86-64-v4
-# This will be overwritten by selecting any option in microarchitecture script
-# Source files: https://github.com/xanmod/linux/tree/5.17/CONFIGS/xanmod/gcc
-if [ -z ${_config+x} ]; then
-  _config=config_x86-64-v2
-fi
-
-# Compress modules with ZSTD (to save disk space)
-if [ -z ${_compress_modules+x} ]; then
-  _compress_modules=y
-fi
-
-# Compile ONLY used modules to VASTLY reduce the number of modules built
-# and the build time.
-#
-# To keep track of which modules are needed for your specific system/hardware,
-# give module_db script a try: https://aur.archlinux.org/packages/modprobed-db
-# This PKGBUILD read the database kept if it exists
-#
-# More at this wiki page ---> https://wiki.archlinux.org/index.php/Modprobed-db
-if [ -z ${_localmodcfg} ]; then
-  _localmodcfg=n
-fi
-
-# Tweak kernel options prior to a build via nconfig
-if [ -z ${_makenconfig} ]; then
-  _makenconfig=n
-fi
-
-### IMPORTANT: Do no edit below this line unless you know what you're doing
-
-pkgbase=linux-elaina
-_major=6.8
-pkgver=${_major}.7
-_branch=6.x
-xanmod=1
-_revision=
-_sf_branch=main
-pkgrel=${xanmod}
-pkgdesc='Linux kernel for Elaina, based on Xanmod stable and prune some config'
-url="http://www.xanmod.org/"
-arch=(x86_64)
-license=(GPL-2.0-only)
+pkgbase='linux-elaina'
+pkgver="${_to_xanmod}"
+pkgrel=2
+pkgdesc='Linux kernel for Elaina, based on Xanmod stable and edited some config'
+url='https://www.xanmod.org/'
+arch=('x86_64')
+license=('GPL-2.0-only')
 makedepends=(
   bc
   cpio
@@ -95,177 +30,80 @@ makedepends=(
   tar
   xz
 )
-if [ "${_compiler}" = "clang" ]; then
-  makedepends+=(clang llvm lld)
-fi
-options=('!strip')
-_srcname="linux-${pkgver}-xanmod${xanmod}"
+options=('!debug' '!strip')
 
-source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
-        "patch-${pkgver}-xanmod${xanmod}${_revision}.xz::https://sourceforge.net/projects/xanmod/files/releases/${_sf_branch}/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
-        choose-gcc-optimization.sh)
-validpgpkeys=(
-    'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linux Torvalds
-    '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
-)
+source=("linux-${_to_minor}.tar.xz"::"https://cdn.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_to_minor}.tar.xz"
+        "linux-${_to_minor}.tar.sign"::"https://cdn.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_to_minor}.tar.sign"
+        "patch-${_to_xanmod}.xz"::"https://sourceforge.net/projects/xanmod/files/releases/main/${_to_xanmod//_/-}/patch-${_to_xanmod//_/-}.xz/download"
+        'choose-gcc-optimization.bash'
+        'config.bash'
+        'elaina.bash')
 
-# Archlinux patches
-_commit="ec9e9a4219fe221dec93fa16fddbe44a34933d8d"
-_patches=()
-for _patch in ${_patches[@]}; do
-    source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
-done
+validpgpkeys=('ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linux Torvalds
+              '647F28654894E3BD457199BE38DBBDC86092693E') # Greg Kroah-Hartman
 
-sha256sums=('c969dea4e8bb6be991bbf7c010ba0e0a5643a3a8d8fb0a2aaa053406f1e965f3'
+sha512sums=('5c4eb4aa1d3f7d1ea01c0f7ddeadacdece6e144fd4bdfc16b2b925d3e10dc04de3a6db69320b79a96c3560052616f001d2c09e7a1bb4f7b731e2380a7ecce068'
             'SKIP'
-            '415349ea19a09e64df31a7792b08df2465e79206441ff0af26cab81bf4486cfa'
-            'a8b38eb482eb685944757182c4886404abc12703e5e56ec39c7d61298d17d71f')
+            '171cb8eeebb1e4173b1914e7dded9f00377965526f40f126bc2e88e62763da47302f2121e27d94fab6f6c11390c8cfc06d0990256c2d0c1fb834476e8ec651f7'
+            '225017227219809ec19458f3c4a9def7d22c2a6cead53f3b10d7e8e6722ec49ab5905576bffd0c50784dee99648815f5bbc65146c5d2d7bcd82b72b52f498aa7'
+            'b08209c8f186ee95ea70213932fdcb94bdd135350087c9721bf7c823e95b5db95b42b7f4cbe035c6d107207acedf4a40198053e856b78c3ae772cecf65b5ba95'
+            'a26360fe6c458e83a2f1b3a4861e09b0f66d341b0aba97147ae54cd840e3ca174804470b38ad06298860373e52fddb5748bc30b1961486330f792ed2a366c42e')
+b2sums=('c6f17f816cea16e629f63e9379b98888713f57b2c5173306926471f139a9d612a0c74e119341f8075390e55e203d787d9edeb4ad5a064b18870f6f0f7ffaafb2'
+        'SKIP'
+        '8185e4346aef07318657cab688577bf6f23ee00d27157cf22244ad150c0b60931f30ccd123abad200b3f746a782d0fb9baf583daedb7c9db242ab47b9aae02df'
+        '72b9fa70c5e3ce27ecc6a5790cd76c0a5b646248e43e990d1df2e43215adfb9d9fb8cce01adef700e39bef8300af367fc0381ab5d0c774f014351d333a11a5db'
+        '0340eac720488e3703056ba0408600f5786461c4f42f78093ce4f2a90edb1a61b1278f0ab05d633c57483122613b573520ac5e6b96eb8ed9f7b23c88c3008f19'
+        '6eff62b73f360e6dee4924a511998b504e62039efa3b9bdf280905517912fef0513da26b794805980d1f6956e10a9a49e7fdca3b15252b891eee9466d3c41f6b')
 
-export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
-export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
-export KBUILD_BUILD_TIMESTAMP=${KBUILD_BUILD_TIMESTAMP:-$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})}
+export KBUILD_BUILD_HOST="archlinux"
+export KBUILD_BUILD_USER="${pkgbase}"
+export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})"
 
 prepare() {
-  cd linux-${_major}
+  cd $_srcname
 
-  # Apply Xanmod patch
-  patch -Np1 -i ../patch-${pkgver}-xanmod${xanmod}${_revision}
-
-  msg2 "Setting version..."
-  echo "-$pkgrel" > localversion.10-pkgrel
+  msg 'Setting version...'
+  echo "-${pkgrel}" > localversion.10-pkgrel
   echo "${pkgbase#linux-elaina}" > localversion.20-pkgname
 
-  # Archlinux patches
-  local src
-  for src in "${source[@]}"; do
-    src="${src%%::*}"
-    src="${src##*/}"
-    [[ $src = *.patch ]] || continue
-    msg2 "Applying patch $src..."
-    patch -Np1 < "../$src"
-  done
+  msg 'Applying xanmod patch..'
+  patch -Np1 -i "${srcdir}/patch-${_to_xanmod}"
 
-  # Applying configuration
-  cp -vf CONFIGS/xanmod/gcc/${_config} .config
-  # enable LTO_CLANG_THIN
-  if [ "${_compiler}" = "clang" ]; then
-    scripts/config --disable LTO_CLANG_FULL
-    scripts/config --enable LTO_CLANG_THIN
-  fi
+  msg 'Applying config for elaina kernel...'
+  SRCDIR="${srcdir}" bash "${srcdir}/elaina.bash"
 
-  # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
-  scripts/config --enable CONFIG_STACK_VALIDATION
-
-  # Enable IKCONFIG following Arch's philosophy
-  scripts/config --enable CONFIG_IKCONFIG \
-                 --enable CONFIG_IKCONFIG_PROC
-
-  # Requested by Alexandre Frade to fix issues in python-gbinder
-  scripts/config --enable CONFIG_ANDROID_BINDERFS
-  scripts/config --enable CONFIG_ANDROID_BINDER_IPC
-
-  # User set. See at the top of this file
-  if [ "$use_tracers" = "y" ]; then
-    msg2 "Enabling CONFIG_FTRACE only if we are not compiling with clang..."
-    if [ "${_compiler}" = "gcc" ] || [ "${_compiler}q" = "q" ]; then
-      scripts/config --enable CONFIG_FTRACE \
-                     --enable CONFIG_FUNCTION_TRACER \
-                     --enable CONFIG_STACK_TRACER
-    fi
-  fi
-
-  if [ "$use_numa" = "n" ]; then
-    msg2 "Disabling NUMA..."
-    scripts/config --disable CONFIG_NUMA
-  fi
-
-  # Compress modules by default (following Arch's kernel)
-  if [ "$_compress_modules" = "y" ]; then
-    scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
-  fi
-
-  # Let's user choose microarchitecture optimization in GCC
-  # Use default microarchitecture only if we have not choosen another microarchitecture
-  if [ "$_microarchitecture" -ne "0" ]; then
-    ../choose-gcc-optimization.sh $_microarchitecture
-  fi
-
-  # This is intended for the people that want to build this package with their own config
-  # Put the file "myconfig" at the package folder (this will take preference) or "${XDG_CONFIG_HOME}/linux-xanmod/myconfig"
-  # If we detect partial file with scripts/config commands, we execute as a script
-  # If not, it's a full config, will be replaced
-  for _myconfig in "${SRCDEST}/myconfig" "${HOME}/.config/linux-xanmod/myconfig" "${XDG_CONFIG_HOME}/linux-xanmod/myconfig" ; do
-    if [ -f "${_myconfig}" ] && [ "$(wc -l <"${_myconfig}")" -gt "0" ]; then
-      if grep -q 'scripts/config' "${_myconfig}"; then
-        # myconfig is a partial file. Executing as a script
-        msg2 "Applying myconfig..."
-        bash "${_myconfig}"
-      else
-        # myconfig is a full config file. Replacing default .config
-        msg2 "Using user CUSTOM config..."
-        cp -f "${_myconfig}" .config
-      fi
-      echo
-      break
-    fi
-  done
-
-  ### Optionally load needed modules for the make localmodconfig
-  # See https://aur.archlinux.org/packages/modprobed-db
-  if [ "$_localmodcfg" = "y" ]; then
-    if [ -f $HOME/.config/modprobed.db ]; then
-      msg2 "Running Steven Rostedt's make localmodconfig now"
-      make ${_compiler_flags} LSMOD=$HOME/.config/modprobed.db localmodconfig
-    else
-      msg2 "No modprobed.db data found"
-      exit 1
-    fi
-  fi
-
-  msg2 "make ${_compiler_flags} olddefconfig"
-  make ${_compiler_flags} olddefconfig
-  #diff -u CONFIGS/xanmod/gcc/${_config} .config || :
+  msg 'make olddefconfig'
+  make olddefconfig
 
   make -s kernelrelease > version
-  msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
+  msg "Prepared %s version %s" "${pkgbase}" "$(<version)"
 
-  if [ "$_makenconfig" = "y" ]; then
-    make ${_compiler_flags} nconfig
-  fi
-
-  # save configuration for later reuse
+  # Save configuration for later reuse
   cat .config > "${SRCDEST}/config.last"
 }
 
 build() {
-  cd linux-${_major}
-  make ${_compiler_flags} all
+  cd $_srcname
+  make all
   make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1
 }
 
 _package() {
-  pkgdesc="The Linux kernel and modules with Xanmod patches"
+  pkgdesc="The $_name kernel and modules"
   depends=(
     coreutils
     initramfs
     kmod
   )
   optdepends=(
-    'wireless-regdb: to set the correct wireless channels of your country'
     'linux-firmware: firmware images needed for some devices'
   )
   provides=(
-    KSMBD-MODULE
     VIRTUALBOX-GUEST-MODULES
     WIREGUARD-MODULE
-    NTFS3-MODULE
-  )
-  replaces=(
-    virtualbox-guest-modules-arch
-    wireguard-arch
   )
 
-  cd linux-${_major}
+  cd $_srcname
   local modulesdir="$pkgdir/usr/lib/modules/$(<version)"
 
   msg2 "Installing boot image..."
@@ -285,10 +123,10 @@ _package() {
 }
 
 _package-headers() {
-  pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel"
+  pkgdesc="Headers and scripts for building modules for the $_name kernel"
   depends=(pahole)
 
-  cd linux-${_major}
+  cd $_srcname
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
   msg2 "Installing build files..."
@@ -323,7 +161,7 @@ _package-headers() {
   # https://bugs.archlinux.org/task/71392
   install -Dt "$builddir/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
 
-  echo "Installing KConfig files..."
+  msg2 "Installing KConfig files..."
   find . -name 'Kconfig*' -exec install -Dm644 {} "$builddir/{}" \;
 
   msg2 "Removing unneeded architectures..."
