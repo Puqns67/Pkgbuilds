@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-source "${SRCDIR}/config.bash"
+source "${srcdir}/config.bash"
 
 # Set config as x86-64_v2
 setConfig config_x86-64-v2
@@ -36,7 +36,8 @@ disableAll \
     CONFIG_USB_APPLEDISPLAY \
     CONFIG_SAMSUNG_Q10 \
     CONFIG_ACPI_CMPC \
-    CONFIG_SOUND
+    CONFIG_SOUND \
+    CONFIG_MEDIA_SUPPORT
 
 # Disable noneeded filesystems
 disableAll \
@@ -106,6 +107,7 @@ disableAll \
     CONFIG_WLAN \
     CONFIG_WWAN \
     CONFIG_WIRELESS \
+    CONFIG_RFKILL \
     CONFIG_NET_9P \
     CONFIG_NFC \
     CONFIG_INPUT_JOYSTICK \

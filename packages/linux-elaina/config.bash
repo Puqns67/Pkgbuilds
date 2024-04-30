@@ -1,8 +1,5 @@
 #!/usr/bin/bash
 
-source /usr/share/makepkg/util/message.sh
-colorize
-
 disable() {
     msg2 'disable: %s' $1
     scripts/config --disable $1
@@ -48,5 +45,5 @@ setConfig() {
 
 setOptimization() {
     msg2 'setOptimization: %s' $1
-    bash "${SRCDIR}/choose-gcc-optimization.bash" $1
+    source "${srcdir}/choose-gcc-optimization.bash" $1
 }
