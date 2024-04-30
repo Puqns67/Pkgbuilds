@@ -10,6 +10,3 @@
 [submodule "AURPKG/juicity"]
 	path = packages/juicity
 	url = ssh://aur@aur.archlinux.org/juicity.git
-[submodule "AURPKG/python-xmldiff"]
-	path = packages/python-xmldiff
-	url = ssh://aur@aur.archlinux.org/python-xmldiff.git
