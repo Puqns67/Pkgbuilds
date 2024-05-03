@@ -4,7 +4,7 @@ _organization_url='https://github.com/alist-org'
 _solid_router_git_hash='f77b206e8592bb56d2d001e9488de5a54a13699b'
 
 pkgname='alist-web'
-pkgver=3.33.0
+pkgver=3.34.0
 pkgrel=1
 pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
 url="${_organization_url}/${pkgname}"
@@ -15,7 +15,7 @@ makedepends=('pnpm')
 source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/${pkgver}.tar.gz"
         "solid_router-${_solid_router_git_hash}.tar.gz"::"${_organization_url}/solid-router/archive/${_solid_router_git_hash}.tar.gz")
 
-b2sums=('0c56d376554fa5e5f46f42dcd654080354afa41cd25822dfeda73ba9d03cc84e5289cba3a137bacdd7245c8f60ff134480599329917f5e28d02da22c53ae89e6'
+b2sums=('630fb3024cca6400ff5f6d9e5c584c98b4c39789be0944f9b04607fe94b8f51c11b1c8509ffd6278292007602a4a07f1a4185f9c3dcf6547067e99cf37d53adb'
         '0678eafed0908109fda831cbdeccb676e212960bdec0ad062064415566c8f11076bf3a706a1719b21d238dccbaa96e47cb5d265f4d7e5f21f2bd4f5a1e1296f9')
 
 prepare() {
