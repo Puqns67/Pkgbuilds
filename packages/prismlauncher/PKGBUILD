@@ -1,0 +1,46 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+
+_pkgname='PrismLauncher'
+
+pkgname='prismlauncher'
+pkgver=8.3
+pkgrel=2
+pkgdesc='Minecraft launcher with ability to manage multiple instances.'
+arch=('x86_64' 'aarch64')
+url='https://prismlauncher.org/'
+license=('GPL-3.0-only')
+depends=('bzip2' 'cmark' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'libglvnd' 'qt6-5compat' 'qt6-base' 'quazip-qt6' 'tomlplusplus' 'zlib')
+makedepends=('cmake' 'extra-cmake-modules' 'gamemode' 'ghc-filesystem' 'java-environment=17' 'ninja' 'scdoc')
+optdepends=('glfw: to use system GLFW libraries'
+            'openal: to use system OpenAL libraries'
+            'visualvm: Profiling support'
+            'mangohud: run minecraft with mangohud'
+            'gamemode: run minecraft with gamemode'
+            'xorg-xrandr: for older minecraft versions (<=1.12.2)'
+            'java-runtime=8: for older minecraft versions'
+            'java-runtime=17: for minecraft 1.18.0+ (>=1.18 Pre-release 2)'
+            'java-runtime=21: for minecraft 1.20.5+ (>=24w14a)')
+
+source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/PrismLauncher/PrismLauncher/releases/download/${pkgver}/${_pkgname}-${pkgver}.tar.gz")
+
+b2sums=('47244a8ec09ad12bf902660d114835ef0c142dd7cf740e8fe3771c08dd39ff5ab5f9e043d17c03dce1986c0a37b421868d4d3d939b35bdb9c237b2f72925be79')
+
+prepare() {
+  cmake \
+    -B "${srcdir}/build" \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX='/usr' \
+    -D BUILD_TESTING=OFF \
+    -D ENABLE_LTO=ON \
+    -D Launcher_BUILD_PLATFORM=archlinux \
+    -G Ninja \
+    -S "${srcdir}/${_pkgname}-${pkgver}"
+}
+
+build() {
+  cmake --build "${srcdir}/build"
+}
+
+package() {
+  DESTDIR="${pkgdir}" cmake --install "${srcdir}/build"
+}

@@ -1,0 +1,39 @@
+pkgbase = prismlauncher
+	pkgdesc = Minecraft launcher with ability to manage multiple instances.
+	pkgver = 8.3
+	pkgrel = 2
+	url = https://prismlauncher.org/
+	arch = x86_64
+	arch = aarch64
+	license = GPL-3.0-only
+	makedepends = cmake
+	makedepends = extra-cmake-modules
+	makedepends = gamemode
+	makedepends = ghc-filesystem
+	makedepends = java-environment=17
+	makedepends = ninja
+	makedepends = scdoc
+	depends = bzip2
+	depends = cmark
+	depends = gcc-libs
+	depends = glibc
+	depends = hicolor-icon-theme
+	depends = libglvnd
+	depends = qt6-5compat
+	depends = qt6-base
+	depends = quazip-qt6
+	depends = tomlplusplus
+	depends = zlib
+	optdepends = glfw: to use system GLFW libraries
+	optdepends = openal: to use system OpenAL libraries
+	optdepends = visualvm: Profiling support
+	optdepends = mangohud: run minecraft with mangohud
+	optdepends = gamemode: run minecraft with gamemode
+	optdepends = xorg-xrandr: for older minecraft versions (<=1.12.2)
+	optdepends = java-runtime=8: for older minecraft versions
+	optdepends = java-runtime=17: for minecraft 1.18.0+ (>=1.18 Pre-release 2)
+	optdepends = java-runtime=21: for minecraft 1.20.5+ (>=24w14a)
+	source = prismlauncher-8.3.tar.gz::https://github.com/PrismLauncher/PrismLauncher/releases/download/8.3/PrismLauncher-8.3.tar.gz
+	b2sums = 47244a8ec09ad12bf902660d114835ef0c142dd7cf740e8fe3771c08dd39ff5ab5f9e043d17c03dce1986c0a37b421868d4d3d939b35bdb9c237b2f72925be79
+
+pkgname = prismlauncher
