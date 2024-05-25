@@ -8,7 +8,7 @@
 # This PKGBUILD is base on the AUR repo osu-lazer-bin, from these contributors above
 
 _appname='osu'
-_appver=2024.519.1
+_appver=2024.521.2
 _resname='osu-resources'
 _resver=2024.517.0
 
@@ -23,6 +23,7 @@ depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'lttng-ust2.12' 'zlib')
 provides=("${_appname}" 'osu-lazer')
 conflicts=("${_appname}" 'osu-lazer')
 replaces=('osu-lazer')
+options=('!debug')
 
 source=("${_appname}-${_appver}.AppImage"::"https://github.com/ppy/osu/releases/download/${_appver}/osu.AppImage"
         "${_resname}-LICENCE-${_resver}.md"::"https://github.com/ppy/osu-resources/raw/${_resver}/LICENCE.md"
@@ -30,7 +31,7 @@ source=("${_appname}-${_appver}.AppImage"::"https://github.com/ppy/osu/releases/
         "${_appname}.desktop"
         "${_appname}.xml")
 
-b2sums=('f9675ba755da05eff9a673af82d804ebb604a8418c5e9d75d81c7eede79b8dfdca8136fff5c0668e9ba2e7ad29b8a05f431476e0d388dfb1db774dd2bf39c6ef'
+b2sums=('c367473a3bdd21e251183a68b9c6f6bb59140267772d68210f33886ea12eee8fb92abb3043cfddf93a388c80e5ddb6a8f084ac90aab84a28d8ef392df620e960'
         '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
         '63c4f291210a06d1116689ba073fd370ab72db8bd951cf445da447d39a2c05492cebd37c293bf72519e6c86efb97600a9ac146d31ba29b8b6543cc50bcb9c6e9'
         'c1f20062245a02bdaef45ee0eb18c6eefd1faa09b6354d3dc83951e844cdf72a1832fdacad05139c1cfa54afd6ac0e0912971a7f4c324d4e5a6c681e833df1e7'
