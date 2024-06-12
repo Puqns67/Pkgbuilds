@@ -14,7 +14,7 @@ _resver=2024.517.0
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
-pkgrel=1
+pkgrel=2
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
@@ -42,9 +42,13 @@ prepare() {
   chmod +x "${_appname}-${_appver}.AppImage"
   "${srcdir}/${_appname}-${_appver}.AppImage" --appimage-extract
 
-  # Use system libraries
   cd "${srcdir}/squashfs-root/usr/bin"
+
+  # Use system libraries
   rm -v libav*.so.*
+
+  # Remove pdb files
+  rm -v *.pdb
 }
 
 package() {
