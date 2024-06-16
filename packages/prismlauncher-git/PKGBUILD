@@ -1,0 +1,59 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+
+_pkgname='prismlauncher'
+
+pkgname="${_pkgname}-git"
+pkgver=8.0.r728.g978e96916
+pkgrel=1
+pkgdesc='Minecraft launcher with ability to manage multiple instances.'
+arch=('x86_64' 'aarch64')
+url='https://prismlauncher.org/'
+license=('GPL-3.0-only')
+depends=('bzip2' 'cmark' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'libglvnd' 'qt6-5compat' 'qt6-base' 'qt6-networkauth' 'quazip-qt6' 'tomlplusplus' 'zlib')
+makedepends=('cmake' 'extra-cmake-modules' 'gamemode' 'ghc-filesystem' 'git' 'java-environment=17' 'ninja' 'scdoc')
+optdepends=('flite: for Minecraft text2speech support'
+            'glfw: to use system GLFW libraries'
+            'openal: to use system OpenAL libraries'
+            'visualvm: Profiling support'
+            'mangohud: run Minecraft with mangohud'
+            'gamemode: run Minecraft with gamemode'
+            'xorg-xrandr: for older Minecraft (<=1.12.2)'
+            'java-runtime=8: for older Minecraft (<1.18 Pre-release 2)'
+            'java-runtime=17: for Minecraft 1.18.0+ (>=1.18 Pre-release 2)'
+            'java-runtime=21: for Minecraft 1.20.5+ (>=24w14a)'
+            'qt6-wayland: for Wayland support')
+provides=("${_pkgname}")
+conflicts=("${_pkgname}")
+
+source=("${_pkgname}"::"git+https://github.com/PrismLauncher/PrismLauncher.git"
+        "libnbtplusplus"::"git+https://github.com/PrismLauncher/libnbtplusplus.git")
+
+b2sums=('SKIP'
+        'SKIP')
+
+pkgver() {
+  git -C "${srcdir}/${_pkgname}" describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+prepare() {
+  rmdir -v "${srcdir}/${_pkgname}/libraries/libnbtplusplus"
+  ln -s "${srcdir}/libnbtplusplus" "${srcdir}/${_pkgname}/libraries/libnbtplusplus"
+
+  cmake \
+    -B "${srcdir}/build" \
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+    -D CMAKE_INSTALL_PREFIX='/usr' \
+    -D BUILD_TESTING=OFF \
+    -D ENABLE_LTO=ON \
+    -D Launcher_BUILD_PLATFORM=archlinux \
+    -G Ninja \
+    -S "${srcdir}/${_pkgname}"
+}
+
+build() {
+  cmake --build "${srcdir}/build"
+}
+
+package() {
+  DESTDIR="${pkgdir}" cmake --install "${srcdir}/build"
+}
