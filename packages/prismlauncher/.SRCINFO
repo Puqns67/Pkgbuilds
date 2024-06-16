@@ -1,7 +1,7 @@
 pkgbase = prismlauncher
 	pkgdesc = Minecraft launcher with ability to manage multiple instances.
 	pkgver = 8.3
-	pkgrel = 2
+	pkgrel = 3
 	url = https://prismlauncher.org/
 	arch = x86_64
 	arch = aarch64
@@ -24,15 +24,17 @@ pkgbase = prismlauncher
 	depends = quazip-qt6
 	depends = tomlplusplus
 	depends = zlib
+	optdepends = flite: for Minecraft text2speech support
 	optdepends = glfw: to use system GLFW libraries
 	optdepends = openal: to use system OpenAL libraries
 	optdepends = visualvm: Profiling support
-	optdepends = mangohud: run minecraft with mangohud
-	optdepends = gamemode: run minecraft with gamemode
-	optdepends = xorg-xrandr: for older minecraft versions (<=1.12.2)
-	optdepends = java-runtime=8: for older minecraft versions
-	optdepends = java-runtime=17: for minecraft 1.18.0+ (>=1.18 Pre-release 2)
-	optdepends = java-runtime=21: for minecraft 1.20.5+ (>=24w14a)
+	optdepends = mangohud: run Minecraft with mangohud
+	optdepends = gamemode: run Minecraft with gamemode
+	optdepends = xorg-xrandr: for older Minecraft (<=1.12.2)
+	optdepends = java-runtime=8: for older Minecraft (<1.18 Pre-release 2)
+	optdepends = java-runtime=17: for Minecraft 1.18.0+ (>=1.18 Pre-release 2)
+	optdepends = java-runtime=21: for Minecraft 1.20.5+ (>=24w14a)
+	optdepends = qt6-wayland: for Wayland support
 	source = prismlauncher-8.3.tar.gz::https://github.com/PrismLauncher/PrismLauncher/releases/download/8.3/PrismLauncher-8.3.tar.gz
 	b2sums = 47244a8ec09ad12bf902660d114835ef0c142dd7cf740e8fe3771c08dd39ff5ab5f9e043d17c03dce1986c0a37b421868d4d3d939b35bdb9c237b2f72925be79
 
