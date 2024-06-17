@@ -8,18 +8,21 @@
 # This PKGBUILD is base on the AUR repo osu-lazer-bin, from these contributors above
 
 _appname='osu'
-_appver=2024.521.2
+_appver='2024.521.2'
 _resname='osu-resources'
-_resver=2024.517.0
+_resver='2024.517.0'
+
+_icon=('16x16' '24x24' '32x32' '48x48' '64x64' '128x128' '256x256' '512x512')
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
-pkgrel=2
+pkgrel=3
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
 license=('MIT' 'CC-BY-NC-4.0')
-depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'lttng-ust2.12' 'zlib')
+depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'lttng-ust2.12' 'zlib')
+makedepends=('imagemagick')
 provides=("${_appname}" 'osu-lazer')
 conflicts=("${_appname}" 'osu-lazer')
 replaces=('osu-lazer')
@@ -49,6 +52,12 @@ prepare() {
 
   # Remove pdb files
   rm -v *.pdb
+
+  # Downscale icons
+  mkdir "${srcdir}/icons"
+  for size in ${_icon[@]}; do
+    magick -verbose "${srcdir}/squashfs-root/osu!.png" -resize "${size}!" "${srcdir}/icons/${size}.png"
+  done
 }
 
 package() {
@@ -60,10 +69,15 @@ package() {
   install -Dm755 "${srcdir}/${_appname}.bash" "${pkgdir}/usr/bin/${_appname}"
 
   # Install license file
-  install -Dm644 "${srcdir}/${_resname}-LICENCE-${_resver}.md" "${pkgdir}/usr/share/licenses/${pkgname}/${_resname}-LICENCE-${_resver}.md"
+  install -Dm644 "${srcdir}/${_resname}-LICENCE-${_resver}.md" "${pkgdir}/usr/share/licenses/${pkgname}/${_resname}-LICENCE.md"
 
   # Install icon, desktop and mime files
   install -Dm644 "${srcdir}/squashfs-root/osu!.png" "${pkgdir}/usr/share/pixmaps/${_appname}.png"
   install -Dm644 "${srcdir}/${_appname}.desktop" "${pkgdir}/usr/share/applications/${_appname}.desktop"
   install -Dm644 "${srcdir}/${_appname}.xml" "${pkgdir}/usr/share/mime/packages/${_appname}.xml"
+
+  # Install downscaled icons
+  for size in ${_icon[@]}; do
+    install -Dm644 "${srcdir}/icons/${size}.png" "${pkgdir}/usr/share/icons/hicolor/${size}/apps/${_appname}.png"
+  done
 }
