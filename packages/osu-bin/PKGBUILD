@@ -8,7 +8,7 @@
 # This PKGBUILD is base on the AUR repo osu-lazer-bin, from these contributors above
 
 _appname='osu'
-_appver='2024.625.0'
+_appver='2024.625.2'
 _resname='osu-resources'
 _resver='2024.622.0'
 
@@ -32,7 +32,7 @@ source=("${_appname}-${_appver}.AppImage"::"https://github.com/ppy/osu/releases/
         "${_appname}.desktop"
         "${_appname}.xml")
 
-b2sums=('af475a5a13dc02a2f33cf98575b2c93ba1c543ec988fe3c2b9d338386584aabf4ed8d461451f12fe797d9f46c6d723dd9c27330a9edd7212c30b5780cea5be17'
+b2sums=('ddb06e0a1098f2abdfdf46c069a4fc1fb1bb25bd6edb118a7efda4f8142a82ed5efc22e559031ab3388482f626a2f9dc871a0fffb5a9c6618bae6cfd90d61c5b'
         '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
         'cfeafcf6ba214f21983e26008571258bba5734bc9826df57c70db08b8c1ee034d1960dea8900583ceef4f25c8cbdff035cda1703e5713076943b5c9de3b45785'
         'c1f20062245a02bdaef45ee0eb18c6eefd1faa09b6354d3dc83951e844cdf72a1832fdacad05139c1cfa54afd6ac0e0912971a7f4c324d4e5a6c681e833df1e7'
