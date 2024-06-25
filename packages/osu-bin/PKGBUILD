@@ -8,15 +8,13 @@
 # This PKGBUILD is base on the AUR repo osu-lazer-bin, from these contributors above
 
 _appname='osu'
-_appver='2024.521.2'
+_appver='2024.625.0'
 _resname='osu-resources'
-_resver='2024.517.0'
-
-_icon=('16x16' '24x24' '32x32' '48x48' '64x64' '128x128' '256x256' '512x512')
+_resver='2024.622.0'
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
-pkgrel=3
+pkgrel=1
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
@@ -34,15 +32,15 @@ source=("${_appname}-${_appver}.AppImage"::"https://github.com/ppy/osu/releases/
         "${_appname}.desktop"
         "${_appname}.xml")
 
-b2sums=('c367473a3bdd21e251183a68b9c6f6bb59140267772d68210f33886ea12eee8fb92abb3043cfddf93a388c80e5ddb6a8f084ac90aab84a28d8ef392df620e960'
+b2sums=('af475a5a13dc02a2f33cf98575b2c93ba1c543ec988fe3c2b9d338386584aabf4ed8d461451f12fe797d9f46c6d723dd9c27330a9edd7212c30b5780cea5be17'
         '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
-        '63c4f291210a06d1116689ba073fd370ab72db8bd951cf445da447d39a2c05492cebd37c293bf72519e6c86efb97600a9ac146d31ba29b8b6543cc50bcb9c6e9'
+        'cfeafcf6ba214f21983e26008571258bba5734bc9826df57c70db08b8c1ee034d1960dea8900583ceef4f25c8cbdff035cda1703e5713076943b5c9de3b45785'
         'c1f20062245a02bdaef45ee0eb18c6eefd1faa09b6354d3dc83951e844cdf72a1832fdacad05139c1cfa54afd6ac0e0912971a7f4c324d4e5a6c681e833df1e7'
         '06878f8aa3368d73fb72d17cdf5b95c55c5d9f721ea5fcb5db6b538527a71746a874cb58619dbca8c6f43e402ebfdc414a80dc1d515288ddf9151a4d6bcd8a1f')
 
 prepare() {
   # Extract AppImage
-  chmod +x "${_appname}-${_appver}.AppImage"
+  chmod +x "${srcdir}/${_appname}-${_appver}.AppImage"
   "${srcdir}/${_appname}-${_appver}.AppImage" --appimage-extract
 
   cd "${srcdir}/squashfs-root/usr/bin"
@@ -53,11 +51,8 @@ prepare() {
   # Remove pdb files
   rm -v *.pdb
 
-  # Downscale icons
-  mkdir "${srcdir}/icons"
-  for size in ${_icon[@]}; do
-    magick -verbose "${srcdir}/squashfs-root/osu!.png" -resize "${size}!" "${srcdir}/icons/${size}.png"
-  done
+  # Downscale icon
+  magick -verbose "${srcdir}/squashfs-root/osu!.png" -resize "512x512!" "${srcdir}/osu-512x512.png"
 }
 
 package() {
@@ -71,13 +66,11 @@ package() {
   # Install license file
   install -Dm644 "${srcdir}/${_resname}-LICENCE-${_resver}.md" "${pkgdir}/usr/share/licenses/${pkgname}/${_resname}-LICENCE.md"
 
-  # Install icon, desktop and mime files
-  install -Dm644 "${srcdir}/squashfs-root/osu!.png" "${pkgdir}/usr/share/pixmaps/${_appname}.png"
+  # Install desktop and mime files
   install -Dm644 "${srcdir}/${_appname}.desktop" "${pkgdir}/usr/share/applications/${_appname}.desktop"
   install -Dm644 "${srcdir}/${_appname}.xml" "${pkgdir}/usr/share/mime/packages/${_appname}.xml"
 
-  # Install downscaled icons
-  for size in ${_icon[@]}; do
-    install -Dm644 "${srcdir}/icons/${size}.png" "${pkgdir}/usr/share/icons/hicolor/${size}/apps/${_appname}.png"
-  done
+  # Install icons
+  install -Dm644 "${srcdir}/osu-512x512.png" "${pkgdir}/usr/share/icons/hicolor/512x512/apps/${_appname}.png"
+  install -Dm644 "${srcdir}/squashfs-root/osu!.png" "${pkgdir}/usr/share/icons/hicolor/1024x1024/apps/${_appname}.png"
 }
