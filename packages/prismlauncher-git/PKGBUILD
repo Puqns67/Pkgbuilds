@@ -3,7 +3,7 @@
 _pkgname='prismlauncher'
 
 pkgname="${_pkgname}-git"
-pkgver=8.0.r728.g978e96916
+pkgver=8.0.r905.g635236290
 pkgrel=1
 pkgdesc='Minecraft launcher with ability to manage multiple instances.'
 arch=('x86_64' 'aarch64')
@@ -37,12 +37,12 @@ pkgver() {
 
 prepare() {
   rmdir -v "${srcdir}/${_pkgname}/libraries/libnbtplusplus"
-  ln -s "${srcdir}/libnbtplusplus" "${srcdir}/${_pkgname}/libraries/libnbtplusplus"
+  ln -sv "${srcdir}/libnbtplusplus" "${srcdir}/${_pkgname}/libraries/libnbtplusplus"
 
   cmake \
     -B "${srcdir}/build" \
     -D CMAKE_BUILD_TYPE=RelWithDebInfo \
-    -D CMAKE_INSTALL_PREFIX='/usr' \
+    -D CMAKE_INSTALL_PREFIX=/usr \
     -D BUILD_TESTING=OFF \
     -D ENABLE_LTO=ON \
     -D Launcher_BUILD_PLATFORM=archlinux \
