@@ -1,7 +1,7 @@
 # Maintainer: Puqns67 <me@puqns67.icu>
 
 pkgname='alist-web-bin'
-pkgver=3.35.0
+pkgver=3.36.0
 pkgrel=1
 pkgdesc=' 🗂️ The front end of Alist V3 (A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs)'
 url="https://github.com/alist-org/alist-web"
@@ -12,7 +12,7 @@ conflicts=("${pkgname%-bin}")
 
 source=("${pkgname%-bin}-${pkgver}-dist.tar.gz"::"${url}/releases/download/${pkgver}/dist.tar.gz")
 
-b2sums=('9de472f574a1a8c4d9c96a247701eb6d0c8293ff8316990b6b20a10aa716113eb83f4eb10c6b6504930a51a34a04b4c24ec5080c04d3589c08385d56a95e3500')
+b2sums=('0a9942b0e18b93033a0ae20a58b16ea6334d9c76a2a606585c2982d1bb9a94336627acbbbe15eb488ebf36e90088122997307d01d8d9514202f090a4b37ac6b6')
 
 package() {
   install -dm755 "${pkgdir}/usr/share"
