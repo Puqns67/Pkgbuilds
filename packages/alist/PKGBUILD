@@ -1,7 +1,7 @@
 # Maintainer: Puqns67 <me@puqns67.icu>
 
 pkgname='alist'
-pkgver=3.35.0
+pkgver=3.36.0
 pkgrel=1
 pkgdesc='A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs.'
 arch=('x86_64' 'aarch64' 'riscv64')
@@ -43,7 +43,7 @@ build() {
     -o "${srcdir}/${pkgname}" \
     -ldflags="-w -s -linkmode external \
       -X 'github.com/alist-org/alist/v3/internal/conf.BuiltAt=$(date +"%F %T %z")' \
-      -X 'github.com/alist-org/alist/v3/internal/conf.GoVersion=$(go version | sed "s/go version //")' \
+      -X 'github.com/alist-org/alist/v3/internal/conf.GoVersion=$(go version | cut -c12-)' \
       -X 'github.com/alist-org/alist/v3/internal/conf.Version=v${pkgver}-arch${pkgrel}' \
       -X 'github.com/alist-org/alist/v3/internal/conf.WebVersion=none'"
 }
