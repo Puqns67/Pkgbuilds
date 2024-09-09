@@ -1,0 +1,13 @@
+[Unit]
+Description=Tailscale derper service
+Documentation=https://tailscale.com/kb/
+Requires=network.target
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/default/derper
+ExecStart=/usr/bin/derper $FLAGS
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

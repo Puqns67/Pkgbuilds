@@ -1,0 +1,87 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+# Contributor: Morten Linderud <foxboron@archlinux.org>
+# Contributor: Christian Heusel <gromit@archlinux.org>
+# Contributor: David Anderson <dave@natulte.net>
+# Contributor: Jun Ouyang <ouyangjun1999@gmail.com>
+# Contributor: Takase <takase1121@proton.me>
+
+# This PKGBUILD is based on "tailscale" in the official repository and "derper" on the AUR repository
+# by Morten Linderud <foxboron@archlinux.org>, Christian Heusel <gromit@archlinux.org> and David Anderson <dave@natulte.net> from official repository
+# by Jun Ouyang <ouyangjun1999@gmail.com> and Takase <takase1121@proton.me> from AUR repository
+
+pkgbase='tailscale'
+pkgname=("${pkgbase}" 'derper')
+pkgver='1.72.1'
+pkgrel=2
+pkgdesc='Tailscale runs DERP relay servers to help connect your nodes.'
+arch=('x86_64' 'aarch64')
+url='https://tailscale.com/'
+license=('BSD-3-Clause')
+depends=('glibc')
+makedepends=('git' 'go')
+
+source=("${pkgbase}"::"git+https://github.com/tailscale/tailscale.git#tag=v${pkgver}"
+        'derper.defaults'
+        'derper.service')
+
+b2sums=('e3300e1ef3de63d9236e90006043231193fab3baa9011e33923725ab04d6f19f0a94ecf10df539d59d9c95113c6bf40cce106228a3d34a6063bed4d489574fe8'
+        'f7768acb80b813bc2e98f83e70346dddc4950b8dcbde9cd547495f3f56eb3319e3201456c848268b03cfe28e79137311836903c2894313b00e7e0dd4a01e6cf9'
+        '03d44e817de68137a77aef2890fca28d0fdf317d272f06b2d949121796bf07359ce34bb5832d32a0a2ae093f9fcfb2b9973d8d8b86b791e072ff9b5296fe4d58')
+
+prepare() {
+  cd "${srcdir}/${pkgbase}"
+  go mod vendor
+}
+
+build() {
+  export CGO_CPPFLAGS="${CPPFLAGS}"
+  export CGO_CFLAGS="${CFLAGS}"
+  export CGO_CXXFLAGS="${CXXFLAGS}"
+  export CGO_LDFLAGS="${LDFLAGS}"
+  export GOFLAGS="-v -x -work -modcacherw -trimpath -buildmode=pie -mod=readonly"
+
+  mkdir -pv "${srcdir}/build" "${srcdir}/completion"
+
+  cd "${srcdir}/${pkgbase}"
+  eval $(go run ./cmd/mkversion)
+
+  for cmd in tailscale tailscaled derper; do
+    go build \
+      -C "${srcdir}/${pkgbase}" \
+      -o "${srcdir}/build/${cmd}" \
+      -ldflags "-w -s -linkmode external
+        -X 'tailscale.com/version.longStamp=${VERSION_LONG}' \
+        -X 'tailscale.com/version.shortStamp=${VERSION_SHORT}'" \
+      "./cmd/${cmd}"
+  done
+
+  for completion in bash zsh fish; do
+    "${srcdir}/build/tailscale" completion "${completion}" >"${srcdir}/completion/${completion}"
+  done
+}
+
+package_tailscale() {
+  backup=("etc/default/${pkgname}d")
+
+  install -Dm755 "${srcdir}/build/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+  install -Dm755 "${srcdir}/build/${pkgname}d" "${pkgdir}/usr/bin/${pkgname}d"
+
+  install -Dm644 "${srcdir}/${pkgbase}/cmd/${pkgname}d/${pkgname}d.defaults" "${pkgdir}/etc/default/${pkgname}d"
+  install -Dm644 "${srcdir}/${pkgbase}/cmd/${pkgname}d/${pkgname}d.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}d.service"
+
+  install -Dm644 "${srcdir}/completion/bash" "${pkgdir}/usr/share/bash-completion/completions/${pkgname}"
+  install -Dm644 "${srcdir}/completion/zsh" "${pkgdir}/usr/share/zsh/site-functions/_${pkgname}"
+  install -Dm644 "${srcdir}/completion/fish" "${pkgdir}/usr/share/fish/vendor_completions.d/${pkgname}.fish"
+
+  install -Dm644 "${srcdir}/${pkgbase}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
+
+package_derper() {
+  backup=("etc/default/${pkgname}")
+
+  install -Dm755 "${srcdir}/build/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+  install -Dm644 "${srcdir}/${pkgname}.defaults" "${pkgdir}/etc/default/${pkgname}"
+  install -Dm644 "${srcdir}/${pkgname}.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
+
+  install -Dm644 "${srcdir}/${pkgbase}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
