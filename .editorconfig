@@ -16,3 +16,6 @@ insert_final_newline = false
 
 [*.service]
 insert_final_newline = false
+
+[*.yaml]
+indent_size = 2
