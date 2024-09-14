@@ -97,7 +97,10 @@ disableAll \
     CONFIG_MELLANOX_PLATFORM \
     CONFIG_SURFACE_PLATFORMS \
     CONFIG_SOUNDWIRE \
-    CONFIG_FPGA
+    CONFIG_FPGA \
+    CONFIG_I3C \
+    CONFIG_ANDROID_BINDER_IPC \
+    CONFIG_HAMRADIO
 
 # Disable other noneeded moudles
 disableAll \
@@ -113,7 +116,28 @@ disableAll \
     CONFIG_INPUT_JOYSTICK \
     CONFIG_INPUT_TABLET \
     CONFIG_INPUT_TOUCHSCREEN \
-    CONFIG_SECURITY_SELINUX
+    CONFIG_SECURITY_SELINUX \
+    CONFIG_ACPI_APEI # Need by CONFIG_MISC_FILESYSTEMS
+
+# Disable x86 support
+disableAll \
+    CONFIG_IA32_EMULATION \
+    CONFIG_COMPAT_32BIT_TIME
+
+# Disable virtualization support
+disable CONFIG_VIRTUALIZATION
+
+# Disable suspend and hibernation support
+disable CONFIG_SUSPEND
+disable CONFIG_HIBERNATION
+
+# Using as Server
+enableAll \
+    CONFIG_PREEMPT_NONE_BUILD \
+    CONFIG_PREEMPT_NONE
+disableAll \
+    CONFIG_PREEMPT \
+    CONFIG_PREEMPT_DYNAMIC
 
 # Zswap
 enableAll \
