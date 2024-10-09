@@ -8,9 +8,9 @@
 # This PKGBUILD is base on the AUR repo osu-lazer-bin, from these contributors above
 
 _appname='osu'
-_appver='2024.906.2'
+_appver='2024.1009.1'
 _resname='osu-resources'
-_resver='2024.904.0'
+_resver='2024.1003.0'
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
@@ -33,30 +33,41 @@ source=("${_appname}-${_appver}.AppImage"::"https://github.com/ppy/osu/releases/
         "${_appname}.desktop"
         "${_appname}.xml")
 
-b2sums=('6088b7f24c7f0789d825f7390c5d287b1ea3e93ee6aa6db12857e05e13877b2942bf22063629c6b0b10ca9cdf95fe7d0ac72ead14a46e1061b21e2d20380b158'
+b2sums=('79ab7b7a41ac2eabfe84ef8a20b8624d90010a31f84ea225b866e30853ac240ef0db9e43a750d423b127adb156d842f019c4c998819d457dd8afc86001aa7a07'
         '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
         '57413ec0582254216196c52cddc7c4635c61efcd7a2b538dd61628960b7bc91c09160bd39d6383c69ae470d4d3b6a9a6b4fb67f457ac91996bbcfebb8762880b'
         'c1f20062245a02bdaef45ee0eb18c6eefd1faa09b6354d3dc83951e844cdf72a1832fdacad05139c1cfa54afd6ac0e0912971a7f4c324d4e5a6c681e833df1e7'
-        '06878f8aa3368d73fb72d17cdf5b95c55c5d9f721ea5fcb5db6b538527a71746a874cb58619dbca8c6f43e402ebfdc414a80dc1d515288ddf9151a4d6bcd8a1f')
+        '9e1f8221c14c1c7a3a7046321e850f92c12ff8782bf09e4f358b9a1912fd41791fec2eb56c81ae416b895ae8fd7176495d63da3c4a2f0f24eb97bd2e4e422b5f')
 
 prepare() {
   # Extract AppImage
   chmod +x "${srcdir}/${_appname}-${_appver}.AppImage"
   "${srcdir}/${_appname}-${_appver}.AppImage" --appimage-extract
 
-  cd "${srcdir}/squashfs-root/usr/bin"
+  pushd "${srcdir}/squashfs-root/usr/bin"
+    # Use system ffmpeg
+    rm -fv libav*.so.*
 
-  # Use system ffmpeg
-  rm -fv libav*.so.*
+    # Use system sdl2
+    rm -fv libSDL2.so
 
-  # Use system ffmpeg
-  rm -fv libSDL2.so
+    # Remove pdb files
+    rm -fv *.pdb
+  popd
 
-  # Remove pdb files
-  rm -fv *.pdb
+  # Create icons
+  mkdir -v "${srcdir}/icons"
+  pushd "${srcdir}/icons"
+    magick -verbose "${srcdir}/squashfs-root/usr/bin/lazer.ico" osu.png
+    cp -v "${srcdir}/squashfs-root/osu!.png" osu-origin.png
+    magick -verbose osu-origin.png -resize "128x128!" osu-downscaled@128.png
+    magick -verbose osu-origin.png -resize "512x512!" osu-downscaled@512.png
 
-  # Downscale icon
-  magick -verbose "${srcdir}/squashfs-root/osu!.png" -resize "512x512!" "${srcdir}/osu-512x512.png"
+    magick -verbose "${srcdir}/squashfs-root/usr/bin/beatmap.ico" beatmap.png
+
+    eval $(magick identify -format "mv -v %f osu-%G;" osu*.png)
+    eval $(magick identify -format "mv -v %f beatmap-%G;" beatmap*.png)
+  popd
 }
 
 package() {
@@ -75,6 +86,13 @@ package() {
   install -Dm644 "${srcdir}/${_appname}.xml" "${pkgdir}/usr/share/mime/packages/${_appname}.xml"
 
   # Install icons
-  install -Dm644 "${srcdir}/osu-512x512.png" "${pkgdir}/usr/share/icons/hicolor/512x512/apps/${_appname}.png"
-  install -Dm644 "${srcdir}/squashfs-root/osu!.png" "${pkgdir}/usr/share/icons/hicolor/1024x1024/apps/${_appname}.png"
+  pushd "${srcdir}/icons"
+    for icon in osu-*; do
+      install -Dm644 "${icon}" "${pkgdir}/usr/share/icons/hicolor/$(echo "${icon}" | cut -d- -f2 -)/apps/${_appname}.png"
+    done
+
+    for icon in beatmap-*; do
+      install -Dm644 "${icon}" "${pkgdir}/usr/share/icons/hicolor/$(echo "${icon}" | cut -d- -f2 -)/mimetypes/${_appname}-beatmap.png"
+    done
+  popd
 }
