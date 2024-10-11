@@ -1,13 +1,13 @@
 pkgbase = alist-web-bin
 	pkgdesc = 🗂️ The front end of Alist V3 (A file list/WebDAV program that supports multiple storages, powered by Gin and Solidjs)
-	pkgver = 3.36.0
+	pkgver = 3.38.0
 	pkgrel = 1
 	url = https://github.com/alist-org/alist-web
 	arch = any
 	license = AGPL-3.0-or-later
 	provides = alist-web
 	conflicts = alist-web
-	source = alist-web-3.36.0-dist.tar.gz::https://github.com/alist-org/alist-web/releases/download/3.36.0/dist.tar.gz
-	b2sums = 0a9942b0e18b93033a0ae20a58b16ea6334d9c76a2a606585c2982d1bb9a94336627acbbbe15eb488ebf36e90088122997307d01d8d9514202f090a4b37ac6b6
+	source = alist-web-3.38.0-dist.tar.gz::https://github.com/alist-org/alist-web/releases/download/3.38.0/dist.tar.gz
+	b2sums = 4fdfd45ef2418acb352c838cf71c94bb77b4716a12d02addd98176f782af2552eb1b386c8a5ca6f18ac11d7c1d2974c62c408712a09c943e17b483432afbb3fe
 
 pkgname = alist-web-bin
