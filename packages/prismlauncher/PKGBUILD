@@ -3,13 +3,13 @@
 _pkgname='PrismLauncher'
 
 pkgname='prismlauncher'
-pkgver=8.4
-pkgrel=2
+pkgver=9.1
+pkgrel=1
 pkgdesc='Minecraft launcher with ability to manage multiple instances.'
 arch=('x86_64' 'aarch64')
 url='https://prismlauncher.org/'
 license=('GPL-3.0-only')
-depends=('bzip2' 'cmark' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'libglvnd' 'qt6-5compat' 'qt6-base' 'quazip-qt6' 'tomlplusplus' 'zlib')
+depends=('bzip2' 'cmark' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'libglvnd' 'qt6-5compat' 'qt6-base' 'qt6-networkauth' 'quazip-qt6' 'tomlplusplus' 'zlib')
 makedepends=('cmake' 'extra-cmake-modules' 'gamemode' 'ghc-filesystem' 'java-environment=17' 'ninja' 'scdoc')
 optdepends=('flite: for Minecraft text2speech support'
             'glfw: to use system GLFW libraries'
@@ -25,7 +25,7 @@ optdepends=('flite: for Minecraft text2speech support'
 
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/PrismLauncher/PrismLauncher/releases/download/${pkgver}/${_pkgname}-${pkgver}.tar.gz")
 
-b2sums=('c7950df3d843e370914e2a72c71847a71ab0446508a464ce04ded007b0b3170e8119bb30455d1022fda98cd49f16528a63f5589766561cfc15950c6823779b6f')
+b2sums=('1bb31dab88d9ca4317e61b6938f9b5aeb0b76cab3407d69b62ecf9bfa1ade3308a8927f53e020b6531fbe0cce962c7e560727298a911f07b9fec1f51b1470cd9')
 
 prepare() {
   cmake \
@@ -33,6 +33,7 @@ prepare() {
     -D CMAKE_BUILD_TYPE=RelWithDebInfo \
     -D CMAKE_INSTALL_PREFIX=/usr \
     -D BUILD_TESTING=OFF \
+    -D ENABLE_LTO=ON \
     -D Launcher_BUILD_PLATFORM=archlinux \
     -G Ninja \
     -S "${srcdir}/${_pkgname}-${pkgver}"
