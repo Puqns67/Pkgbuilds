@@ -42,8 +42,3 @@ setConfig() {
     msg2 'setConfig: %s' $1
     cp -f "CONFIGS/xanmod/gcc/${1}" .config
 }
-
-setOptimization() {
-    msg2 'setOptimization: %s' $1
-    source "${srcdir}/choose-gcc-optimization.bash" $1
-}

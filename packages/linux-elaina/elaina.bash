@@ -2,11 +2,8 @@
 
 source "${srcdir}/config.bash"
 
-# Set config as x86-64_v2
-setConfig config_x86-64-v2
-
-# Set GCC optimization level as x86-64_v2
-setOptimization 92
+# Set config as x86-64_v3
+setConfig config_x86-64-v3
 
 # AUR package linux-xanmod defaulted
 enableAll \
