@@ -1,4 +1,4 @@
-# Pkgbulids
+# Puqns67's Arch Linux Pkgbulids
 
 此处存放了个人编写/修改的部分 Arch Liunx PKGBUILD，以方便对他们统一管理。
 
@@ -16,7 +16,7 @@
 2. 在 pacman.conf 中添加软件源。
 
     ```conf
-    [marisa]
+    [puqns67]
     Server = https://repo.puqns67.icu/$arch
     ```
 
