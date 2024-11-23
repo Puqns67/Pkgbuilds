@@ -1,0 +1,71 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+# Contributor: Misaka13514 <misaka13514@gmail.com>
+# Contributor: Henry-ZHR <henry-zhr@qq.com>
+
+# This PKGBUILD is base on the AUR repo serenity,
+# by Misaka13514 <misaka13514@gmail.com> and Henry-ZHR <henry-zhr@qq.com>
+
+_pkgname='serenity'
+pkgname="${_pkgname}-elaina-git"
+pkgver=1.1.0.alpha3.r4.g0a1889c
+pkgrel=2
+pkgdesc='The configuration generator for sing-box, elaina edition'
+arch=('x86_64' 'aarch64')
+url='https://git.puqns67.icu/Puqns67/serenity'
+license=('GPL-3.0-or-later' 'LicenseRef-Name-use-and-association-addition')
+depends=('glibc')
+makedepends=('git' 'go')
+optdepends=('sing-box')
+provides=("${_pkgname}")
+conflicts=("${_pkgname}")
+backup=("etc/${_pkgname}/config.json")
+source=("${_pkgname}-elaina"::"git+${url}.git")
+b2sums=('SKIP')
+
+pkgver() {
+  git -C "${srcdir}/${_pkgname}-elaina" describe --long --tags | sed 's/^v\([0-9\.]\+\)\(-*[0-9\.abcehlprt]*\)-\([0-9]\+\)-g\([0-9a-f]\{7\}\)$/\1\2.r\3.g\4/g' | sed 's/-\(alpha\|beta\|rc\)\./.\1/g'
+}
+
+prepare() {
+  mkdir -v "${srcdir}/completions"
+
+  # Download dependencies
+  cd "${srcdir}/${_pkgname}-elaina"
+  go mod vendor
+}
+
+build() {
+  export CGO_CFLAGS="${CFLAGS}"
+  export CGO_CXXFLAGS="${CXXFLAGS}"
+  export CGO_LDFLAGS="${LDFLAGS}"
+  export GOFLAGS="-v -x -work -modcacherw -trimpath -buildmode=pie -mod=readonly"
+
+  cd "${srcdir}/${_pkgname}-elaina"
+
+  go build \
+    -o "${srcdir}/${_pkgname}" \
+    -ldflags "-w -s -linkmode external -X github.com/sagernet/serenity/constant.Version=${pkgver}" \
+    ./cmd/...
+
+  go run "./cmd/${_pkgname}" completion bash > "${srcdir}/completions/${_pkgname}"
+  go run "./cmd/${_pkgname}" completion fish > "${srcdir}/completions/${_pkgname}.fish"
+  go run "./cmd/${_pkgname}" completion zsh > "${srcdir}/completions/_${_pkgname}"
+}
+
+check() {
+  go test -C "${srcdir}/${_pkgname}-elaina" ./...
+}
+
+package() {
+  install -Dm755 "${srcdir}/${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
+
+  install -Dm644 "${srcdir}/${_pkgname}-elaina/release/config/config.json" "${pkgdir}/etc/${_pkgname}/config.json"
+  install -Dm644 "${srcdir}/${_pkgname}-elaina/release/config/${_pkgname}.service" "${pkgdir}/usr/lib/systemd/system/${_pkgname}.service"
+  install -Dm644 "${srcdir}/${_pkgname}-elaina/release/config/${_pkgname}@.service" "${pkgdir}/usr/lib/systemd/system/${_pkgname}@.service"
+
+  install -Dm644 "${srcdir}/completions/${_pkgname}" "${pkgdir}/usr/share/bash-completion/completions/${_pkgname}"
+  install -Dm644 "${srcdir}/completions/${_pkgname}.fish" "${pkgdir}/usr/share/fish/vendor_completions.d/${_pkgname}.fish"
+  install -Dm644 "${srcdir}/completions/_${_pkgname}" "${pkgdir}/usr/share/zsh/site-functions/_${_pkgname}"
+
+  install -Dm644 "${srcdir}/${_pkgname}-elaina/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
