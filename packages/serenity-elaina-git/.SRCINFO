@@ -1,7 +1,7 @@
 pkgbase = serenity-elaina-git
 	pkgdesc = The configuration generator for sing-box, elaina edition
-	pkgver = 1.1.0.alpha3.r4.g0a1889c
-	pkgrel = 2
+	pkgver = 1.1.0.alpha4.puqns672.r0.gc0576a3
+	pkgrel = 1
 	url = https://git.puqns67.icu/Puqns67/serenity
 	arch = x86_64
 	arch = aarch64
