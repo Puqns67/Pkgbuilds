@@ -2,8 +2,8 @@
 
 _major=6
 _minor=12
-_patch=0
-_xanmod=1
+_patch=1
+_xanmod=2
 _elaina=1
 
 _xanmod_branch='edge'
@@ -33,14 +33,14 @@ source=("${_srcname}.tar.xz"::"https://cdn.kernel.org/pub/linux/kernel/v${_major
 
 sha512sums=('a37b1823df7b4f72542f689b65882634740ba0401a42fdcf6601d9efd2e132e5a7650e70450ba76f6cd1f13ca31180f2ccee9d54fe4df89bc0000ade4380a548'
             'SKIP'
-            '7cb67154974d4ae74400fa9fdd1a76cfe2ac260195938284b717fd15bbe8342a3062e3f71f8266d3945404fa63c19451f7727b69815e7a1ec2c7fe06f442497f'
+            '93cd85e01b79dade5e892b754e9a0de20d48248e657ba7752d9c163c52a004d0810dfac8b465f9a65424cf4c36fa371b2a7ffaf00aae0a63971355ffa49d2762'
             '16cf008929ecb71ac8907feb2a3a4b2a06fed378915bf4d65db353235c1204df0a18939c9b66fcdf6d61736f063057a7a6e6bac846ed9904161a214d0562443a'
-            'a59199ae02019b6f05030ec64907b80f1042440752ab3be2f34317e27b622095138eb78d6c7e198004e62e87806d662f5c0778b285ecf0d8b9d4eed615b247fa')
+            '30cfcff84b5ebf347374b33a857d542cfe815b925b95decec5cc86fdd91adeb47f33a72d7a5d5bd4ec6ed20d85385675a5200b23fb9691245c65b5bbebbabd3b')
 b2sums=('b2ec2fc69218cacabbbe49f78384a5d259ca581b717617c12b000b16f4a4c59ee348ea886b37147f5f70fb9a7a01c1e2c8f19021078f6b23f5bc62d1c48d5e5e'
         'SKIP'
-        '14c60a8f8a7acc80f9612c156fb60c3f013b50e2a0bd907d7ec075c4bfdd27ab36432b57850b40e9876d34f2bf7b2ca3eb3eb55f912ef67c5528008ef910dbe2'
+        'f2cae72d4324488624d6529f4f12a6ce0c075cbefcd90fddfc69fb76ad80df7f942ab95ad623ee0ec0597e7607c7276702090437e7f49ce6f25c3d59cb82df67'
         '331c754b0814eaa931cf58d4d5a68c5e4a7f345b6139459a38cb4c452ee5e6ead00424673596f4822d7b2e4ebb35022b474c66612f91b07d3222215b211fdd4f'
-        '9fbfdd6ab77e7ece87452fef5b9578cf148dc0962efe23079cae51e33492ddb01e39a5d7f583f5b2a9ac60ed5255a0acc9cddc7283e6a30d9d49da145863512f')
+        '8548194b1eac3eeb4d920d45788870f7b52314a7f918453519c767c296fe9e39a684d713aad6fcece6f63e20815199d4fc825d1b23cb077713af3bc21691f2b6')
 
 validpgpkeys=('ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linux Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E') # Greg Kroah-Hartman
@@ -62,7 +62,7 @@ prepare() {
   source "${srcdir}/elaina.bash"
 
   msg 'make olddefconfig'
-  make olddefconfig
+  make -j olddefconfig
 
   make -s kernelrelease > version
   msg "Prepared %s version %s" "${pkgbase}" "$(<version)"
