@@ -1,6 +1,6 @@
 pkgbase = osu-bin
 	pkgdesc = A free-to-win rhythm game. Rhythm is just a click away!
-	pkgver = 2024.1115.3
+	pkgver = 2024.1208.0
 	pkgrel = 1
 	url = https://osu.ppy.sh/
 	arch = x86_64
@@ -23,15 +23,15 @@ pkgbase = osu-bin
 	replaces = osu-lazer
 	replaces = osu-lazer-bin
 	options = !debug
-	source = osu-2024.1115.3.AppImage::https://github.com/ppy/osu/releases/download/2024.1115.3/osu.AppImage
-	source = osu-resources-LICENCE-2024.1106.0.md::https://github.com/ppy/osu-resources/raw/2024.1106.0/LICENCE.md
+	source = osu-2024.1208.0.AppImage::https://github.com/ppy/osu/releases/download/2024.1208.0/osu.AppImage
+	source = osu-resources-LICENCE-2024.1202.0.md::https://github.com/ppy/osu-resources/raw/2024.1202.0/LICENCE.md
 	source = osu.bash
 	source = osu.desktop
 	source = osu.xml
-	b2sums = 3823474c93576f13bb43f70c7edf4bbaea5eca8cecaaaef4f0a04901cba9de76730b100ee83fbdd5891dc5be24e002b015754e84e69d0169b3cce20781457673
+	b2sums = 390761984c0f0f1a7272dedecf699d2a76a7473a9320b031d04260e72b886fda7f890791cab92a4f406fd35b9d1116b9992098e0508518f4bd3a2f6bbc635622
 	b2sums = 7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff
 	b2sums = 57413ec0582254216196c52cddc7c4635c61efcd7a2b538dd61628960b7bc91c09160bd39d6383c69ae470d4d3b6a9a6b4fb67f457ac91996bbcfebb8762880b
-	b2sums = c1f20062245a02bdaef45ee0eb18c6eefd1faa09b6354d3dc83951e844cdf72a1832fdacad05139c1cfa54afd6ac0e0912971a7f4c324d4e5a6c681e833df1e7
+	b2sums = a8092d2bdd6b72b2072178ae620f0d16fe93f17061e3ef789cba2ca5eb236d7277b78ea4c7838053ebd08b025c2255ac6ce2f5587c34e8dde04fe4a04f2e1fa3
 	b2sums = 9e1f8221c14c1c7a3a7046321e850f92c12ff8782bf09e4f358b9a1912fd41791fec2eb56c81ae416b895ae8fd7176495d63da3c4a2f0f24eb97bd2e4e422b5f
 
 pkgname = osu-bin
