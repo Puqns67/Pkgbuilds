@@ -40,7 +40,6 @@ disableAll \
 disableAll \
     CONFIG_TMPFS_QUOTA \
     CONFIG_QUOTA \
-    CONFIG_REISERFS_FS \
     CONFIG_JFS_FS \
     CONFIG_XFS_FS \
     CONFIG_GFS2_FS \
@@ -49,7 +48,6 @@ disableAll \
     CONFIG_F2FS_FS \
     CONFIG_BCACHEFS_FS \
     CONFIG_ZONEFS_FS \
-    CONFIG_FUSE_FS \
     CONFIG_OVERLAY_FS \
     CONFIG_ISO9660_FS \
     CONFIG_UDF_FS \
