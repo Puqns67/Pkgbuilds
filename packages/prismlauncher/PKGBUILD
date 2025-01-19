@@ -3,36 +3,38 @@
 _pkgname='PrismLauncher'
 
 pkgname='prismlauncher'
-pkgver=9.1
+pkgver=9.2
 pkgrel=1
-pkgdesc='Minecraft launcher with ability to manage multiple instances.'
+pkgdesc='Minecraft launcher with ability to manage multiple instances'
 arch=('x86_64' 'aarch64')
 url='https://prismlauncher.org/'
-license=('GPL-3.0-only')
+license=('GPL-3.0-only AND LGPL-3.0-or-later AND LGPL-2.0-or-later AND Apache-2.0 AND MIT AND LicenseRef-Batch AND OFL-1.1')
 depends=('bzip2' 'cmark' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'libglvnd' 'qt6-5compat' 'qt6-base' 'qt6-networkauth' 'quazip-qt6' 'tomlplusplus' 'zlib')
 makedepends=('cmake' 'extra-cmake-modules' 'gamemode' 'ghc-filesystem' 'java-environment=17' 'ninja' 'scdoc')
-optdepends=('flite: for Minecraft text2speech support'
-            'glfw: to use system GLFW libraries'
+optdepends=('glfw: to use system GLFW libraries'
             'openal: to use system OpenAL libraries'
             'visualvm: Profiling support'
+            'xorg-xrandr: for older minecraft versions (<=1.12.2)'
+            'flite: minecraft voice narration'
             'mangohud: run Minecraft with mangohud'
             'gamemode: run Minecraft with gamemode'
-            'xorg-xrandr: for older Minecraft (<=1.12.2)'
             'java-runtime=8: for older Minecraft (<1.18 Pre-release 2)'
             'java-runtime=17: for Minecraft 1.18.0+ (>=1.18 Pre-release 2)'
-            'java-runtime=21: for Minecraft 1.20.5+ (>=24w14a)'
-            'qt6-wayland: for Wayland support')
+            'java-runtime=21: for Minecraft 1.20.5+ (>=24w14a)')
 
-source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/PrismLauncher/PrismLauncher/releases/download/${pkgver}/${_pkgname}-${pkgver}.tar.gz")
+source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/PrismLauncher/PrismLauncher/releases/download/${pkgver}/${_pkgname}-${pkgver}.tar.gz"
+        LICENSE-{batch,lionshead,mdi})
 
-b2sums=('1bb31dab88d9ca4317e61b6938f9b5aeb0b76cab3407d69b62ecf9bfa1ade3308a8927f53e020b6531fbe0cce962c7e560727298a911f07b9fec1f51b1470cd9')
+b2sums=('82e54ed299b7c93d086beae02e02ae148d8acea0034d7db1e4ff1752a8933994a0ab7ef1f8bc7d6ce9a598347863a8e8a6ecddca13211f6b7f96526d004ae919'
+        '356248a6b86f06d260e0920b49d34034f79f9bc504c7fdc1849d929d2ff9b169e693a8269a2c0b34656b3802970d9b8be41a92b35177eaa3c4ccc89a702f5c9d'
+        'be4289832af95b1cd6e721dc16b84a034533de9718d9b43a49bd08dd6fe4e28eaa15228bfb311867b18fddbda1c9fc4c91f04c6d5c1a3bcc39aaa5161425e3ba'
+        'b35c447cd9223e096a2bb75e0741a7d0a3a1606af54c957e4f276f4e6861a9b3f06ae1d646137e8d2f24ba2238c9967c76eff8cc631a68d7e48e376056982cc6')
 
 prepare() {
   cmake \
     -B "${srcdir}/build" \
     -D CMAKE_BUILD_TYPE=RelWithDebInfo \
     -D CMAKE_INSTALL_PREFIX=/usr \
-    -D BUILD_TESTING=OFF \
     -D ENABLE_LTO=ON \
     -D Launcher_BUILD_PLATFORM=archlinux \
     -G Ninja \
@@ -43,6 +45,13 @@ build() {
   cmake --build "${srcdir}/build"
 }
 
+check() {
+  ctest --test-dir "${srcdir}/build" --output-on-failure
+}
+
 package() {
   DESTDIR="${pkgdir}" cmake --install "${srcdir}/build"
+
+  # licenses
+  install -Dm644 -t "${pkgdir}/usr/share/licenses/${pkgname}" ${srcdir}/LICENSE-{batch,lionshead,mdi}
 }
