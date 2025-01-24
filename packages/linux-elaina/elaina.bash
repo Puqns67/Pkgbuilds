@@ -168,14 +168,6 @@ disable CONFIG_VIRTUALIZATION
 disable CONFIG_SUSPEND
 disable CONFIG_HIBERNATION
 
-# Using as Server
-enableAll \
-    CONFIG_PREEMPT_NONE_BUILD \
-    CONFIG_PREEMPT_NONE
-disableAll \
-    CONFIG_PREEMPT \
-    CONFIG_PREEMPT_DYNAMIC
-
 # Zswap
 enableAll \
     CONFIG_ZSWAP_DEFAULT_ON \
