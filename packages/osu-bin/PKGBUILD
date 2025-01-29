@@ -14,14 +14,15 @@ _resver='2024.1224.0'
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
-pkgrel=1
+pkgrel=2
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
 license=('MIT' 'CC-BY-NC-4.0')
-depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'lttng-ust2.12' 'sdl2' 'zlib')
+depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'lttng-ust2.12' 'sdl3' 'zlib')
 makedepends=('imagemagick')
-optdepends=('gamemode: run osu with gamemode')
+optdepends=('gamemode: run osu with gamemode'
+            'sdl2-compat: run osu with sdl2')
 provides=("${_appname}" 'osu-lazer')
 conflicts=("${_appname}" 'osu-lazer')
 replaces=('osu-lazer' 'osu-lazer-bin')
@@ -48,8 +49,8 @@ prepare() {
     # Use system ffmpeg
     rm -fv libav*.so.*
 
-    # Use system sdl2
-    rm -fv libSDL2.so
+    # Use system sdl
+    rm -fv libSDL{2,3}.so
 
     # Remove pdb files
     rm -fv *.pdb
