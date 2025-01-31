@@ -1,6 +1,6 @@
 pkgbase = tailscale
 	pkgdesc = A mesh VPN that makes it easy to connect your devices, wherever they are
-	pkgver = 1.78.1
+	pkgver = 1.80.0
 	pkgrel = 1
 	url = https://tailscale.com/
 	arch = x86_64
@@ -9,10 +9,10 @@ pkgbase = tailscale
 	makedepends = git
 	makedepends = go
 	depends = glibc
-	source = tailscale::git+https://github.com/tailscale/tailscale.git#tag=v1.78.1
+	source = tailscale::git+https://github.com/tailscale/tailscale.git#tag=v1.80.0
 	source = derper.defaults
 	source = derper.service
-	b2sums = 2dc2455f688992e80fc34a59e7aee0ebe2842a6d2bb7bac27c34029dc951b78cda7a8bcbcf141d82bd37e222fada71b03dcec9e16f2837af402c800227ef23a6
+	b2sums = 713ed5fecd5d75ae85b941bc84195034ccd01971abf16ebc796f490f194a6a61fc56c52075fcdd462397d7d72b42318adb3dbd564fa4d82f4ac1ae37c982bb0b
 	b2sums = f7768acb80b813bc2e98f83e70346dddc4950b8dcbde9cd547495f3f56eb3319e3201456c848268b03cfe28e79137311836903c2894313b00e7e0dd4a01e6cf9
 	b2sums = 03d44e817de68137a77aef2890fca28d0fdf317d272f06b2d949121796bf07359ce34bb5832d32a0a2ae093f9fcfb2b9973d8d8b86b791e072ff9b5296fe4d58
 
