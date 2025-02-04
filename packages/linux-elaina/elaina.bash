@@ -3,7 +3,12 @@
 source "${srcdir}/config.bash"
 
 # Set config as x86-64_v3
-setConfig config_x86-64-v3
+setConfig config
+setVal CONFIG_X86_64_VERSION 3
+
+# General setups
+enable CONFIG_EXPERT
+disable CONFIG_USELIB
 
 # AUR package linux-xanmod defaulted
 enableAll \
@@ -15,6 +20,7 @@ enableAll \
 disable CONFIG_STAGING
 
 # Disable support for special cpu
+enable CONFIG_PROCESSOR_SELECT
 disableAll \
     CONFIG_CPU_SUP_HYGON \
     CONFIG_CPU_SUP_CENTAUR \
@@ -56,7 +62,9 @@ disableAll \
     CONFIG_NTFS_FS \
     CONFIG_NTFS3_FS \
     CONFIG_MISC_FILESYSTEMS \
-    CONFIG_NETWORK_FILESYSTEMS
+    CONFIG_NETWORK_FILESYSTEMS \
+    CONFIG_EXT4_USE_FOR_EXT2
+module CONFIG_FUSE_FS
 
 # Disable noneeded partition types
 disableAll \
@@ -81,13 +89,19 @@ disableAll \
 disableAll \
     CONFIG_PCCARD \
     CONFIG_GNSS \
+    CONFIG_MTD \
     CONFIG_MD \
     CONFIG_FIREWIRE \
     CONFIG_FIREWIRE_NOSY \
     CONFIG_MACINTOSH_DRIVERS \
+    CONFIG_HID_SUPPORT \
+    CONFIG_USB_SUPPORT \
+    CONFIG_MMC \
+    CONFIG_SCSI_UFSHCD \
     CONFIG_MEMSTICK \
     CONFIG_ACCESSIBILITY \
     CONFIG_CHROME_PLATFORMS \
+    CONFIG_CZNIC_PLATFORMS \
     CONFIG_MELLANOX_PLATFORM \
     CONFIG_SURFACE_PLATFORMS \
     CONFIG_SOUNDWIRE \
@@ -99,7 +113,11 @@ disableAll \
     CONFIG_SCSI_BNX2X_FCOE \
     CONFIG_SCSI_CXGB3_ISCSI \
     CONFIG_SCSI_CXGB4_ISCSI \
-    CONFIG_IIO
+    CONFIG_IIO \
+    CONFIG_SSB \
+    CONFIG_SIOX \
+    CONFIG_SLIMBUS \
+    CONFIG_IPACK_BUS
 
 # Disable noneeded network-related modules
 disableAll \
@@ -159,14 +177,22 @@ disableAll \
 # Disable x86 support
 disableAll \
     CONFIG_IA32_EMULATION \
-    CONFIG_COMPAT_32BIT_TIME
+    CONFIG_COMPAT_32BIT_TIME \
+    CONFIG_X86_X32_ABI
 
 # Disable virtualization support
 disable CONFIG_VIRTUALIZATION
 
 # Disable suspend and hibernation support
-disable CONFIG_SUSPEND
-disable CONFIG_HIBERNATION
+disableAll \
+    CONFIG_SUSPEND \
+    CONFIG_HIBERNATION
+
+# Compress modules with zstd
+enableAll \
+    CONFIG_MODULE_COMPRESS \
+    CONFIG_MODULE_COMPRESS_ZSTD
+disable MODULE_COMPRESS_GZIP
 
 # Zswap
 enableAll \
@@ -196,6 +222,10 @@ disable CONFIG_HZ_250
 
 # Builtin btrfs
 enable CONFIG_BTRFS_FS
+
+# Enable LTO
+disable CONFIG_LTO_NONE
+enable CONFIG_LTO_CLANG_THIN
 
 # Fix issue from systemd
 # systemd[1]: Failed to find module 'autofs4'

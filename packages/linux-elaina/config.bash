@@ -20,6 +20,11 @@ setStr() {
     scripts/config --set-str $1 $2
 }
 
+setVal() {
+    msg2 'setVal: %s -> %s' $1 $2
+    scripts/config --set-val $1 $2
+}
+
 disableAll() {
     for i in $*; do
         disable $i
@@ -40,5 +45,5 @@ moduleAll() {
 
 setConfig() {
     msg2 'setConfig: %s' $1
-    cp -f "CONFIGS/xanmod/gcc/${1}" .config
+    cp -f "CONFIGS/$(uname --machine)/${1}" .config
 }
