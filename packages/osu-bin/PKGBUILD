@@ -8,13 +8,13 @@
 # This PKGBUILD is base on the AUR repo osu-lazer-bin, from these contributors above
 
 _appname='osu'
-_appver='2025.118.3'
+_appver='2025.220.0'
 _resname='osu-resources'
-_resver='2024.1224.0'
+_resver='2025.217.0'
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
-pkgrel=2
+pkgrel=1
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
@@ -34,7 +34,7 @@ source=("${_appname}-${_appver}.AppImage"::"https://github.com/ppy/osu/releases/
         "${_appname}.desktop"
         "${_appname}.xml")
 
-b2sums=('e1ed76402771170ed12207d075b9ccf0c6710d7693ffe3b5083c19ba4e243f8e492dd7006e89b54aa30b45003149e5330313035fcf302bf2563f4d17368f7528'
+b2sums=('2a998d69189dab97e27539a6fc127be13dea46cc354245ddc823990299cab85dab0e4786a29e404aa3b950b35505439a4197da01913293666438da3d16e3d2ac'
         '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
         '57413ec0582254216196c52cddc7c4635c61efcd7a2b538dd61628960b7bc91c09160bd39d6383c69ae470d4d3b6a9a6b4fb67f457ac91996bbcfebb8762880b'
         'a8092d2bdd6b72b2072178ae620f0d16fe93f17061e3ef789cba2ca5eb236d7277b78ea4c7838053ebd08b025c2255ac6ce2f5587c34e8dde04fe4a04f2e1fa3'
