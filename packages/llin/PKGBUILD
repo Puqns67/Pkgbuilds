@@ -4,18 +4,24 @@ _pkgname="LLin"
 
 pkgname="llin"
 pkgver="2025.124.0"
-pkgrel=1
+pkgrel=2
 pkgdesc="向 osu! 添加播放器以及 Sayobot 加速下载功能"
 arch=('any')
 url='https://github.com/MATRIX-feather/LLin'
-license=('LicenseRef-Unknown')
+license=('MIT')
 depends=('osu')
 makedepends=('dotnet-sdk')
 options=('!debug')
 
-source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/${pkgver}.tar.gz")
+source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/${pkgver}.tar.gz"
+        "${pkgname}-LICENCE"::"${url}/raw/refs/heads/ruleset/LICENCE"
+        "osu-LICENCE"::"${url}/raw/refs/heads/ruleset/osu.Game.Rulesets.Hikariii/RulesetStuffs/LICENCE"
+        "SandboxToPanel-LICENCE"::"${url}/raw/refs/heads/ruleset/osu.Game.Rulesets.Hikariii/Features/Player/Plugins/Bundle/SandboxToPanel/LICENSE")
 
-b2sums=('4d1903d4c01cca7513bc2413a9592f7a5c57c2818a51078bf088014e9b95187c692025c261f986dbe259d61106c095bec85f3e6d7d05e7026279ba2ef81beb90')
+b2sums=('4d1903d4c01cca7513bc2413a9592f7a5c57c2818a51078bf088014e9b95187c692025c261f986dbe259d61106c095bec85f3e6d7d05e7026279ba2ef81beb90'
+        '997813179910e0662d6bc4afadc1d4eef9b04bef0f38028d71d31b412d7247241336a54e27e1960dd1b70c4881c11ebd0d59cc31cd777ec6a78bff1939b53ad5'
+        '75c856af8e4e676a5dea15057433e898cff7d2e19238227d11598959ed019a1594821d757c7cd525fa977d5f312267908e9f7393ffdb9046140cef455a01350b'
+        '75d044f38a5a85cbeb00408f159ff0aed7966c97df812142e5f77fce797006f3f2902221c7772f0dd37ba35cede5f3152e2b776f0ded886fe70c4cacebb42829')
 
 prepare() {
 	cd "${srcdir}/${_pkgname}-${pkgver}"
@@ -40,6 +46,10 @@ package() {
     $srcdir/build/Tmds.DBus.* \
     $srcdir/build/M.{DBus,Resources}.* \
     $srcdir/build/osu.Game.Rulesets.Hikariii.*
-
   install -vDm644 "${srcdir}/build/zh/M.Resources.resources.dll" "${pkgdir}/usr/lib/osu/zh/M.Resources.resources.dll"
+
+  # Install license files
+  install -vDm644 "${srcdir}/${pkgname}-LICENCE" "${pkgdir}/usr/share/licenses/${pkgname}/${pkgname}-LICENCE"
+  install -vDm644 "${srcdir}/osu-LICENCE" "${pkgdir}/usr/share/licenses/${pkgname}/osu-LICENCE"
+  install -vDm644 "${srcdir}/SandboxToPanel-LICENCE" "${pkgdir}/usr/share/licenses/${pkgname}/SandboxToPanel-LICENCE"
 }

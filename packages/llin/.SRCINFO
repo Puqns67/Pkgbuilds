@@ -1,14 +1,20 @@
 pkgbase = llin
 	pkgdesc = 向 osu! 添加播放器以及 Sayobot 加速下载功能
 	pkgver = 2025.124.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/MATRIX-feather/LLin
 	arch = any
-	license = LicenseRef-Unknown
+	license = MIT
 	makedepends = dotnet-sdk
 	depends = osu
 	options = !debug
 	source = llin-2025.124.0.tar.gz::https://github.com/MATRIX-feather/LLin/archive/refs/tags/2025.124.0.tar.gz
+	source = llin-LICENCE::https://github.com/MATRIX-feather/LLin/raw/refs/heads/ruleset/LICENCE
+	source = osu-LICENCE::https://github.com/MATRIX-feather/LLin/raw/refs/heads/ruleset/osu.Game.Rulesets.Hikariii/RulesetStuffs/LICENCE
+	source = SandboxToPanel-LICENCE::https://github.com/MATRIX-feather/LLin/raw/refs/heads/ruleset/osu.Game.Rulesets.Hikariii/Features/Player/Plugins/Bundle/SandboxToPanel/LICENSE
 	b2sums = 4d1903d4c01cca7513bc2413a9592f7a5c57c2818a51078bf088014e9b95187c692025c261f986dbe259d61106c095bec85f3e6d7d05e7026279ba2ef81beb90
+	b2sums = 997813179910e0662d6bc4afadc1d4eef9b04bef0f38028d71d31b412d7247241336a54e27e1960dd1b70c4881c11ebd0d59cc31cd777ec6a78bff1939b53ad5
+	b2sums = 75c856af8e4e676a5dea15057433e898cff7d2e19238227d11598959ed019a1594821d757c7cd525fa977d5f312267908e9f7393ffdb9046140cef455a01350b
+	b2sums = 75d044f38a5a85cbeb00408f159ff0aed7966c97df812142e5f77fce797006f3f2902221c7772f0dd37ba35cede5f3152e2b776f0ded886fe70c4cacebb42829
 
 pkgname = llin
