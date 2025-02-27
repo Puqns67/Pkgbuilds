@@ -1,0 +1,14 @@
+pkgbase = llin
+	pkgdesc = 向 osu! 添加播放器以及 Sayobot 加速下载功能
+	pkgver = 2025.124.0
+	pkgrel = 1
+	url = https://github.com/MATRIX-feather/LLin
+	arch = any
+	license = LicenseRef-Unknown
+	makedepends = dotnet-sdk
+	depends = osu
+	options = !debug
+	source = llin-2025.124.0.tar.gz::https://github.com/MATRIX-feather/LLin/archive/refs/tags/2025.124.0.tar.gz
+	b2sums = 4d1903d4c01cca7513bc2413a9592f7a5c57c2818a51078bf088014e9b95187c692025c261f986dbe259d61106c095bec85f3e6d7d05e7026279ba2ef81beb90
+
+pkgname = llin

@@ -1,0 +1,45 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+
+_pkgname="LLin"
+
+pkgname="llin"
+pkgver="2025.124.0"
+pkgrel=1
+pkgdesc="向 osu! 添加播放器以及 Sayobot 加速下载功能"
+arch=('any')
+url='https://github.com/MATRIX-feather/LLin'
+license=('LicenseRef-Unknown')
+depends=('osu')
+makedepends=('dotnet-sdk')
+options=('!debug')
+
+source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/${pkgver}.tar.gz")
+
+b2sums=('4d1903d4c01cca7513bc2413a9592f7a5c57c2818a51078bf088014e9b95187c692025c261f986dbe259d61106c095bec85f3e6d7d05e7026279ba2ef81beb90')
+
+prepare() {
+	cd "${srcdir}/${_pkgname}-${pkgver}"
+
+	dotnet restore osu.Game.Rulesets.Hikariii
+}
+
+build() {
+	cd "${srcdir}/${_pkgname}-${pkgver}"
+
+	dotnet \
+		publish \
+		--framework net8.0 \
+		--configuration Release \
+		--no-restore \
+		--output "${srcdir}/build" \
+		osu.Game.Rulesets.Hikariii
+}
+
+package() {
+	install -vDt "${pkgdir}/usr/lib/osu" -m644 \
+    $srcdir/build/Tmds.DBus.* \
+    $srcdir/build/M.{DBus,Resources}.* \
+    $srcdir/build/osu.Game.Rulesets.Hikariii.*
+
+  install -vDm644 "${srcdir}/build/zh/M.Resources.resources.dll" "${pkgdir}/usr/lib/osu/zh/M.Resources.resources.dll"
+}
