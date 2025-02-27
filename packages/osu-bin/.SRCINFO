@@ -1,7 +1,7 @@
 pkgbase = osu-bin
 	pkgdesc = A free-to-win rhythm game. Rhythm is just a click away!
 	pkgver = 2025.225.0
-	pkgrel = 2
+	pkgrel = 3
 	url = https://osu.ppy.sh/
 	arch = x86_64
 	license = MIT
@@ -17,6 +17,7 @@ pkgbase = osu-bin
 	depends = zlib
 	optdepends = gamemode: run osu with gamemode
 	optdepends = sdl2: run osu with sdl2
+	optdepends = llin: a mod adds in-game music player and speeds up download for beatmap using Sayobot
 	provides = osu
 	provides = osu-lazer
 	conflicts = osu

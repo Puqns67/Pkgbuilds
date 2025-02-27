@@ -14,7 +14,7 @@ _resver='2025.217.0'
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
-pkgrel=2
+pkgrel=3
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
@@ -22,7 +22,8 @@ license=('MIT' 'CC-BY-NC-4.0')
 depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'lttng-ust2.12' 'sdl3' 'zlib')
 makedepends=('imagemagick')
 optdepends=('gamemode: run osu with gamemode'
-            'sdl2: run osu with sdl2')
+            'sdl2: run osu with sdl2'
+            'llin: a mod adds in-game music player and speeds up download for beatmap using Sayobot')
 provides=("${_appname}" 'osu-lazer')
 conflicts=("${_appname}" 'osu-lazer')
 replaces=('osu-lazer' 'osu-lazer-bin')
