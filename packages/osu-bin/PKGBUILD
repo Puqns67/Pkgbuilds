@@ -14,7 +14,7 @@ _resver='2025.217.0'
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
-pkgrel=3
+pkgrel=4
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
@@ -30,12 +30,14 @@ replaces=('osu-lazer' 'osu-lazer-bin')
 options=('!debug')
 
 source=("${_appname}-${_appver}.AppImage"::"https://github.com/ppy/osu/releases/download/${_appver}/osu.AppImage"
+        "${_appname}-LICENCE-${_appver}"::"https://github.com/ppy/osu/raw/${_appver}/LICENCE"
         "${_resname}-LICENCE-${_resver}.md"::"https://github.com/ppy/osu-resources/raw/${_resver}/LICENCE.md"
         "${_appname}.bash"
         "${_appname}.desktop"
         "${_appname}.xml")
 
 b2sums=('35cf93988329879126f5f1418892f3fe15767c75ab95f45a9f4120e3ebf130de0a0ee9ea5d4f5ad5395883d52e1318122444ec64e1651e0b7fd1553163457d2d'
+        'abe851f82cff8d15ff2ac8c9fc93fb4f4d540b09067cb44b19bc03c31d13cf13a6e3c6ff65bd0bdeb8a6b074fbaba42f5d4c7217c4344258b452840f2debe7ce'
         '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
         '57413ec0582254216196c52cddc7c4635c61efcd7a2b538dd61628960b7bc91c09160bd39d6383c69ae470d4d3b6a9a6b4fb67f457ac91996bbcfebb8762880b'
         'a8092d2bdd6b72b2072178ae620f0d16fe93f17061e3ef789cba2ca5eb236d7277b78ea4c7838053ebd08b025c2255ac6ce2f5587c34e8dde04fe4a04f2e1fa3'
@@ -80,9 +82,6 @@ package() {
   # Install launch script
   install -vDm755 "${srcdir}/${_appname}.bash" "${pkgdir}/usr/bin/${_appname}"
 
-  # Install license file
-  install -vDm644 "${srcdir}/${_resname}-LICENCE-${_resver}.md" "${pkgdir}/usr/share/licenses/${pkgname}/${_resname}-LICENCE.md"
-
   # Install desktop and mime files
   install -vDm644 "${srcdir}/${_appname}.desktop" "${pkgdir}/usr/share/applications/${_appname}.desktop"
   install -vDm644 "${srcdir}/${_appname}.xml" "${pkgdir}/usr/share/mime/packages/${_appname}.xml"
@@ -97,4 +96,8 @@ package() {
       install -vDm644 "${icon}" "${pkgdir}/usr/share/icons/hicolor/$(echo "${icon}" | cut -d- -f2 -)/mimetypes/${_appname}-beatmap.png"
     done
   popd
+
+  # Install license files
+  install -vDm644 "${srcdir}/${_appname}-LICENCE-${_appver}" "${pkgdir}/usr/share/licenses/${pkgname}/${_appname}-LICENCE"
+  install -vDm644 "${srcdir}/${_resname}-LICENCE-${_resver}.md" "${pkgdir}/usr/share/licenses/${pkgname}/${_resname}-LICENCE.md"
 }
