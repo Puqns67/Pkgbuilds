@@ -13,3 +13,6 @@
 [submodule "AURPKG/dufs"]
 	path = packages/dufs
 	url = ssh://aur@aur.archlinux.org/dufs.git
+[submodule "AURPKG/rustdesk-server"]
+	path = packages/rustdesk-server
+	url = ssh://aur@aur.archlinux.org/rustdesk-server.git
