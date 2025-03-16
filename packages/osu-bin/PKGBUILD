@@ -8,9 +8,9 @@
 # This PKGBUILD is base on the AUR repo osu-lazer-bin, from these contributors above
 
 _appname='osu'
-_appver='2025.310.0'
+_appver='2025.316.0'
 _resname='osu-resources'
-_resver='2025.307.0'
+_resver='2025.313.0'
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
@@ -19,10 +19,9 @@ pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
 license=('MIT' 'CC-BY-NC-4.0')
-depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'lttng-ust2.12' 'sdl3' 'zlib')
+depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'lttng-ust2.12' 'sdl2' 'zlib')
 makedepends=('imagemagick')
 optdepends=('gamemode: run osu with gamemode'
-            'sdl2: run osu with sdl2'
             'llin: a mod adds in-game music player and speeds up download for beatmap using Sayobot')
 provides=("${_appname}" 'osu-lazer')
 conflicts=("${_appname}" 'osu-lazer')
@@ -36,10 +35,10 @@ source=("${_appname}-${_appver}.AppImage"::"https://github.com/ppy/osu/releases/
         "${_appname}.desktop"
         "${_appname}.xml")
 
-b2sums=('17ec423115e3886de7676a0fdc7495267ce45f453f9bed981f8ab9e80c778f861826eae243b9a0a756be6dbc33529d1ae51ee11b8eeb6d4e3b7cf1e4b6cdf683'
+b2sums=('121c1d6673ab09a39160098b8311db7d47188b18e5305261b04c27854af96e218eeafc4ffb597349373e3a51291ca1c90e5cd8403beb3499884ac1e31ae2c046'
         'abe851f82cff8d15ff2ac8c9fc93fb4f4d540b09067cb44b19bc03c31d13cf13a6e3c6ff65bd0bdeb8a6b074fbaba42f5d4c7217c4344258b452840f2debe7ce'
         '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
-        '57413ec0582254216196c52cddc7c4635c61efcd7a2b538dd61628960b7bc91c09160bd39d6383c69ae470d4d3b6a9a6b4fb67f457ac91996bbcfebb8762880b'
+        'f4a96d56732b56428510a12182b743461a55e44a7a035e878f6c8bce862bce339ee1710279446584e3c64b7a3473a0530b72069bbdaad2c39b2e6b5e5a07e38a'
         'a8092d2bdd6b72b2072178ae620f0d16fe93f17061e3ef789cba2ca5eb236d7277b78ea4c7838053ebd08b025c2255ac6ce2f5587c34e8dde04fe4a04f2e1fa3'
         '9e1f8221c14c1c7a3a7046321e850f92c12ff8782bf09e4f358b9a1912fd41791fec2eb56c81ae416b895ae8fd7176495d63da3c4a2f0f24eb97bd2e4e422b5f')
 
