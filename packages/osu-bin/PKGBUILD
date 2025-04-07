@@ -14,7 +14,7 @@ _resver='2025.321.0'
 
 pkgname="${_appname}-bin"
 pkgver="${_appver}"
-pkgrel=1
+pkgrel=2
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
