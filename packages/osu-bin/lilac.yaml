@@ -13,3 +13,5 @@ update_on:
   - source: github
     github: ppy/osu
     use_latest_release: true
+  - source: manual
+    manual: 1

@@ -8,9 +8,7 @@
 # This PKGBUILD is base on the AUR repo osu-lazer-bin, from these contributors above
 
 _appname='osu'
-_appver='2025.321.0'
-_resname='osu-resources'
-_resver='2025.321.0'
+_resname="${_appname}-resources"
 
 pkgname="${_appname}-bin"
 pkgver=2025.418.0
@@ -28,9 +26,9 @@ conflicts=("${_appname}" 'osu-lazer')
 replaces=('osu-lazer' 'osu-lazer-bin')
 options=('!debug')
 
-source=("${_appname}-${_appver}.AppImage"::"https://github.com/ppy/osu/releases/download/${_appver}/osu.AppImage"
-        "${_appname}-LICENCE-${_appver}"::"https://github.com/ppy/osu/raw/${_appver}/LICENCE"
-        "${_resname}-LICENCE-${_resver}.md"::"https://github.com/ppy/osu-resources/raw/${_resver}/LICENCE.md"
+source=("${_appname}-${pkgver}.AppImage"::"https://github.com/ppy/osu/releases/download/${pkgver}/osu.AppImage"
+        "${_appname}-LICENCE-${pkgver}"::"https://github.com/ppy/osu/raw/${pkgver}/LICENCE"
+        "${_resname}-LICENCE-${pkgver}.md"::"https://github.com/ppy/osu-resources/raw/refs/heads/master/LICENCE.md"
         "${_appname}.bash"
         "${_appname}.desktop"
         "${_appname}.xml")
@@ -44,8 +42,8 @@ b2sums=('0371b219cfe15bb8e29482b4bae1389a3e77f5fc57f2f18b78f1c854618bd6a749e4e46
 
 prepare() {
   # Extract AppImage
-  chmod +x "${srcdir}/${_appname}-${_appver}.AppImage"
-  "${srcdir}/${_appname}-${_appver}.AppImage" --appimage-extract
+  chmod +x "${srcdir}/${_appname}-${pkgver}.AppImage"
+  "${srcdir}/${_appname}-${pkgver}.AppImage" --appimage-extract
 
   pushd "${srcdir}/squashfs-root/usr/bin"
     # Use system ffmpeg
@@ -97,6 +95,6 @@ package() {
   popd
 
   # Install license files
-  install -vDm644 "${srcdir}/${_appname}-LICENCE-${_appver}" "${pkgdir}/usr/share/licenses/${pkgname}/${_appname}-LICENCE"
-  install -vDm644 "${srcdir}/${_resname}-LICENCE-${_resver}.md" "${pkgdir}/usr/share/licenses/${pkgname}/${_resname}-LICENCE.md"
+  install -vDm644 "${srcdir}/${_appname}-LICENCE-${pkgver}" "${pkgdir}/usr/share/licenses/${pkgname}/${_appname}-LICENCE"
+  install -vDm644 "${srcdir}/${_resname}-LICENCE-${pkgver}.md" "${pkgdir}/usr/share/licenses/${pkgname}/${_resname}-LICENCE.md"
 }
