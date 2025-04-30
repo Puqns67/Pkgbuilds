@@ -3,6 +3,8 @@
 
 */*.log
 */*.pkg.tar.zst
+*/*.pkg.tar.zst.sig
+*/.SRCINFO
 
 */LICENSE
 */*.zip
@@ -10,5 +12,3 @@
 */*.tar.xz
 */*.tar.bz2
 */*.AppImage
-
-*/*.sig
