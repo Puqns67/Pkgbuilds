@@ -20,7 +20,8 @@ license=('MIT' 'CC-BY-NC-4.0')
 depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'lttng-ust2.12' 'sdl3' 'zlib')
 makedepends=('imagemagick')
 optdepends=('gamemode: run osu with gamemode'
-            'llin: a mod adds in-game music player and speeds up download for beatmap using Sayobot')
+            'llin: a ruleset adds in-game music player and speeds up download for beatmap using Sayobot'
+            'sentakki: a ruleset like maimai gameplay')
 provides=("${_appname}" 'osu-lazer')
 conflicts=("${_appname}" 'osu-lazer')
 replaces=('osu-lazer' 'osu-lazer-bin')
@@ -47,10 +48,13 @@ prepare() {
 
   pushd "${srcdir}/squashfs-root/usr/bin"
     # Use system ffmpeg
-    rm -fv libav*.so.*
+    rm -fv libav*.so.* libswscale.so.*
 
     # Use system sdl
     rm -fv libSDL{2,3}.so
+
+    # Remove UpdateNix from Velopack, updates are managed by pacman
+    rm -fv UpdateNix
 
     # Remove pdb files
     rm -fv *.pdb
@@ -75,6 +79,11 @@ package() {
   # Install osu and libraries
   install -vdm755 "${pkgdir}/usr/lib"
   mv "${srcdir}/squashfs-root/usr/bin" "${pkgdir}/usr/lib/${_appname}"
+
+  # Update permissions
+  find "${pkgdir}/usr/lib/${_appname}" -type d -exec chmod -v 755 {} +
+  find "${pkgdir}/usr/lib/${_appname}" -type f -exec chmod -v 644 {} +
+  chmod -v 755 "${pkgdir}/usr/lib/${_appname}/osu!"
 
   # Install launch script
   install -vDm755 "${srcdir}/${_appname}.bash" "${pkgdir}/usr/bin/${_appname}"
