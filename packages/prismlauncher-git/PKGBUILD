@@ -26,8 +26,7 @@ conflicts=("${_pkgname}")
 
 source=("${_pkgname}"::"git+https://github.com/PrismLauncher/PrismLauncher.git"
         "libnbtplusplus"::"git+https://github.com/PrismLauncher/libnbtplusplus.git"
-        LICENSE-{batch,lionshead,mdi}
-        'prismlauncher-use-system-qrcodegencpp-cmake.patch')
+        LICENSE-{batch,lionshead,mdi})
 
 b2sums=('SKIP'
         'SKIP'
@@ -43,8 +42,6 @@ pkgver() {
 prepare() {
   rmdir -v "${srcdir}/${_pkgname}/libraries/libnbtplusplus"
   ln -sv "${srcdir}/libnbtplusplus" "${srcdir}/${_pkgname}/libraries/libnbtplusplus"
-
-  patch -d "${srcdir}/${_pkgname}" -Np1 -i "${srcdir}/prismlauncher-use-system-qrcodegencpp-cmake.patch"
 
   cmake \
     -B "${srcdir}/build" \
