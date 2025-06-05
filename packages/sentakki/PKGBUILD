@@ -1,8 +1,8 @@
 # Maintainer: Puqns67 <me@puqns67.icu>
 
 pkgname='sentakki'
-pkgver='2025.418.0'
-pkgrel=2
+pkgver=2025.605.0
+pkgrel=1
 pkgdesc='An attempt to recreate maimai gameplay within osu!lazer'
 arch=('any')
 url='https://github.com/LumpBloom7/sentakki'
@@ -13,7 +13,7 @@ options=('!debug')
 
 source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/${pkgver}.tar.gz")
 
-b2sums=('f638d63d8a3d63c595d27b55e79f79ed5195e09eabd62a7157cbf5b45cee7631f3b90b67b432ba9ce0980154f34c7f6e8a06a0071c8da5a8dea34c337d092eaf')
+b2sums=('a0e7ff83fe0c2018815e06f54db3c1383301bbe086abae554bc5c01e00979cdbd71b6e66d1b33f3fa1d8852c7bd0b1a1e64b56c1ce88043c3df31c39e4dab0d0')
 
 prepare() {
 	cd "${srcdir}/${pkgname}-${pkgver}"
