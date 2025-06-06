@@ -3,8 +3,8 @@
 _pkgname='LLin'
 
 pkgname='llin'
-pkgver='2025.309.0'
-pkgrel=2
+pkgver='2025.606.0'
+pkgrel=1
 pkgdesc='向 osu! 添加播放器以及 Sayobot 加速下载功能'
 arch=('any')
 url='https://github.com/MATRIX-feather/LLin'
@@ -15,7 +15,7 @@ options=('!debug')
 
 source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/${pkgver}.tar.gz")
 
-b2sums=('1f02b0c3937cf700384cf8089eb98b11cdffe90b552a79a4f0f4417997763a8e097cc1bb98d8350375b93438e93373db22b4bffc48ec70d37988d8d53d7658f4')
+b2sums=('571d706768678bd7960cfb78a5bb9859d5721485d1e61ee20cc2bf52245c24b4f598b385af56aff2e7624ba83186aa498f6bfe5bd9871ed316b6194fbd066d8a')
 
 prepare() {
 	cd "${srcdir}/${_pkgname}-${pkgver}"
@@ -37,13 +37,13 @@ build() {
 
 package() {
 	install -vDt "${pkgdir}/usr/lib/osu" -m644 \
-    $srcdir/build/Tmds.DBus.* \
-    $srcdir/build/M.{DBus,Resources}.* \
-    $srcdir/build/osu.Game.Rulesets.Hikariii.*
-  install -vDm644 "${srcdir}/build/zh/M.Resources.resources.dll" "${pkgdir}/usr/lib/osu/zh/M.Resources.resources.dll"
+		$srcdir/build/Tmds.DBus.* \
+		$srcdir/build/M.{DBus,Resources}.* \
+		$srcdir/build/osu.Game.Rulesets.Hikariii.*
+	install -vDm644 "${srcdir}/build/zh/M.Resources.resources.dll" "${pkgdir}/usr/lib/osu/zh/M.Resources.resources.dll"
 
-  # Install license files
-  install -vDm644 "${srcdir}/${_pkgname}-${pkgver}/LICENCE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENCE"
-  install -vDm644 "${srcdir}/${_pkgname}-${pkgver}/osu.Game.Rulesets.Hikariii/RulesetStuffs/LICENCE" "${pkgdir}/usr/share/licenses/${pkgname}/osu-LICENCE"
-  install -vDm644 "${srcdir}/${_pkgname}-${pkgver}/osu.Game.Rulesets.Hikariii/Features/Player/Plugins/Bundle/SandboxToPanel/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/SandboxToPanel-LICENCE"
+	# Install license files
+	install -vDm644 "${srcdir}/${_pkgname}-${pkgver}/LICENCE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENCE"
+	install -vDm644 "${srcdir}/${_pkgname}-${pkgver}/osu.Game.Rulesets.Hikariii/ppyStuffs/LICENCE" "${pkgdir}/usr/share/licenses/${pkgname}/osu-LICENCE"
+	install -vDm644 "${srcdir}/${_pkgname}-${pkgver}/osu.Game.Rulesets.Hikariii/Features/Player/Plugins/Bundle/SandboxToPanel/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/SandboxToPanel-LICENCE"
 }
