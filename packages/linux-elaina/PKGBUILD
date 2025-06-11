@@ -1,12 +1,12 @@
 # Maintainer: Puqns67 <me@puqns67.icu>
 
 _major=6
-_minor=14
-_patch=4
+_minor=15
+_patch=2
 _xanmod=1
 _elaina=1
 
-_xanmod_branch='main'
+_xanmod_branch='edge'
 
 _to_minor="${_major}.${_minor}"
 _to_patch="${_to_minor}.${_patch}"
@@ -31,14 +31,14 @@ source=("${_srcname}.tar.xz"::"https://cdn.kernel.org/pub/linux/kernel/v${_major
         'config.bash'
         'elaina.bash')
 
-sha512sums=('71dcaa3772d8d9797c3ae30cae9c582b11a7047a3bbcb8dfd479a4dffb40ff0da74cf3d45175f50cc9992e338bcadd46c9c570f54054ca3bde6661768d3d22eb'
+sha512sums=('d03788ffa8d8ae1b84ef1286bb44a08fc01432e509dfec6cccae5c5a5a47201d378aec2bcd21e6f0bbd1e625b26f47780c06ee9c1cef3775358f98b160923f30'
             'SKIP'
-            'f00d6d28255d0ffa90db0b01e94ec942249c5184c1781303e7b88393c21f2d8c6581d7828c6e074780aab98e576b5afb321f1ca5710643436be7dda42268a528'
+            '648d016c7537abb517fabb05e4f928fb40fc07c8b945a99f03f5fed0e61f5db5176f85faaf416440304cb3b5c5458ab85cf46544cf291b4a79dc95ef982a2530'
             '2dbfce9ec1be85308f2760f930318a8aae290f1cab129faa71271d433707a7cc192bd984fdb2a0c7374d845056a0390a76212427375f6883d61c0fdb94f6d513'
             '61ad3bf8f1b8af96a408c0970e963f8624a16c8462cdc301905e4b65355d2a58c22645e6839c59fe6d61f3fb0c880d67324f4463e71605332c3839b6e62d4d03')
-b2sums=('11835719804b406fe281ea1c276a84dc0cbaa808552ddcca9233d3eaeb1c001d0455c7205379b02de8e8db758c1bae6fe7ceb6697e63e3cf9ae7187dc7a9715e'
+b2sums=('465596c6dc053ff3a3966302a906d3edb4f7ee1ef82f8c20b96360196d3414f5b1deeafa67b8340fcdecd3617280ba9b756d7073ad15c707865e256397b4af53'
         'SKIP'
-        '5d42420aab50f71e00965dd0edb17022d4b0eea19dcea36d82a386cee1506497995036d2daf212762a00b5114aa464d0ef493eca9c7d20e25fa9533409f2e8c1'
+        '3aa3396bee4c16b2e2e7f1ea0c77f524a5a8aee4a082e342980bcea7c6c153194d24df47f5822ad9e5d80a218b15feeb1cb7509158a72b84ff1a6e17190703a2'
         'af30ef0927a4de2556041472796f85d99bd43d63b1507ccf17e566b642d9278cbfa0c705f40500a04c2f3d0e0af2c24d885309acc7d2481e7e4537a2021bf20f'
         '291a693bbfe70ba845546a1874e0c73bca45c507f06982e2df9d63ae59846d185573b326844f43de6e66b19042f291ea87c39644dd4bb95ff7bf486bbf475aaa')
 
@@ -74,7 +74,7 @@ prepare() {
 
 build() {
   cd $_srcname
-  make all
+  make KCFLAGS="-Wno-error=incompatible-pointer-types-discards-qualifiers" all
   make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1
 }
 
@@ -192,5 +192,3 @@ for _p in "${pkgname[@]}"; do
     _package${_p#$pkgbase}
   }"
 done
-
-# vim:set ts=8 sts=2 sw=2 et:
