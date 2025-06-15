@@ -3,8 +3,8 @@
 _pkgname='LLin'
 
 pkgname='llin'
-pkgver='2025.606.0'
-pkgrel=2
+pkgver=2025.615.0
+pkgrel=1
 pkgdesc='向 osu! 添加播放器以及 Sayobot 加速下载功能'
 arch=('any')
 url='https://github.com/MATRIX-feather/LLin'
@@ -15,7 +15,7 @@ options=('!debug')
 
 source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/${pkgver}.tar.gz")
 
-b2sums=('571d706768678bd7960cfb78a5bb9859d5721485d1e61ee20cc2bf52245c24b4f598b385af56aff2e7624ba83186aa498f6bfe5bd9871ed316b6194fbd066d8a')
+b2sums=('115f79d6fcf1bf48c87913d94d6de987375af593e57fcc57d8dd76ea2af30bf47e7a076018b8d4986a412c153cca86a7972a30f3493f02b7605e389076b090d1')
 
 prepare() {
 	cd "${srcdir}/${_pkgname}-${pkgver}"
