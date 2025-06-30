@@ -1,0 +1,12 @@
+maintainers:
+  - github: Puqns67
+
+build_prefix: extra-x86_64
+
+pre_build_script: |
+  update_pkgver_and_pkgrel(_G.newver)
+
+update_on:
+  - source: "git"
+    git: "https://git.puqns67.icu/Puqns67/serenity.git"
+    use_commit: true
