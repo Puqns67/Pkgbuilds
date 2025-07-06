@@ -2,7 +2,7 @@
 
 pkgname='sentakki'
 pkgver=2025.605.0
-pkgrel=1
+pkgrel=2
 pkgdesc='An attempt to recreate maimai gameplay within osu!lazer'
 arch=('any')
 url='https://github.com/LumpBloom7/sentakki'
