@@ -7,8 +7,8 @@
 
 # This PKGBUILD is base on the AUR repo osu-lazer-bin, from these contributors above
 
-_appname='osu'
-_resname="${_appname}-resources"
+_appname='osu-lazer'
+_resname='osu-resources'
 
 pkgname="${_appname}-bin"
 pkgver=2025.710.0
@@ -20,9 +20,9 @@ license=('MIT' 'CC-BY-NC-4.0')
 depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'lttng-ust2.12' 'sdl3' 'zlib')
 makedepends=('imagemagick')
 optdepends=('gamemode: run osu with gamemode')
-provides=("${_appname}" 'osu-lazer')
-conflicts=("${_appname}" 'osu-lazer')
-replaces=('osu-lazer' 'osu-lazer-bin')
+provides=("${_appname}")
+conflicts=("${_appname}")
+replaces=('osu-lazer' 'osu-bin')
 options=('!debug')
 
 source=("${_appname}-${pkgver}.AppImage"::"https://github.com/ppy/osu/releases/download/${pkgver}-lazer/osu.AppImage"
@@ -35,8 +35,8 @@ source=("${_appname}-${pkgver}.AppImage"::"https://github.com/ppy/osu/releases/d
 b2sums=('8f55d1a20e48f2f3e7492b637a5c3994fb6ea4032be1a7e3373b44b55e3d916c494fb0e53f73e1f8bf4dfb28d3938b7f496a232e5c1314727aaf5aa91673f55b'
         '4465ca3332688adce6b25f15cc7e29e7a5edce1c60fc751bd23b7cac62a0e4aa3ba8309da487032ee37e760c98c92c2d0747dd33eec6c95ff8a74873be7a7335'
         '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
-        'ae4a247a8018ab98d0290a954bd5741cd93afa2738f0dc8294cc81c723221845484322cfd088f0632895f0a453b4e1d66338371a85a4a23b7e4d2d41b077f0f2'
-        'a8092d2bdd6b72b2072178ae620f0d16fe93f17061e3ef789cba2ca5eb236d7277b78ea4c7838053ebd08b025c2255ac6ce2f5587c34e8dde04fe4a04f2e1fa3'
+        '6359e5d3088bfc5ff70bbfd083269893027ae9b70de9916f2916da17f777e15852784692b321b1b13ede9a4736f8d2ad1ecc20eb3828d95d6e1e2ee0bfc0d85a'
+        '4469f3c9d9132fce3d305f434185b415856b2c188e233c858fb6b7d00cbcce5b5943f2f6b5ad09c242e8e677c0a29499d805b2848f2312f9922a489268f88d79'
         '9e1f8221c14c1c7a3a7046321e850f92c12ff8782bf09e4f358b9a1912fd41791fec2eb56c81ae416b895ae8fd7176495d63da3c4a2f0f24eb97bd2e4e422b5f')
 
 prepare() {
@@ -97,7 +97,7 @@ package() {
     done
 
     for icon in beatmap-*; do
-      install -vDm644 "${icon}" "${pkgdir}/usr/share/icons/hicolor/$(echo "${icon}" | cut -d- -f2 -)/mimetypes/${_appname}-beatmap.png"
+      install -vDm644 "${icon}" "${pkgdir}/usr/share/icons/hicolor/$(echo "${icon}" | cut -d- -f2 -)/mimetypes/${_appname%-lazer}-beatmap.png"
     done
   popd
 
