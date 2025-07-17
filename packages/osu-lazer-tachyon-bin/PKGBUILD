@@ -1,0 +1,107 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+# Contributor: David Husička <contact@bydave.net>
+# Contributor: Tyler Nelson <neo@cybercat.cc>
+# Contributor: Tuhana GAYRETLİ <tuhana at tuta dot io>
+# Contributor: Quenten Schoonderwoerd <ellie at nicecock dot eu>
+# Contributor: Antti <antti@antti.codes>
+
+# This PKGBUILD is base on the AUR repo osu-lazer-bin, from these contributors above
+
+_appname='osu-lazer'
+_resname='osu-resources'
+
+pkgname="${_appname}-tachyon-bin"
+pkgver=2025.711.0
+pkgrel=1
+pkgdesc="A free-to-win rhythm game. Rhythm is just a click away! (tachyon releases)"
+arch=('x86_64')
+url='https://osu.ppy.sh/'
+license=('MIT' 'CC-BY-NC-4.0')
+depends=('bash' 'ffmpeg4.4' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'lttng-ust2.12' 'sdl3' 'zlib')
+makedepends=('imagemagick')
+optdepends=('gamemode: run osu with gamemode')
+provides=("${_appname}")
+conflicts=("${_appname}")
+replaces=('osu-lazer' 'osu-bin')
+options=('!debug')
+
+source=("${_appname}-${pkgver}.AppImage"::"https://github.com/ppy/osu/releases/download/${pkgver}-tachyon/osu.AppImage"
+        "${_appname}-LICENCE"::"https://github.com/ppy/osu/raw/${pkgver}-tachyon/LICENCE"
+        "${_resname}-LICENCE"::"https://github.com/ppy/osu-resources/raw/refs/heads/master/LICENCE.md"
+        "${_appname}.bash"
+        "${_appname}.desktop"
+        "${_appname}.xml")
+
+b2sums=('7e9c7aad9413ed0b75d74adab3c3048b4cecefc5059c51f4b42ed855c0666fb6dacbe5e517a0f8266a081b260c43db19b9ff205da8ffcd22697acba18c8409ae'
+        '4465ca3332688adce6b25f15cc7e29e7a5edce1c60fc751bd23b7cac62a0e4aa3ba8309da487032ee37e760c98c92c2d0747dd33eec6c95ff8a74873be7a7335'
+        '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
+        '6359e5d3088bfc5ff70bbfd083269893027ae9b70de9916f2916da17f777e15852784692b321b1b13ede9a4736f8d2ad1ecc20eb3828d95d6e1e2ee0bfc0d85a'
+        '4469f3c9d9132fce3d305f434185b415856b2c188e233c858fb6b7d00cbcce5b5943f2f6b5ad09c242e8e677c0a29499d805b2848f2312f9922a489268f88d79'
+        '9e1f8221c14c1c7a3a7046321e850f92c12ff8782bf09e4f358b9a1912fd41791fec2eb56c81ae416b895ae8fd7176495d63da3c4a2f0f24eb97bd2e4e422b5f')
+
+prepare() {
+  # Extract AppImage
+  chmod +x "${srcdir}/${_appname}-${pkgver}.AppImage"
+  "${srcdir}/${_appname}-${pkgver}.AppImage" --appimage-extract
+
+  pushd "${srcdir}/squashfs-root/usr/bin"
+    # Use system ffmpeg
+    rm -fv libav*.so.* libswscale.so.*
+
+    # Use system sdl
+    rm -fv libSDL{2,3}.so
+
+    # Remove UpdateNix from Velopack, updates are managed by pacman
+    rm -fv UpdateNix
+
+    # Remove pdb files
+    rm -fv *.pdb
+  popd
+
+  # Create icons
+  mkdir -v "${srcdir}/icons"
+  pushd "${srcdir}/icons"
+    magick -verbose "${srcdir}/squashfs-root/usr/bin/lazer.ico" osu.png
+    magick -verbose "${srcdir}/squashfs-root/usr/bin/beatmap.ico" beatmap.png
+
+    eval $(magick identify -format "mv -v %f osu-%G;" osu*.png)
+    eval $(magick identify -format "mv -v %f beatmap-%G;" beatmap*.png)
+
+    for icon in $srcdir/squashfs-root/usr/share/icons/hicolor/*/apps/osu.png; do
+      mv -v "${icon}" "osu-$(echo "${icon}" | sed 's/^.*\/\([0-9]\{2,4\}x[0-9]\{2,4\}\)\/.*$/\1/g')"
+    done
+  popd
+}
+
+package() {
+  # Install osu and libraries
+  install -vdm755 "${pkgdir}/usr/lib"
+  mv "${srcdir}/squashfs-root/usr/bin" "${pkgdir}/usr/lib/${_appname}"
+
+  # Update permissions
+  find "${pkgdir}/usr/lib/${_appname}" -type d -exec chmod -v 755 {} +
+  find "${pkgdir}/usr/lib/${_appname}" -type f -exec chmod -v 644 {} +
+  chmod -v 755 "${pkgdir}/usr/lib/${_appname}/osu!"
+
+  # Install launch script
+  install -vDm755 "${srcdir}/${_appname}.bash" "${pkgdir}/usr/bin/${_appname}"
+
+  # Install desktop and mime files
+  install -vDm644 "${srcdir}/${_appname}.desktop" "${pkgdir}/usr/share/applications/${_appname}.desktop"
+  install -vDm644 "${srcdir}/${_appname}.xml" "${pkgdir}/usr/share/mime/packages/${_appname}.xml"
+
+  # Install icons
+  pushd "${srcdir}/icons"
+    for icon in osu-*; do
+      install -vDm644 "${icon}" "${pkgdir}/usr/share/icons/hicolor/$(echo "${icon}" | cut -d- -f2 -)/apps/${_appname}.png"
+    done
+
+    for icon in beatmap-*; do
+      install -vDm644 "${icon}" "${pkgdir}/usr/share/icons/hicolor/$(echo "${icon}" | cut -d- -f2 -)/mimetypes/${_appname%-lazer}-beatmap.png"
+    done
+  popd
+
+  # Install license files
+  install -vDm644 "${srcdir}/${_appname}-LICENCE" "${pkgdir}/usr/share/licenses/${pkgname}/${_appname}-LICENCE"
+  install -vDm644 "${srcdir}/${_resname}-LICENCE" "${pkgdir}/usr/share/licenses/${pkgname}/${_resname}-LICENCE"
+}
