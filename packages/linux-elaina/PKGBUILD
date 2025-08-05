@@ -1,8 +1,8 @@
 # Maintainer: Puqns67 <me@puqns67.icu>
 
 _major=6
-_minor=15
-_patch=2
+_minor=16
+_patch=0
 _xanmod=1
 _elaina=1
 
@@ -22,7 +22,7 @@ pkgdesc='Linux kernel for Elaina, based on Xanmod stable and edited some config'
 arch=('x86_64')
 url='https://www.xanmod.org/'
 license=('GPL-2.0-only')
-makedepends=('bc' 'clang' 'cpio' 'lld' 'llvm' 'pahole' 'python')
+makedepends=('bc' 'clang' 'cpio' 'lld' 'llvm' 'pahole' 'python' 'rust' 'rust-bindgen')
 options=('!debug' '!strip')
 
 source=("${_srcname}.tar.xz"::"https://cdn.kernel.org/pub/linux/kernel/v${_major}.x/${_srcname}.tar.xz"
@@ -31,16 +31,16 @@ source=("${_srcname}.tar.xz"::"https://cdn.kernel.org/pub/linux/kernel/v${_major
         'config.bash'
         'elaina.bash')
 
-sha512sums=('d03788ffa8d8ae1b84ef1286bb44a08fc01432e509dfec6cccae5c5a5a47201d378aec2bcd21e6f0bbd1e625b26f47780c06ee9c1cef3775358f98b160923f30'
+sha512sums=('55a00f89ad6db6db2e26ff5dc5cfc96bbf6654e5bd5d17d2a3b944a47640367e54139716d230923187bebc6cb7756edc9511a620fb8abc6f32c50a658a734784'
             'SKIP'
-            '648d016c7537abb517fabb05e4f928fb40fc07c8b945a99f03f5fed0e61f5db5176f85faaf416440304cb3b5c5458ab85cf46544cf291b4a79dc95ef982a2530'
+            '6fec5b14c9435c15eba4b8503b1ffa7ba9dbdb91ae94c629afe321c863797f9e7742f38080984aa71ae88528cfec6d8ef66ec16ef6d3beb0b0752be10ac68ca8'
             '2dbfce9ec1be85308f2760f930318a8aae290f1cab129faa71271d433707a7cc192bd984fdb2a0c7374d845056a0390a76212427375f6883d61c0fdb94f6d513'
-            '61ad3bf8f1b8af96a408c0970e963f8624a16c8462cdc301905e4b65355d2a58c22645e6839c59fe6d61f3fb0c880d67324f4463e71605332c3839b6e62d4d03')
-b2sums=('465596c6dc053ff3a3966302a906d3edb4f7ee1ef82f8c20b96360196d3414f5b1deeafa67b8340fcdecd3617280ba9b756d7073ad15c707865e256397b4af53'
+            '130be302cbf88c9599cad45e1913b77b59a86aabf45cdeeccee0d042f037cfb7168e85446058a2516d9447c020443091bb872a711b263e96118c7ec71ccf72f6')
+b2sums=('87bc4da7e89cc8265aebffea7ec6c09f711be24fee87cb1c03a264c03fd5a538d66aa806640835aa5103926e612cdfbc52d7c861d7f7065f1a8bb11d893b0921'
         'SKIP'
-        '3aa3396bee4c16b2e2e7f1ea0c77f524a5a8aee4a082e342980bcea7c6c153194d24df47f5822ad9e5d80a218b15feeb1cb7509158a72b84ff1a6e17190703a2'
+        '54561227f1dbc2116852e8bc6787f4f0cee05950b2d8aa9725e9991b3694270d0a1fbd65f63f065f51270dc47650fd84e763c53ce4704f7164fa64e09d86a359'
         'af30ef0927a4de2556041472796f85d99bd43d63b1507ccf17e566b642d9278cbfa0c705f40500a04c2f3d0e0af2c24d885309acc7d2481e7e4537a2021bf20f'
-        '291a693bbfe70ba845546a1874e0c73bca45c507f06982e2df9d63ae59846d185573b326844f43de6e66b19042f291ea87c39644dd4bb95ff7bf486bbf475aaa')
+        '16bb0d09ae8ea635e3e0ee903d32c85272911c4c4243863472fbb0a312e083d0820320d94173eb2aa3c0ad14134272f51d085bc54236cd513991dc39e5e6dd93')
 
 validpgpkeys=('ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linux Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E') # Greg Kroah-Hartman
