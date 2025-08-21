@@ -13,3 +13,4 @@ update_on:
   - source: github
     github: matrix-construct/tuwunel
     use_latest_release: true
+    prefix: v
