@@ -1,8 +1,8 @@
 # Maintainer: Puqns67 <me@puqns67.icu>
 
 pkgname='tuwunel'
-pkgver=1.3.0
-pkgrel=2
+pkgver=1.4.0
+pkgrel=1
 pkgdesc='A featureful Matrix homeserver'
 arch=('x86_64')
 url='https://github.com/matrix-construct/tuwunel'
@@ -17,7 +17,7 @@ source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/v${pkgver}.tar.
         "${pkgname}-sysusers.conf"
         "${pkgname}-tmpfiles.conf")
 
-b2sums=('7ca9ba2b0c6907e14a9b2c9460d6a582d7ca51da3569eca3a2b6b42bc90988d4ff46d0ea359adf16ad504ca3b0f430bb2268dee4524dbbbb46578e61eb4ae404'
+b2sums=('29d1762e1bc7af4288ec798f910be1c9f35e9423e63ea4ff594b5641b431efad5ce9e97a22e3dd0886f4264d19a5ffef9986393f71ad3643d4acb1c0656f39da'
         '98a3ce7c2274b95cff97eae54a408c0804585b530e69f6e15d60bb91ab854cd30068f127578cbeaa3f906496d5600076a6372609c165a4b475a57a8e04c52062'
         'e6aeae38f93c078471742ffc25dea2c4bcd5aeda8cc184f33eca0db53019367ae6da2522f703ee346ef83a73d99a1703eea6cbe71393ca91a5678b781ba03c18'
         '443daebba5262947ab50dcb14e388dfb4f1fa1a0cbd4ee6987f75a53dfbaabcea230596573fc3bac7e50bfe7bd3468ffc1e901bd8d9234b4d70beb3a82324f10')
