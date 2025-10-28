@@ -11,7 +11,7 @@
 
 pkgbase='tailscale'
 pkgname=("${pkgbase}" 'derper')
-pkgver=1.90.3
+pkgver=1.90.4
 pkgrel=1
 pkgdesc='A mesh VPN that makes it easy to connect your devices, wherever they are'
 arch=('x86_64' 'aarch64')
@@ -24,7 +24,7 @@ source=("${pkgbase}"::"git+https://github.com/tailscale/tailscale.git#tag=v${pkg
         'derper.defaults'
         'derper.service')
 
-b2sums=('69fbd16d94ccfd78659c5d5687bd6fd899bfa0a8b418685dc0842f5692af06060cdd88d4ea239c3bb1c66eed6ed0ed987761f78041f05d0d939bc56ae91e0d3d'
+b2sums=('aed5254885535f111e375d9e45fd60c4b70e64a1a7fb414501699febfb1c2935ee95c3f6ef19878e0efb731832d103d30ee5d96a714bea9c77b77fce5af87cf7'
         'f7768acb80b813bc2e98f83e70346dddc4950b8dcbde9cd547495f3f56eb3319e3201456c848268b03cfe28e79137311836903c2894313b00e7e0dd4a01e6cf9'
         '03d44e817de68137a77aef2890fca28d0fdf317d272f06b2d949121796bf07359ce34bb5832d32a0a2ae093f9fcfb2b9973d8d8b86b791e072ff9b5296fe4d58')
 
