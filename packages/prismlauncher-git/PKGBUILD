@@ -3,14 +3,14 @@
 _pkgname='prismlauncher'
 
 pkgname="${_pkgname}-git"
-pkgver=8.0.r2697.g16066c9a1
+pkgver=10.0.0.pre1.r104.gdb0bdc6be
 pkgrel=1
 pkgdesc='Minecraft launcher with ability to manage multiple instances'
 arch=('x86_64' 'aarch64')
 url='https://prismlauncher.org/'
 license=('GPL-3.0-only AND LGPL-3.0-or-later AND LGPL-2.0-or-later AND Apache-2.0 AND MIT AND LicenseRef-Batch AND OFL-1.1')
-depends=('bzip2' 'cmark' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'libglvnd' 'qt6-5compat' 'qt6-base' 'qt6-networkauth' 'qrencode' 'quazip-qt6' 'tomlplusplus' 'zlib')
-makedepends=('cmake' 'extra-cmake-modules' 'gamemode' 'ghc-filesystem' 'git' 'java-environment=17' 'ninja' 'scdoc')
+depends=('cmark' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'libarchive' 'qrencode' 'qt6-base' 'qt6-networkauth' 'tomlplusplus' 'zlib')
+makedepends=('cmake' 'extra-cmake-modules' 'gamemode' 'git' 'java-environment=17')
 optdepends=('glfw: to use system GLFW libraries'
             'openal: to use system OpenAL libraries'
             'visualvm: Profiling support'
@@ -39,15 +39,15 @@ pkgver() {
 }
 
 prepare() {
-  rmdir -v "${srcdir}/${_pkgname}/libraries/libnbtplusplus"
-  ln -sv "${srcdir}/libnbtplusplus" "${srcdir}/${_pkgname}/libraries/libnbtplusplus"
+  git -C "${srcdir}/${_pkgname}" submodule init
+  git -C "${srcdir}/${_pkgname}" config submodule.libraries/libnbtplusplus.url "${srcdir}/libnbtplusplus"
+  git -C "${srcdir}/${_pkgname}" -c protocol.file.allow=always submodule update
 
   cmake \
     -B "${srcdir}/build" \
     -D CMAKE_BUILD_TYPE=RelWithDebInfo \
     -D CMAKE_INSTALL_PREFIX=/usr \
     -D Launcher_BUILD_PLATFORM=archlinux \
-    -G Ninja \
     -S "${srcdir}/${_pkgname}"
 }
 
