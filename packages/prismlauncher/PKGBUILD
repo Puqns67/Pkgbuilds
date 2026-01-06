@@ -3,14 +3,14 @@
 _pkgname='PrismLauncher'
 
 pkgname='prismlauncher'
-pkgver=9.4
-pkgrel=3
+pkgver=10.0.0
+pkgrel=1
 pkgdesc='Minecraft launcher with ability to manage multiple instances'
 arch=('x86_64' 'aarch64')
 url='https://prismlauncher.org/'
 license=('GPL-3.0-only AND LGPL-3.0-or-later AND LGPL-2.0-or-later AND Apache-2.0 AND MIT AND LicenseRef-Batch AND OFL-1.1')
-depends=('bzip2' 'cmark' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'libglvnd' 'qt6-5compat' 'qt6-base' 'qt6-networkauth' 'quazip-qt6' 'tomlplusplus' 'zlib')
-makedepends=('cmake' 'extra-cmake-modules' 'gamemode' 'ghc-filesystem' 'java-environment=17' 'ninja' 'scdoc')
+depends=('cmark' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'libarchive' 'qrencode' 'qt6-base' 'qt6-networkauth' 'tomlplusplus' 'zlib')
+makedepends=('cmake' 'extra-cmake-modules' 'gamemode' 'java-environment=17')
 optdepends=('glfw: to use system GLFW libraries'
             'openal: to use system OpenAL libraries'
             'visualvm: Profiling support'
@@ -25,7 +25,7 @@ optdepends=('glfw: to use system GLFW libraries'
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/PrismLauncher/PrismLauncher/releases/download/${pkgver}/${_pkgname}-${pkgver}.tar.gz"
         LICENSE-{batch,lionshead,mdi})
 
-b2sums=('57bb4391e8b84265e42b08545bb0cf64046915fca2a80a7f40923f6abf605d9bdd7efefae40694cb5118451346ed4cf8b9d77291b6ebc5b82ec1bb1fbafc16fc'
+b2sums=('97e510ae538136794aa936d0e53e2493177a02ac446a50a99da1e47103f333f9ab43b61b76cce266b7ed22167876f184148063ff1d635d2f732a98ac0a2c5875'
         '356248a6b86f06d260e0920b49d34034f79f9bc504c7fdc1849d929d2ff9b169e693a8269a2c0b34656b3802970d9b8be41a92b35177eaa3c4ccc89a702f5c9d'
         'be4289832af95b1cd6e721dc16b84a034533de9718d9b43a49bd08dd6fe4e28eaa15228bfb311867b18fddbda1c9fc4c91f04c6d5c1a3bcc39aaa5161425e3ba'
         'b35c447cd9223e096a2bb75e0741a7d0a3a1606af54c957e4f276f4e6861a9b3f06ae1d646137e8d2f24ba2238c9967c76eff8cc631a68d7e48e376056982cc6')
@@ -37,7 +37,6 @@ prepare() {
     -D CMAKE_INSTALL_PREFIX=/usr \
     -D ENABLE_LTO=ON \
     -D Launcher_BUILD_PLATFORM=archlinux \
-    -G Ninja \
     -S "${srcdir}/${_pkgname}-${pkgver}"
 }
 

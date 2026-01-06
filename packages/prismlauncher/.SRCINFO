@@ -1,7 +1,7 @@
 pkgbase = prismlauncher
 	pkgdesc = Minecraft launcher with ability to manage multiple instances
-	pkgver = 9.2
-	pkgrel = 2
+	pkgver = 10.0.0
+	pkgrel = 1
 	url = https://prismlauncher.org/
 	arch = x86_64
 	arch = aarch64
@@ -9,20 +9,15 @@ pkgbase = prismlauncher
 	makedepends = cmake
 	makedepends = extra-cmake-modules
 	makedepends = gamemode
-	makedepends = ghc-filesystem
 	makedepends = java-environment=17
-	makedepends = ninja
-	makedepends = scdoc
-	depends = bzip2
 	depends = cmark
 	depends = gcc-libs
 	depends = glibc
 	depends = hicolor-icon-theme
-	depends = libglvnd
-	depends = qt6-5compat
+	depends = libarchive
+	depends = qrencode
 	depends = qt6-base
 	depends = qt6-networkauth
-	depends = quazip-qt6
 	depends = tomlplusplus
 	depends = zlib
 	optdepends = glfw: to use system GLFW libraries
@@ -35,11 +30,11 @@ pkgbase = prismlauncher
 	optdepends = java-runtime=8: for older Minecraft (<1.18 Pre-release 2)
 	optdepends = java-runtime=17: for Minecraft 1.18.0+ (>=1.18 Pre-release 2)
 	optdepends = java-runtime=21: for Minecraft 1.20.5+ (>=24w14a)
-	source = prismlauncher-9.2.tar.gz::https://github.com/PrismLauncher/PrismLauncher/releases/download/9.2/PrismLauncher-9.2.tar.gz
+	source = prismlauncher-10.0.0.tar.gz::https://github.com/PrismLauncher/PrismLauncher/releases/download/10.0.0/PrismLauncher-10.0.0.tar.gz
 	source = LICENSE-batch
 	source = LICENSE-lionshead
 	source = LICENSE-mdi
-	b2sums = 82e54ed299b7c93d086beae02e02ae148d8acea0034d7db1e4ff1752a8933994a0ab7ef1f8bc7d6ce9a598347863a8e8a6ecddca13211f6b7f96526d004ae919
+	b2sums = 97e510ae538136794aa936d0e53e2493177a02ac446a50a99da1e47103f333f9ab43b61b76cce266b7ed22167876f184148063ff1d635d2f732a98ac0a2c5875
 	b2sums = 356248a6b86f06d260e0920b49d34034f79f9bc504c7fdc1849d929d2ff9b169e693a8269a2c0b34656b3802970d9b8be41a92b35177eaa3c4ccc89a702f5c9d
 	b2sums = be4289832af95b1cd6e721dc16b84a034533de9718d9b43a49bd08dd6fe4e28eaa15228bfb311867b18fddbda1c9fc4c91f04c6d5c1a3bcc39aaa5161425e3ba
 	b2sums = b35c447cd9223e096a2bb75e0741a7d0a3a1606af54c957e4f276f4e6861a9b3f06ae1d646137e8d2f24ba2238c9967c76eff8cc631a68d7e48e376056982cc6
