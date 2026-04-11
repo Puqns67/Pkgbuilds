@@ -12,7 +12,7 @@ _resname='osu-resources'
 
 pkgname="${_appname}-bin"
 pkgver=2026.406.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
