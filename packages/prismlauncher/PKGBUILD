@@ -4,13 +4,13 @@ _pkgname='PrismLauncher'
 
 pkgname='prismlauncher'
 pkgver=11.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Minecraft launcher with ability to manage multiple instances'
 arch=('x86_64' 'aarch64')
 url='https://prismlauncher.org/'
 license=('GPL-3.0-only AND LGPL-3.0-or-later AND LGPL-2.0-or-later AND Apache-2.0 AND MIT AND LicenseRef-Batch AND OFL-1.1')
-depends=('cmark' 'glibc' 'hicolor-icon-theme' 'libarchive' 'libgcc' 'libglvnd' 'libstdc++' 'qrencode' 'qt6-base' 'qt6-networkauth' 'tomlplusplus' 'zlib')
-makedepends=('cmake' 'extra-cmake-modules' 'gamemode' 'java-environment=17' 'vulkan-headers')
+depends=('cmark' 'gamemode' 'glibc' 'hicolor-icon-theme' 'libarchive' 'libgcc' 'libglvnd' 'libstdc++' 'qrencode' 'qt6-base' 'qt6-networkauth' 'tomlplusplus' 'zlib')
+makedepends=('cmake' 'extra-cmake-modules' 'java-environment=17' 'vulkan-headers')
 optdepends=('glfw: to use system GLFW libraries'
             'openal: to use system OpenAL libraries'
             'visualvm: Profiling support'
