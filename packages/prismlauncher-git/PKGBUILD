@@ -3,29 +3,31 @@
 _pkgname='prismlauncher'
 
 pkgname="${_pkgname}-git"
-pkgver=10.0.0.r614.eed06a78f
+pkgver=11.0.0.r15.a488eb6d5
 pkgrel=1
 pkgdesc='Minecraft launcher with ability to manage multiple instances'
 arch=('x86_64' 'aarch64')
 url='https://prismlauncher.org/'
 license=('GPL-3.0-only AND LGPL-3.0-or-later AND LGPL-2.0-or-later AND Apache-2.0 AND MIT AND LicenseRef-Batch AND OFL-1.1')
-depends=('cmark' 'gamemode' 'glibc' 'hicolor-icon-theme' 'libarchive' 'libgcc' 'libglvnd' 'libstdc++' 'qrencode' 'qt6-base' 'qt6-networkauth' 'tomlplusplus' 'zlib')
-makedepends=('cmake' 'extra-cmake-modules' 'git' 'java-environment=17' 'vulkan-headers')
+depends=('cmark' 'glibc' 'hicolor-icon-theme' 'libarchive' 'libgcc' 'libglvnd' 'libstdc++' 'qrencode' 'qt6-base' 'qt6-networkauth' 'tomlplusplus' 'zlib')
+makedepends=('cmake' 'extra-cmake-modules' 'gamemode' 'git' 'java-environment=17' 'vulkan-headers')
 optdepends=('glfw: to use system GLFW libraries'
             'openal: to use system OpenAL libraries'
             'visualvm: Profiling support'
             'xorg-xrandr: for older minecraft versions (<=1.12.2)'
             'flite: minecraft voice narration'
             'mangohud: run Minecraft with mangohud'
-            'java-runtime=8: for older Minecraft (<1.18 Pre-release 2)'
-            'java-runtime=17: for Minecraft 1.18.0+ (>=1.18 Pre-release 2)'
-            'java-runtime=21: for Minecraft 1.20.5+ (>=24w14a)')
+            'gamemode: run Minecraft with gamemode'
+            'java-runtime=8: for older Minecraft (<21w19a)'
+            'java-runtime=17: for Minecraft 1.18.0+ (>=21w19a)'
+            'java-runtime=21: for Minecraft 1.20.5+ (>=24w14a)'
+            'java-runtime=25: for Minecraft 26.1+ (>=26.1-snapshot-1)')
 provides=("${_pkgname}")
 conflicts=("${_pkgname}")
 
 source=("${_pkgname}"::"git+https://github.com/PrismLauncher/PrismLauncher.git"
         "libnbtplusplus"::"git+https://github.com/PrismLauncher/libnbtplusplus.git"
-        LICENSE-{batch,lionshead,mdi})
+        {batch,lionshead,mdi}.license)
 
 b2sums=('SKIP'
         'SKIP'
@@ -46,6 +48,7 @@ prepare() {
     -B "${srcdir}/build" \
     -D CMAKE_BUILD_TYPE=RelWithDebInfo \
     -D CMAKE_INSTALL_PREFIX=/usr \
+    -D ENABLE_LTO=ON \
     -D Launcher_BUILD_PLATFORM=archlinux \
     -S "${srcdir}/${_pkgname}"
 }
@@ -62,5 +65,5 @@ package() {
   DESTDIR="${pkgdir}" cmake --install "${srcdir}/build"
 
   # licenses
-  install -Dm644 -t "${pkgdir}/usr/share/licenses/${pkgname}" ${srcdir}/LICENSE-{batch,lionshead,mdi}
+  install -Dm644 -t "${pkgdir}/usr/share/licenses/${pkgname}" ${srcdir}/{batch,lionshead,mdi}.license
 }
