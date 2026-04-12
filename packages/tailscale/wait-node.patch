@@ -1,0 +1,95 @@
+diff --git a/cmd/tailscale/cli/cli.go b/cmd/tailscale/cli/cli.go
+index 8a2c2b9ef..fdb142751 100644
+--- a/cmd/tailscale/cli/cli.go
++++ b/cmd/tailscale/cli/cli.go
+@@ -278,6 +278,7 @@ func newRootCmd() *ffcli.Command {
+ 			systrayCmd,
+ 			appcRoutesCmd,
+ 			waitCmd,
++			waitNodeCmd,
+ 		),
+ 		FlagSet: rootfs,
+ 		Exec: func(ctx context.Context, args []string) error {
+diff --git a/cmd/tailscale/cli/wait-node.go b/cmd/tailscale/cli/wait-node.go
+new file mode 100644
+index 000000000..c3b0ee7a4
+--- /dev/null
++++ b/cmd/tailscale/cli/wait-node.go
+@@ -0,0 +1,77 @@
++// Copyright (c) Tailscale Inc & contributors
++// SPDX-License-Identifier: BSD-3-Clause
++
++package cli
++
++import (
++	"context"
++	"errors"
++	"flag"
++	"fmt"
++	"time"
++
++	"github.com/peterbourgon/ff/v3/ffcli"
++)
++
++var waitNodeCmd = &ffcli.Command{
++	Name:       "wait-node",
++	ShortUsage: "tailscale wait-node [node]...",
++	ShortHelp:  "Wait tailscale node online",
++	LongHelp:   "Wait tailscale node online.",
++	FlagSet: (func() *flag.FlagSet {
++		fs := newFlagSet("wait-node")
++		fs.IntVar(&waitNodeArgs.timeout, "timeout", 60, "Maximum time to wait for tailscale node")
++		return fs
++	})(),
++	Exec: runWaitNode,
++}
++
++var waitNodeArgs struct {
++	timeout int
++}
++
++func runWaitNode(ctx context.Context, args []string) error {
++	if len(args) == 0 {
++		return errors.New("Needs one more node to wait")
++	}
++
++	startTime := time.Now().UnixNano()
++	timeout := int64(time.Duration(waitNodeArgs.timeout) * time.Second)
++	var err error = nil
++
++	for time.Now().UnixNano()-startTime < timeout {
++		err = checkNodesOnline(ctx, args)
++		if err == nil {
++			return nil
++		}
++		time.Sleep(500 * time.Millisecond)
++	}
++
++	return err
++}
++
++func checkNodesOnline(ctx context.Context, args []string) error {
++	status, err := localClient.Status(ctx)
++	if err != nil {
++		return fixTailscaledConnectError(err)
++	}
++
++	peers := make(map[string]bool)
++
++	peers[status.Self.HostName] = status.Self.Online
++	for _, peer := range status.Peer {
++		peers[peer.HostName] = peer.Online
++	}
++
++	for _, peername := range args {
++		peerstate, ok := peers[peername]
++		if !ok {
++			return fmt.Errorf("Node not found: %s", peername)
++		}
++		if !peerstate {
++			return fmt.Errorf("Node not online: %s", peername)
++		}
++	}
++
++	return nil
++}

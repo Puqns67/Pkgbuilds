@@ -1,0 +1,4 @@
+[Unit]
+Description=Tailscale node %i is online
+After=tailscale-wait-online.service tailscale-wait-online@%i.service
+Requires=tailscale-wait-online.service tailscale-wait-online@%i.service

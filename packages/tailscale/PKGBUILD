@@ -22,14 +22,21 @@ makedepends=('git' 'go')
 
 source=("${pkgbase}"::"git+https://github.com/tailscale/tailscale.git#tag=v${pkgver}"
         'derper.defaults'
-        'derper.service')
+        'derper.service'
+        'wait-node.patch'
+        'tailscale-wait-online@.service'
+        'tailscale-online@.target')
 
 b2sums=('7ce08ddf4d6f7af399e605384001f947224b13a4d85fae53c50641d10f86cd9d8f0b32453b5f73b7c3a60b3a36848eddd367ceaad754b8b15d93680244ea3259'
         'f7768acb80b813bc2e98f83e70346dddc4950b8dcbde9cd547495f3f56eb3319e3201456c848268b03cfe28e79137311836903c2894313b00e7e0dd4a01e6cf9'
-        '03d44e817de68137a77aef2890fca28d0fdf317d272f06b2d949121796bf07359ce34bb5832d32a0a2ae093f9fcfb2b9973d8d8b86b791e072ff9b5296fe4d58')
+        '03d44e817de68137a77aef2890fca28d0fdf317d272f06b2d949121796bf07359ce34bb5832d32a0a2ae093f9fcfb2b9973d8d8b86b791e072ff9b5296fe4d58'
+        '88b6e403bc5cc82c4704bdac2c028937d1e1bb0d301cc1c4b931b37a73be4bd4ecd3153149815b7a9dc72b1285fd71eaedb52a689f1b8273b0d4c69625dae0f2'
+        '84581ffb16d3df33eeffb7df2aabbfaff003a05372378d36ba6547383284a7352addc28e1d358523d7f1b46b7df79fa214ef3cc1c9cb1a56ceded41731aeebf8'
+        'f51f67e093c3cf8d319079419028cdf07e0a51d7c53938be3638c6c9f331780c5c1749788682ff9f11fb0b3c5bff89b177e0450638e4bb41af9d2329ebbbd812')
 
 prepare() {
   cd "${srcdir}/${pkgbase}"
+  patch --strip=1 --input="${srcdir}/wait-node.patch"
   go mod vendor
 }
 
@@ -68,6 +75,10 @@ package_tailscale() {
 
   install -Dm644 "${srcdir}/${pkgbase}/cmd/${pkgname}d/${pkgname}d.defaults" "${pkgdir}/etc/default/${pkgname}d"
   install -Dm644 "${srcdir}/${pkgbase}/cmd/${pkgname}d/${pkgname}d.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}d.service"
+  install -Dm644 "${srcdir}/${pkgbase}/cmd/${pkgname}d/${pkgname}-wait-online.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}-wait-online.service"
+  install -Dm644 "${srcdir}/${pkgbase}/cmd/${pkgname}d/${pkgname}-online.target" "${pkgdir}/usr/lib/systemd/system/${pkgname}-online.target"
+  install -Dm644 "${srcdir}/${pkgname}-wait-online@.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}-wait-online@.target"
+  install -Dm644 "${srcdir}/${pkgname}-online@.target" "${pkgdir}/usr/lib/systemd/system/${pkgname}-online@.target"
 
   install -Dm644 "${srcdir}/completion/bash" "${pkgdir}/usr/share/bash-completion/completions/${pkgname}"
   install -Dm644 "${srcdir}/completion/zsh" "${pkgdir}/usr/share/zsh/site-functions/_${pkgname}"

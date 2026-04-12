@@ -1,0 +1,13 @@
+[Unit]
+Description=Wait for Tailscale node %i to be online
+BindsTo=tailscaled.service
+After=tailscaled.service
+Requires=tailscaled.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/tailscale wait-node %i
+RemainAfterExit=yes
+
+[Install]
+WantedBy=tailscale-online@%i.target
