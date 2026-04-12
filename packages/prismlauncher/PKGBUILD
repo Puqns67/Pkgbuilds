@@ -3,7 +3,7 @@
 _pkgname='PrismLauncher'
 
 pkgname='prismlauncher'
-pkgver=11.0.1
+pkgver=11.0.2
 pkgrel=1
 pkgdesc='Minecraft launcher with ability to manage multiple instances'
 arch=('x86_64' 'aarch64')
@@ -26,7 +26,7 @@ optdepends=('glfw: to use system GLFW libraries'
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/PrismLauncher/PrismLauncher/releases/download/${pkgver}/${_pkgname}-${pkgver}.tar.gz"
         {batch,lionshead,mdi}.license)
 
-b2sums=('cec93fe0cc6d48a87eae0080b5e81f576a47104b1826cd078007300889cb82468af48a4124dec609ca39ae4eb830b7a62f25ae78a566d9f67bf196c23cc41f2a'
+b2sums=('2fd5affcda9fd7604e47f054ee809f23d26586cada65dd47acd73c854b3d26bc76bab77f7e4736c32c6c8b621c934160caea40924946283c163b949ee28987b0'
         '356248a6b86f06d260e0920b49d34034f79f9bc504c7fdc1849d929d2ff9b169e693a8269a2c0b34656b3802970d9b8be41a92b35177eaa3c4ccc89a702f5c9d'
         'be4289832af95b1cd6e721dc16b84a034533de9718d9b43a49bd08dd6fe4e28eaa15228bfb311867b18fddbda1c9fc4c91f04c6d5c1a3bcc39aaa5161425e3ba'
         'b35c447cd9223e096a2bb75e0741a7d0a3a1606af54c957e4f276f4e6861a9b3f06ae1d646137e8d2f24ba2238c9967c76eff8cc631a68d7e48e376056982cc6')
