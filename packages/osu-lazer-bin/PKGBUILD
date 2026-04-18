@@ -11,8 +11,8 @@ _appname='osu-lazer'
 _resname='osu-resources'
 
 pkgname="${_appname}-bin"
-pkgver=2026.406.0
-pkgrel=2
+pkgver=2026.418.0
+pkgrel=1
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away!"
 arch=('x86_64')
 url='https://osu.ppy.sh/'
@@ -32,7 +32,7 @@ source=("${_appname}-${pkgver}.AppImage"::"https://github.com/ppy/osu/releases/d
         "${_appname}.desktop"
         "${_appname}.xml")
 
-b2sums=('87a62bddc89a76a04e8095d9975adeb6d2eb1147c3857acec68e7595c92430b62b7fe86b7d81cc688193bdf134c5bbc28e334a28d1063c556626568874e4075a'
+b2sums=('a19d3f54a44e8cb31eb6336192cce1ce16541caf501c372781b2f4b1586d0fd7741fd0a955979a8802f44627fb3851b2475b75e1e9797821f4fc9dcd559f0e8e'
         '4465ca3332688adce6b25f15cc7e29e7a5edce1c60fc751bd23b7cac62a0e4aa3ba8309da487032ee37e760c98c92c2d0747dd33eec6c95ff8a74873be7a7335'
         '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
         '6359e5d3088bfc5ff70bbfd083269893027ae9b70de9916f2916da17f777e15852784692b321b1b13ede9a4736f8d2ad1ecc20eb3828d95d6e1e2ee0bfc0d85a'
