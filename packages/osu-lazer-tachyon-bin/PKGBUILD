@@ -11,7 +11,7 @@ _appname='osu-lazer'
 _resname='osu-resources'
 
 pkgname="${_appname}-tachyon-bin"
-pkgver=2026.602.0
+pkgver=2026.610.0
 pkgrel=1
 pkgdesc="A free-to-win rhythm game. Rhythm is just a click away! (tachyon releases)"
 arch=('x86_64')
@@ -32,7 +32,7 @@ source=("${_appname}-${pkgver}.AppImage"::"https://github.com/ppy/osu/releases/d
         "${_appname}.desktop"
         "${_appname}.xml")
 
-b2sums=('0f7fd4cec12cf8821087e2f5b0edc28ed977b58ce3ec4d3796c47360b17bc9c9decccaa012d40bdf2cde3a839033c2ad03c9d765742c5ffdd34ef62e9e4bbeae'
+b2sums=('9781f5b8a80fdcf47201f0487e2977843ae224152b95579f39e2d00134b7c91987e8a2cf59802df545a5593d4b64f44014de594db1ac92570674782330dc9af8'
         '4465ca3332688adce6b25f15cc7e29e7a5edce1c60fc751bd23b7cac62a0e4aa3ba8309da487032ee37e760c98c92c2d0747dd33eec6c95ff8a74873be7a7335'
         '7b7d10932a3c9b07ae10870c7830cacb2dd7164ec3e13ca419a931d6702c496b3ca2b7430f52aa3e71727b8d5f089f174ab13b1c69698925b2e37f8634e3fbff'
         '6359e5d3088bfc5ff70bbfd083269893027ae9b70de9916f2916da17f777e15852784692b321b1b13ede9a4736f8d2ad1ecc20eb3828d95d6e1e2ee0bfc0d85a'
