@@ -7,7 +7,7 @@
 
 _pkgname='serenity'
 pkgname="${_pkgname}-elaina-git"
-pkgver=1.1.0.alpha4.puqns672.r0.gc0576a3
+pkgver=1.1.0.beta3.puqns678.r0.g7149489
 pkgrel=1
 pkgdesc='The configuration generator for sing-box, elaina edition'
 arch=('x86_64' 'aarch64')
