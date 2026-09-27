@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=MiaCode
+Comment=maimai chart editor
+Exec=MiaCode
+Icon=miacode
+Terminal=false
+Categories=AudioVideo;Audio;Development;
+StartupWMClass=MiaCode

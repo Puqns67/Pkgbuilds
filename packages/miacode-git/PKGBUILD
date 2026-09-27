@@ -1,0 +1,83 @@
+# Maintainer: Puqns67 <me@puqns67.icu>
+
+_pkgname='miacode'
+pkgname="${_pkgname}-git"
+pkgver=1.0.0.r541.7f30f77e
+pkgrel=1
+pkgdesc='A desktop editor, previewer, and export tool for simai chart authoring'
+arch=('x86_64')
+url='https://github.com/fanfaredash/MiaCode'
+license=('MIT')
+depends=(
+  'glibc'
+  'hicolor-icon-theme'
+  'libdrm'
+  'libgcc'
+  'libglvnd'
+  'libva'
+  'libxkbcommon'
+  'libstdc++'
+  'qt6-base'
+  'qt6-declarative'
+  'qt6-multimedia'
+  'qt6-svg'
+  'ffmpeg'
+)
+makedepends=('cmake' 'git' 'ninja' 'qt6-shadertools')
+provides=("${_pkgname}")
+conflicts=("${_pkgname}")
+
+source=("${_pkgname}"::"git+${url}.git#branch=dev"
+        "${_pkgname}.sh"
+        'io.github.fanfaredash.MiaCode.desktop')
+
+b2sums=('SKIP'
+        '935919bb6a2788effd23ad751da9aad62b3f1da56f13338208c72b9ce5768a42e47c6ab006368a2a7ffd78ea469fbdedbfb631b3f867b4c56bece27f4e6a3961'
+        'c11475f1686fc40b34f8eccc3c986b73cd330ade1b7373faa550829b7e7c7dd86c09d232d400d602837df2c4b4e46ab3f0a0487df85fcab3c8779b437e257550')
+
+pkgver() {
+  git -C "${srcdir}/${_pkgname}" describe --long --tags \
+    | sed --regexp-extended 's/^v([0-9\.]+)(-[^-]+)?-([0-9]+)-g([0-9a-f]+)$/\1.r\3.\4/g'
+}
+
+prepare() {
+  cmake \
+    -B "${srcdir}/build" \
+    -D CMAKE_C_FLAGS="${CFLAGS}" \
+    -D CMAKE_CXX_FLAGS="${CXXFLAGS}" \
+    -D CMAKE_EXE_LINKER_FLAGS="${LDFLAGS}" \
+    -D CMAKE_SHARED_LINKER_FLAGS="${LDFLAGS}" \
+    -D CMAKE_MODULE_LINKER_FLAGS="${LDFLAGS}" \
+    -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+    -D CMAKE_BUILD_WITH_INSTALL_RPATH=ON \
+    -D CMAKE_INSTALL_RPATH='$ORIGIN' \
+    -D MIACODE_BUILD_DEV_TOOLS=OFF \
+    -G Ninja \
+    -S "${srcdir}/${_pkgname}"
+}
+
+build() {
+  cmake --build "${srcdir}/build"
+
+  ffmpeg -hide_banner -loglevel error \
+    -i "${srcdir}/${_pkgname}/resources/icons/app.png" \
+    -vf scale=1024:1024 \
+    "${srcdir}/${_pkgname}.png"
+}
+
+package() {
+  install -Dm755 "${srcdir}/${_pkgname}.sh" "${pkgdir}/usr/bin/MiaCode"
+
+  pushd "${srcdir}/build"
+  install -Dm755 -t "${pkgdir}/usr/lib/${_pkgname}" MiaCode
+  install -Dm644 -t "${pkgdir}/usr/lib/${_pkgname}" libbass.so libbass_fx.so libbassmix.so
+  popd
+
+  cp -r "${srcdir}/build/extensions" "${srcdir}/${_pkgname}/assets" "${pkgdir}/usr/lib/${_pkgname}"
+  rm -r "${pkgdir}/usr/lib/${_pkgname}/assets"/{fonts,reference}
+
+  install -Dm644 "${srcdir}/io.github.fanfaredash.MiaCode.desktop" "${pkgdir}/usr/share/applications/io.github.fanfaredash.MiaCode.desktop"
+  install -Dm644 "${srcdir}/${_pkgname}.png" "${pkgdir}/usr/share/icons/hicolor/1024x1024/apps/${_pkgname}.png"
+
+  install -Dm644 "${srcdir}/${_pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
