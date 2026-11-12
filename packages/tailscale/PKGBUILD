@@ -11,7 +11,7 @@
 
 pkgbase='tailscale'
 pkgname=("${pkgbase}" 'derper')
-pkgver=1.104.6
+pkgver=1.104.7
 pkgrel=1
 pkgdesc='A mesh VPN that makes it easy to connect your devices, wherever they are'
 arch=('x86_64' 'aarch64')
@@ -27,7 +27,7 @@ source=("${pkgbase}"::"git+https://github.com/tailscale/tailscale.git#tag=v${pkg
         'tailscale-wait-online@.service'
         'tailscale-online@.target')
 
-b2sums=('a71bafeea552febad9cf72cd4ce171948b1e61f564d9994d161f434cb3705d185392fcd71a630edb306d40425bbcd09f0b053672dcaa65100706d9ff99b41239'
+b2sums=('47b5718146a7b49ba6d5330d0cf9bc0aebb80f2c0b51b7671fabe0bf5eceff2fb4b9711afeeb5d6cd01a478ce55797dea3cf5bc63b5e0edb325b519e3307b7f3'
         'f7768acb80b813bc2e98f83e70346dddc4950b8dcbde9cd547495f3f56eb3319e3201456c848268b03cfe28e79137311836903c2894313b00e7e0dd4a01e6cf9'
         '03d44e817de68137a77aef2890fca28d0fdf317d272f06b2d949121796bf07359ce34bb5832d32a0a2ae093f9fcfb2b9973d8d8b86b791e072ff9b5296fe4d58'
         '88b6e403bc5cc82c4704bdac2c028937d1e1bb0d301cc1c4b931b37a73be4bd4ecd3153149815b7a9dc72b1285fd71eaedb52a689f1b8273b0d4c69625dae0f2'
